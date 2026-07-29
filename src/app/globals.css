@@ -1,26 +1,98 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ==========================================================================
+ *  전역 스타일 — 색상, 글꼴, 기본 타이포그래피
+ *
+ *  ★ 사이트 전체의 색을 바꾸려면 아래 --color-brand-* 값만 수정하세요. ★
+ *    모든 페이지가 이 값을 참조하므로 여기 한 곳만 바꾸면 전체가 바뀝니다.
+ * ========================================================================== */
+
+@theme {
+  /* ------------------------------------------------------------------------
+   *  브랜드 색상 — 부산광역시교육청 느낌의 차분한 파란색 계열
+   *
+   *  brand-700 이 기본 색입니다 (제목, 링크, 버튼).
+   *  숫자가 작으면 연하고, 크면 진합니다.
+   *  교육청 공식 색상 코드를 받으면 아래 값을 그것으로 교체하세요.
+   * ---------------------------------------------------------------------- */
+  --color-brand-50: #f2f7fb;
+  --color-brand-100: #e2edf6;
+  --color-brand-200: #c2d9ea;
+  --color-brand-300: #94bcda;
+  --color-brand-400: #5f97c5;
+  --color-brand-500: #3a77ac;
+  --color-brand-600: #2a5e90;
+  --color-brand-700: #1f4b74; /* ← 기본 브랜드 색 */
+  --color-brand-800: #1b3d5e;
+  --color-brand-900: #17324c;
+
+  /* 본문 글자색 / 배경색 — 순수 검정·흰색보다 눈이 편합니다 */
+  --color-ink: #1a1d21;
+  --color-ink-soft: #4a5259;
+  --color-paper: #ffffff;
+  --color-paper-soft: #f7f9fb;
+
+  /* ------------------------------------------------------------------------
+   *  글꼴 — Pretendard (한글 가독성이 가장 좋은 무료 글꼴)
+   *  글꼴 파일은 src/fonts/ 에 직접 포함되어 있습니다 (외부 CDN 미사용).
+   *  뒤쪽 목록은 글꼴 로딩 전/실패 시 쓰이는 대체 글꼴입니다.
+   * ---------------------------------------------------------------------- */
+  --font-sans:
+    var(--font-pretendard), -apple-system, BlinkMacSystemFont, system-ui,
+    "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ==========================================================================
+ *  기본 타이포그래피 — 모바일 우선
+ *  지도교사·학부모 대부분이 휴대폰으로 봅니다.
+ * ========================================================================== */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  /* iOS 가로/세로 전환 시 글자 크기가 멋대로 커지는 것을 방지 */
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+
+  /* 한글은 줄 간격이 넉넉해야 읽기 편합니다 */
+  line-height: 1.75;
+
+  /* ★ 한글 줄바꿈 핵심 설정 ★
+   * keep-all: '부산광역시교육청' 같은 단어가 중간에서 잘리지 않게 합니다.
+   * 이 값을 지우면 한글이 아무 데서나 끊겨 읽기 어려워집니다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 제목은 줄 간격을 좁혀서 덩어리로 보이게 합니다 */
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.35;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+/* 본문 문단은 너무 긴 줄을 막아 읽기 흐름을 유지합니다 */
+p {
+  text-wrap: pretty;
+}
+
+/* 키보드 사용자를 위한 초점 표시 — 접근성상 제거하지 마세요 */
+:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 2px;
+}
+
+/* 인쇄 시 배경색 제거 (학교에서 공문처럼 출력하는 경우가 많습니다) */
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
 }
