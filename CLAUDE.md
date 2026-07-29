@@ -2,6 +2,8 @@
 
 Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-KR-CONTEXT.md`.
 
+**This file is the single set of instructions for this project.** Do not add a second one — no `AGENTS.md`, no `.cursorrules`, no `CONTRIBUTING.md` full of build rules. `create-next-app` generates an `AGENTS.md`; it was deleted deliberately. If two instruction files disagree, a successor with no one to ask has no way to tell which is authoritative — so there is only ever one. Corrections and new conventions get edited **into this file**.
+
 ---
 
 ## The one constraint that governs every decision
