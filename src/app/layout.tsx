@@ -81,7 +81,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${pretendard.variable} h-full antialiased`}>
+    /* data-scroll-behavior="smooth" 는 globals.css 의
+       scroll-behavior: smooth 와 짝을 이룹니다.
+       이게 없으면 페이지를 이동할 때(예: 홈 → 참가 신청) 화면이
+       위로 부드럽게 밀려 올라가서 어지럽게 느껴집니다. */
+    <html
+      lang="ko"
+      data-scroll-behavior="smooth"
+      className={`${pretendard.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col bg-paper text-ink">
         {children}
       </body>

@@ -11,7 +11,7 @@ Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-K
 **The person who builds this site leaves the company on 2026-08-14. 접수 opens 2026-09-01 — 18 days later. The 대회 is 2026-11-27~28. No successor has been assigned.**
 
 So the site must:
-1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something.
+1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something. The Supabase Pro plan is bought specifically to satisfy this — see the Supabase section.
 2. **Be editable by a non-technical person through a web browser.** No terminal. No local setup.
 3. **Fail safe.** A bad edit must break the *build* (so Vercel refuses to deploy and the old site stays up), never deploy broken.
 
@@ -21,21 +21,61 @@ When choosing between two approaches, pick the one a stranger can operate in Nov
 
 ## Scope
 
-**Build:** a Korean-language information site for the competition, plus a 신청 page that hands off to an external form.
+**Build:** a Korean-language information site for the competition, plus a `/apply` page that **embeds a Google Form**.
 
-**Do NOT build:** user accounts, login, a database, file uploads, transactional email, admin dashboards, or a custom form backend. These were considered and deliberately rejected — they all create unattended failure modes. If a future developer wants them, `docs/ROBOFEST-KR-CONTEXT.md` §4 has the full data model spec.
+**Do NOT build:** a database, participant accounts or login, file uploads, transactional email, cron jobs, or an admin dashboard. All rejected — each is an unattended failure mode, and none is needed once 구글폼 holds the 접수 data.
 
-접수 itself runs on **네이버 폼** (chosen over 구글폼 to avoid 개인정보 국외이전 disclosure for a 교육청 event). The site links/embeds it. We do not touch participant PII in our own infrastructure.
+접수 runs entirely inside the embedded 구글폼. **We never store participant 개인정보 in our own infrastructure.** The site's only job is to explain the competition well and put the form in front of the right people.
+
+**Decision log — read this before "fixing" anything that looks inconsistent.**
+- Original plan: hand off to **네이버 폼** (구글폼 rejected over 개인정보 국외이전).
+- 2026-07-30, morning: switched to a **native form on Supabase**.
+- **2026-07-30, current: switched to an embedded 구글폼.** Decided with the 지도교수/advisor. This supersedes both plans above.
+
+**Consequently these files are stale and must not be followed:** `docs/BUILD-GUIDE.md` and `docs/BUILD-GUIDE.ko.md` Days 6–10 (Supabase, RLS, native form), and `docs/schema.sql` (the rejected data model). They are kept only as a record of what was considered. **This file wins.**
 
 ---
 
 ## Stack
 
-- **Next.js (App Router) + TypeScript + Tailwind**, static export where possible
+- **Next.js (App Router) + TypeScript + Tailwind**, fully static
 - **Vercel** for hosting, connected to GitHub — pushes to `main` auto-deploy
+- **구글폼** for 접수, embedded in an `<iframe>` on `/apply`
 - **No database. No API routes that write. No cron. No env vars holding secrets.**
 
 Rationale for TypeScript over plain JSON for content: a malformed edit fails the build, so Vercel keeps serving the last good version instead of publishing something broken. That is a safety feature for an unattended site, not developer preference.
+
+---
+
+## The embedded 구글폼 — what to know before touching `/apply`
+
+**The form is not ours and we cannot style it.** An embedded form is a cross-origin iframe: we control the box, Google controls everything inside it. Pretendard, 브랜드 색, `word-break: keep-all` — none of it crosses the boundary. Do not spend time trying. The design job is to make the page *around* the form good.
+
+**The iframe cannot auto-fit its height.** Browsers forbid measuring inside a cross-origin frame and Google exposes no resize signal, so the height is a hardcoded number in `config/competition.ts` (`embedHeightPx`). Consequences a successor must know:
+- Too short → the form scrolls inside a box while the page also scrolls. Two scrollbars on a phone.
+- **Every time you add or remove a question in the 구글폼, the height is wrong again.** Re-measure and update the config. This is the one recurring manual task in the project — `docs/RUNBOOK.md` must explain it.
+
+**Never rebuild the form's inputs in our own components.** It is technically possible to POST our own themed fields to Google's `formResponse` endpoint. It was considered and rejected, for reasons that still apply:
+- The endpoint is undocumented; Google can break it silently.
+- Cross-origin rules mean **we could not tell whether a submission saved**, so the site would show 접수 완료 without knowing. A silently lost 신청 means a team cannot compete.
+- The `entry.XXXX` field IDs would be hardcoded, so editing the 구글폼 would require a developer — destroying the one property that made 구글폼 the right choice.
+
+**The real 접수 gate is Google's own "응답 받기" toggle, not our site.** Our date logic only decides what the page *shows*; anyone with the direct form link can submit regardless. So on 10-16, 담당자 must turn off 응답 받기 in the 구글폼 itself. Closing 접수 by editing our config alone does not close 접수.
+
+---
+
+## 개인정보 — the tradeoff we accepted, and the duty that comes with it
+
+구글폼 was **originally rejected** because Google processes data outside Korea, so a 교육청 event collecting minors' PII triggers **개인정보 국외이전 고지·동의 의무**. On 2026-07-30 we chose 구글폼 anyway, with the advisor's agreement. That is a legitimate decision, but it is a decision to *disclose*, not a problem that went away. Embedding changes nothing: the iframe is Google's page collecting the data directly — and it *hides* from the applicant that they are submitting to Google, which makes explicit disclosure more important, not less.
+
+So the following are requirements, not polish:
+
+- **A 국외이전 안내 must appear above the form on `/apply`**, before the applicant starts typing. Wording lives in `config/competition.ts` so a 담당자 can revise it without touching code.
+- **The 구글폼's own first question must be an explicit 국외이전 동의** (필수). Our page's notice is context; the consent record has to live with the data, in Google's response sheet.
+- **만 14세 미만 참가자는 법정대리인 동의가 필수입니다.** Junior starts at 초5 (~11세), so this covers most Junior participants. Add a 필수 question having 지도교사 confirm they obtained it. A 담당자 must decide whether that indirect confirmation suffices — it is weaker than verifying directly, and that is their call to make, not ours.
+- **Do not collect more than you need.** Every extra field is 개인정보 we are responsible for. 주민등록번호는 절대 수집하지 마세요. 생년월일보다 학년이 충분합니다.
+- **Restrict who can see the responses.** The response 스프레드시트 must not be link-shared publicly, and must be visible to more than one person.
+- Name a **개인정보 보호책임자** who is still at the company after 2026-08-14.
 
 ---
 
@@ -50,6 +90,11 @@ Checklist when adding anything:
 - Is this a 종목 rule or description? → `config/competition.ts` categories array
 - Is this prose (안내문, FAQ answer, 공지)? → `content/*.md`
 - Is this a phone number, email, 장소? → `config/competition.ts`
+- Is this the 구글폼 주소, its embed height, or the 국외이전 안내 문구? → `config/competition.ts` `registration`
+
+**The form must degrade to a plain link.** Keep the `registration.applyMode` switch (`'embed'` / `'link'`). If the iframe misbehaves — blocked on a school network, unusable on some phone, Google changes something — a non-technical person changes one word and applicants get a big button to the form instead. Test it once before 09-01. This is the most important safety valve in the project, because it needs no developer.
+
+**Never let a broken link be the failure mode.** If `formUrl` is empty the page must say 준비 중, never render a dead button. And the `/apply` page always shows a direct "새 창에서 열기" link *underneath* the iframe, so an applicant whose network blocks the frame can still reach the form.
 
 Add a Korean comment above every field explaining what it is and what changes if you edit it.
 
@@ -100,13 +145,18 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 
 ## Before you start work each session
 
-1. Skim `config/competition.ts` — it is the source of truth, not this file.
+1. Skim `config/competition.ts` — it is the source of truth for competition facts, not this file.
 2. If asked to add a date or fact, put it in the config and reference it. Do not inline it.
-3. If a task would require a database, login, or email sending, stop and say so — it's out of scope by design, and explain the unattended-failure reason.
+3. If a task would require a database, login, file uploads, email sending, cron, or an admin UI, stop and say so — out of scope by design; explain the unattended-failure reason.
+4. Anything touching `/apply`: confirm the 국외이전 안내 still renders above the form, the direct link still renders below it, and the `applyMode` fallback still works.
 
 ## Definition of done for handover (target 2026-08-14)
 
-- [ ] All accounts under a shared 럭스로보 address, not a personal one
-- [ ] `docs/RUNBOOK.md` — how to change a date, post a 공지, check 신청 현황, who to call
+- [ ] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`
+- [ ] `docs/RUNBOOK.md` — how to change a date, post a 공지, check 신청 현황, re-measure `embedHeightPx` after editing the 폼, flip `applyMode` to `'link'`, close 접수 (both the config *and* 구글폼 응답 받기), who to call
 - [ ] Successor has personally edited one file and seen it go live, while being watched
-- [ ] 네이버 폼 owned by a shared account, with 신청 data visible to more than one person
+- [ ] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does.
+- [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
+- [ ] **`applyMode: 'link'` tested once**, then switched back to `'embed'`
+- [ ] **국외이전 동의 and 법정대리인 동의 questions present in the 구글폼**, reviewed by a 담당자
+- [ ] Someone owns turning off **응답 받기** on 접수 마감일
