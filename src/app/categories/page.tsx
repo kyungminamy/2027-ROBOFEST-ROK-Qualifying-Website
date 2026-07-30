@@ -1,0 +1,177 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { competition } from "@/config/competition";
+import { CategoryCard } from "@/components/CategoryCard";
+import { PageHeader } from "@/components/PageHeader";
+import { SiteFooter } from "@/components/SiteFooter";
+import { container } from "@/lib/layout";
+
+/* ============================================================================
+ *  종목 안내 (/categories)
+ *
+ *  ★ 이 파일에는 종목 내용이 직접 적혀 있지 않습니다. ★
+ *    모두 config/competition.ts 의 categories 에서 읽어옵니다.
+ *
+ *  구성: 종목 카드 8개(누르면 상세) → 한눈에 비교표
+ *  카드를 먼저 두는 이유: 휴대폰에서는 표를 좌우로 밀어야 보이므로,
+ *  누르기 쉬운 카드가 먼저 나오는 편이 읽기 흐름에 맞습니다.
+ * ========================================================================== */
+
+export const metadata: Metadata = {
+  title: "종목 안내",
+  description: `${competition.shortName}에서 운영하는 ${competition.categories.length}개 종목의 참가 부문, 인원, 키트 제한, 난이도를 한눈에 비교하고 종목별 상세 안내를 확인하세요.`,
+};
+
+/** 비교표 한 칸 */
+function Th({ children }: { children: React.ReactNode }) {
+  return (
+    <th
+      scope="col"
+      className="whitespace-nowrap border-b-2 border-brand-200 px-3 py-2.5 text-left text-sm font-bold text-brand-800"
+    >
+      {children}
+    </th>
+  );
+}
+
+function Td({ children }: { children: React.ReactNode }) {
+  return (
+    <td className="border-b border-brand-100 px-3 py-2.5 align-top text-sm text-ink">
+      {children}
+    </td>
+  );
+}
+
+export default function CategoriesPage() {
+  const { categories } = competition;
+
+  /* 난이도가 '입문'인 종목을 config 에서 골라냅니다.
+     종목이나 난이도를 바꾸면 이 안내도 자동으로 따라 바뀝니다. */
+  const beginnerFriendly = categories.filter((c) => c.difficulty === "입문");
+
+  return (
+    <>
+      <PageHeader
+        title="종목 안내"
+        description={`${categories.length}개 종목을 운영합니다. 팀마다 한 종목을 선택해 참가합니다.`}
+      />
+
+      <main className="flex-1">
+        {/* ------------------------------------------------- 종목 고르기 도움말 */}
+        {beginnerFriendly.length > 0 && (
+          <section className="py-8 sm:py-10">
+            <div className={container}>
+              <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
+                <p className="text-base font-bold text-brand-900">
+                  처음 참가하신다면
+                </p>
+                <p className="mt-2 text-base text-ink">
+                  {beginnerFriendly.map((c) => `${c.name}(${c.nameKo})`).join(", ")}
+                  {" "}
+                  종목이 규칙이 단순해 시작하기 좋습니다.
+                </p>
+                <p className="mt-2 text-sm text-ink-soft">
+                  모든 종목은 경기 중 사람이 로봇을 조종할 수 없습니다. 로봇이
+                  스스로 판단하고 움직여야 합니다. 이것을 자율주행이라고 합니다.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ------------------------------------------------------- 종목 카드 */}
+        <section className="pb-10 sm:pb-14">
+          <div className={container}>
+            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+              종목 목록
+            </h2>
+            <p className="mt-2 text-base text-ink-soft">
+              종목을 누르면 참가 자격과 준비물을 자세히 볼 수 있습니다.
+            </p>
+
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+              {categories.map((category) => (
+                <li key={category.slug}>
+                  <CategoryCard category={category} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* --------------------------------------------------------- 비교표 */}
+        <section className="bg-paper-soft py-10 sm:py-14">
+          <div className={container}>
+            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+              한눈에 비교하기
+            </h2>
+            <p className="mt-2 text-base text-ink-soft">
+              표가 화면보다 넓으면 좌우로 밀어서 보실 수 있습니다.
+            </p>
+
+            {/* ⚠️ 표는 반드시 이 스크롤 상자 안에 두세요.
+                   그러지 않으면 휴대폰에서 페이지 전체가 좌우로 흔들립니다. */}
+            <div className="mt-5 overflow-x-auto rounded-xl border border-brand-200 bg-white">
+              <table className="w-full min-w-[46rem] border-collapse">
+                <caption className="sr-only">
+                  종목별 참가 부문, 최대 인원, 키트 제한, 난이도 비교표
+                </caption>
+                <thead>
+                  <tr>
+                    <Th>종목</Th>
+                    <Th>참가 부문</Th>
+                    <Th>최대 인원</Th>
+                    <Th>키트 제한</Th>
+                    <Th>난이도</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.map((category) => (
+                    <tr key={category.slug}>
+                      <Td>
+                        <Link
+                          href={`/categories/${category.slug}`}
+                          className="font-bold text-brand-700 underline"
+                        >
+                          {category.name}
+                        </Link>
+                        <span className="block text-ink-soft">
+                          {category.nameKo}
+                        </span>
+                      </Td>
+                      <Td>
+                        <ul>
+                          {category.divisions.map((d) => (
+                            <li key={d}>{d}</li>
+                          ))}
+                        </ul>
+                      </Td>
+                      <Td>
+                        <span className="whitespace-nowrap">
+                          학생 {category.maxTeamSize}명
+                        </span>
+                      </Td>
+                      <Td>{category.kitRestriction}</Td>
+                      <Td>
+                        <span className="whitespace-nowrap">
+                          {category.difficulty}
+                        </span>
+                      </Td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="mt-4 text-sm text-ink-soft">
+              팀 구성은 학생과 성인 지도자 1명입니다. 위 인원은 학생 최대
+              인원입니다.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+    </>
+  );
+}

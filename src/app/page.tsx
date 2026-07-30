@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { competition } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Hero } from "@/components/Hero";
@@ -32,7 +33,15 @@ export default function Home() {
               운영 종목 {competition.categories.length}종목
             </h2>
             <p className="mt-2 text-base text-ink-soft">
-              종목별 상세 규정은 추후 안내 페이지에서 제공합니다.
+              종목을 누르면 참가 자격과 준비물을 자세히 볼 수 있습니다.
+            </p>
+            <p className="mt-3">
+              <Link
+                href="/categories"
+                className="text-base font-bold text-brand-700 underline"
+              >
+                종목 비교표 한눈에 보기 →
+              </Link>
             </p>
 
             {/* 휴대폰에서는 한 줄에 1개, 넓은 화면에서는 2개씩 배치합니다 */}
