@@ -123,7 +123,7 @@ export default async function CategoryDetailPage({
         backLabel="종목 안내"
       />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <div className={container}>
           {/* ============================================ 1) 누가 나갈 수 있나 */}
           <Section step={1} title="누가 나갈 수 있나요">

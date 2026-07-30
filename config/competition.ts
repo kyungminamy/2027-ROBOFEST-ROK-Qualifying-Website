@@ -512,6 +512,38 @@ export const competition = {
     /** 사이트 최종 주소 — 도메인이 확정되면 입력하세요 (검색 노출에 사용) */
     siteUrl: '',
   },
+
+  // ==========================================================================
+  //  12. 상단 메뉴 (모든 페이지 맨 위에 나오는 메뉴)
+  //
+  //  ★ 메뉴에 넣을 페이지를 여기서 정합니다. ★
+  //
+  //  【 페이지를 새로 만들었을 때 (메뉴에 보이게 하려면) 】
+  //   1. 아래에서 그 페이지의 enabled 를 false → true 로 바꿉니다
+  //   2. 그리고 이 파일 아래쪽 ExistingRoute 목록에 주소를 추가합니다
+  //
+  //   ⚠️ 2번을 빼먹으면 배포 전에 오류가 나서 알려 줍니다. (안전장치입니다)
+  //      아직 만들지 않은 페이지를 켜면 방문자가 404 오류를 보게 되는데,
+  //      그것을 막기 위한 장치입니다.
+  //
+  //  【 enabled: false 인 항목은 】
+  //   메뉴에 보이지 않습니다. 앞으로 만들 페이지를 미리 적어 둔 것입니다.
+  //   순서를 바꾸고 싶으면 아래 줄 순서를 바꾸면 됩니다.
+  // ==========================================================================
+
+  nav: [
+    { label: '대회 소개', href: '/about', enabled: false },
+    { label: '종목 안내', href: '/categories', enabled: true },
+    { label: '일정', href: '/schedule', enabled: false },
+    { label: '장소', href: '/venue', enabled: false },
+    { label: '자주 묻는 질문', href: '/faq', enabled: false },
+  ],
+
+  /**
+   * 메뉴 오른쪽의 강조 버튼 (참가 신청)
+   * 메뉴가 접혀 있어도 항상 보입니다. 가장 중요한 링크이기 때문입니다.
+   */
+  navCta: { label: '참가 신청', href: '/apply' },
 } as const;
 
 // ============================================================================
@@ -888,6 +920,42 @@ export function applyFormDirectUrl(): string | null {
   } catch {
     return null;
   }
+}
+
+// ----------------------------------------------------------------------------
+//  상단 메뉴 안전장치
+//
+//  ★ 실제로 만들어진 페이지 주소만 아래 목록에 적어 두세요. ★
+//
+//  메뉴에서 어떤 항목을 enabled: true 로 켰는데 그 주소가 이 목록에 없으면,
+//  배포되기 전에 오류가 납니다. 그래서 없는 페이지로 가는 메뉴가
+//  실수로 사이트에 올라가는 일을 막을 수 있습니다.
+//
+//  페이지를 새로 만들면 여기에 한 줄 추가하세요. 예: | '/schedule'
+// ----------------------------------------------------------------------------
+
+/** 지금 실제로 존재하는 페이지 주소 */
+export type ExistingRoute = '/' | '/apply' | '/categories';
+
+/**
+ * 메뉴 한 줄의 형태.
+ *
+ * enabled: true  → 주소가 반드시 위 ExistingRoute 중 하나여야 합니다
+ * enabled: false → 아직 없는 페이지라도 적어 둘 수 있습니다 (메뉴에 안 보임)
+ */
+export type NavItem =
+  | { readonly label: string; readonly href: ExistingRoute; readonly enabled: true }
+  | { readonly label: string; readonly href: string; readonly enabled: false };
+
+/**
+ * 메뉴 목록 — 화면에 쓰이는 값입니다.
+ * ⚠️ 이 줄에서 타입을 확인합니다. 없는 페이지를 켜면 여기서 빌드가 멈춥니다.
+ */
+export const navItems: readonly NavItem[] = competition.nav;
+
+/** 메뉴에 실제로 보여줄 항목만 (enabled: true) */
+export function visibleNavItems(): readonly NavItem[] {
+  return navItems.filter((item) => item.enabled);
 }
 
 /** slug 로 종목 찾기. 없으면 undefined (상세 페이지에서 404 처리) */

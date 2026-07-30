@@ -56,7 +56,7 @@ export default function CategoriesPage() {
         description={`${categories.length}개 종목을 운영합니다. 팀마다 한 종목을 선택해 참가합니다.`}
       />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* ------------------------------------------------- 종목 고르기 도움말 */}
         {beginnerFriendly.length > 0 && (
           <section className="py-8 sm:py-10">

@@ -22,7 +22,7 @@ export default function Home() {
       {/* 1. 대표 영역 — 대회명, 일정, 장소, 남은 날짜 */}
       <Hero />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* 2. 접수 안내 — 접수 전 / 접수 중 / 마감 상태에 따라 바뀝니다 */}
         <RegistrationNotice />
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { competition, formatKoreanDate } from "@/config/competition";
 import { ApplyForm } from "@/components/ApplyForm";
+import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 
@@ -31,24 +31,16 @@ export default function ApplyPage() {
 
   return (
     <>
-      {/* 대표 영역 — 홈으로 돌아갈 길을 반드시 남겨 둡니다 */}
-      <section className="bg-brand-700 py-8 text-white sm:py-12">
-        <div className={container}>
-          <Link
-            href="/"
-            className="text-sm font-bold text-brand-200 sm:text-base"
-          >
-            ← {competition.shortName}
-          </Link>
-          <h1 className="mt-2 text-2xl font-bold sm:text-3xl">참가 신청</h1>
-          <p className="mt-3 text-base sm:text-lg">
-            접수 기간: {formatKoreanDate(registration.opensAt)} ~{" "}
-            {formatKoreanDate(registration.closesAt)}
-          </p>
-        </div>
-      </section>
+      {/* 대표 영역.
+          홈으로 가는 링크는 넣지 않습니다 — 상단 메뉴가 이미 담당합니다. */}
+      <PageHeader
+        title="참가 신청"
+        description={`접수 기간: ${formatKoreanDate(
+          registration.opensAt,
+        )} ~ ${formatKoreanDate(registration.closesAt)}`}
+      />
 
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         {/* ------------------------------------------------- 신청 전 확인 사항 */}
         <section className="py-9 sm:py-12">
           <div className={container}>

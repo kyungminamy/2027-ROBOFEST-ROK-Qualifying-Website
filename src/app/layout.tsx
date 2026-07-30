@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { competition } from "@/config/competition";
+import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
 
 /* ============================================================================
@@ -91,6 +92,17 @@ export default function RootLayout({
       className={`${pretendard.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
+        {/* 키보드로만 이용하는 분이 메뉴를 건너뛰고 본문으로 갈 수 있게 합니다.
+            평소에는 보이지 않고, Tab 키를 누르면 나타납니다. 지우지 마세요. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-base focus:font-bold focus:text-brand-700"
+        >
+          본문으로 바로 가기
+        </a>
+
+        <SiteNav />
+
         {children}
       </body>
     </html>
