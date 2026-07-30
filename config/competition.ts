@@ -534,7 +534,7 @@ export const competition = {
   nav: [
     { label: '대회 소개', href: '/about', enabled: false },
     { label: '종목 안내', href: '/categories', enabled: true },
-    { label: '일정', href: '/schedule', enabled: false },
+    { label: '일정', href: '/schedule', enabled: true },
     { label: '장소', href: '/venue', enabled: false },
     { label: '자주 묻는 질문', href: '/faq', enabled: false },
   ],
@@ -935,7 +935,7 @@ export function applyFormDirectUrl(): string | null {
 // ----------------------------------------------------------------------------
 
 /** 지금 실제로 존재하는 페이지 주소 */
-export type ExistingRoute = '/' | '/apply' | '/categories';
+export type ExistingRoute = '/' | '/apply' | '/categories' | '/schedule';
 
 /**
  * 메뉴 한 줄의 형태.
