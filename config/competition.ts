@@ -248,6 +248,69 @@ export const competition = {
     /** 네이버/카카오 지도 링크 — 확정 후 입력 */
     mapUrl: '',
     parkingNote: '주차 안내는 장소 확정 후 공지 예정입니다.',
+
+    // ------------------------------------------------------------------------
+    //  오시는 길 (장소 페이지 /venue 에 순서대로 표시됩니다)
+    //
+    //  ★ 네 가지 방법의 제목은 항상 화면에 보입니다. ★
+    //    내용을 비워 두면 제목 아래에 '추후 공지'라고만 나옵니다.
+    //    그래서 아직 안 정해진 항목이 있어도 페이지가 어색해지지 않습니다.
+    //
+    //  【 각 항목 설명 】
+    //   · image
+    //     /public 아래 이미지 경로입니다. 예: '/venue/by-plane.jpg'
+    //     비워두면 이미지 없이 설명만 나옵니다.
+    //     이미지를 넣으려면 그 파일을 public/venue/ 폴더에 올리고
+    //     여기에 '/venue/파일이름' 을 적으세요.
+    //     권장: 가로형, 폭 1200px 내외, jpg/png/webp, 용량 500KB 이하.
+    //
+    //   · imageAlt
+    //     화면을 못 보는 사용자에게 읽어 줄 이미지 설명입니다.
+    //     비우면 label(예: '비행기')을 대신 씁니다.
+    //
+    //   · description
+    //     이 방법으로 오는 길 설명입니다. 몇 문장이어도 됩니다.
+    //     비어 있으면 '추후 공지'가 표시됩니다.
+    //
+    //  【 지금 채워도 되는 것 / 기다려야 하는 것 】
+    //   ✅ 비행기(김해국제공항)와 KTX(부산역)는 정확한 건물과 상관없이
+    //      지금 채워도 됩니다. 부산까지 오는 방법은 이미 정해져 있습니다.
+    //   ⚠️ 자가용·대중교통은 정확한 위치가 정해진 뒤에 채우는 편이 안전합니다.
+    //      건물이 바뀌면 길 안내를 처음부터 다시 써야 합니다.
+    //
+    //  ⚠️ key 값(car/transit/plane/ktx)은 바꾸지 마세요. 화면에서 쓰입니다.
+    // ------------------------------------------------------------------------
+
+    directions: [
+      {
+        key: 'car',
+        label: '자가용',
+        image: '',
+        imageAlt: '',
+        description: '',
+      },
+      {
+        key: 'transit',
+        label: '대중교통',
+        image: '',
+        imageAlt: '',
+        description: '',
+      },
+      {
+        key: 'plane',
+        label: '비행기',
+        image: '',
+        imageAlt: '',
+        description: '',
+      },
+      {
+        key: 'ktx',
+        label: 'KTX',
+        image: '',
+        imageAlt: '',
+        description: '',
+      },
+    ],
   },
 
   // ==========================================================================
@@ -531,7 +594,7 @@ export const competition = {
     { label: '대회 소개', href: '/about', enabled: false },
     { label: '종목 안내', href: '/categories', enabled: true },
     { label: '일정', href: '/schedule', enabled: true },
-    { label: '장소', href: '/venue', enabled: false },
+    { label: '장소', href: '/venue', enabled: true },
     { label: '자주 묻는 질문', href: '/faq', enabled: false },
   ],
 
@@ -931,7 +994,7 @@ export function applyFormDirectUrl(): string | null {
 // ----------------------------------------------------------------------------
 
 /** 지금 실제로 존재하는 페이지 주소 */
-export type ExistingRoute = '/' | '/apply' | '/categories' | '/schedule';
+export type ExistingRoute = '/' | '/apply' | '/categories' | '/schedule' | '/venue';
 
 /**
  * 메뉴 한 줄의 형태.
