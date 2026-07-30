@@ -115,10 +115,21 @@ export function ApplyForm() {
           <div className="mt-5 overflow-hidden rounded-xl border border-brand-200 bg-white">
             <iframe
               src={embedUrl}
-              /* 높이는 config 의 embedHeightPx 로 조절합니다.
-                 구글 정책상 자동으로 맞출 수 없습니다. */
-              height={registration.embedHeightPx}
-              className="block w-full"
+              /* 높이는 config 의 embedHeight 에서 가져옵니다.
+                 화면 크기별로 어느 값을 쓸지는 globals.css 의 .form-embed
+                 규칙이 정합니다. 구글 정책상 자동으로 맞출 수 없습니다. */
+              style={
+                {
+                  "--form-h-narrow-phone": `${registration.embedHeight.narrowPhone}px`,
+                  "--form-h-phone": `${registration.embedHeight.phone}px`,
+                  "--form-h-large-phone": `${registration.embedHeight.largePhone}px`,
+                  "--form-h-desktop": `${registration.embedHeight.desktop}px`,
+                } as React.CSSProperties
+              }
+              /* CSS가 아직 적용되지 않은 아주 짧은 순간에도 칸이 찌그러지지
+                 않도록, 가장 큰 값을 기본 높이로 함께 지정합니다. */
+              height={registration.embedHeight.narrowPhone}
+              className="form-embed block w-full"
               /* 폼을 아직 못 읽은 사람에게도 무엇인지 알려 줍니다 */
               title="참가 신청 폼"
               loading="lazy"
