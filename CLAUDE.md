@@ -60,7 +60,17 @@ Rationale for TypeScript over plain JSON for content: a malformed edit fails the
 - Cross-origin rules mean **we could not tell whether a submission saved**, so the site would show 접수 완료 without knowing. A silently lost 신청 means a team cannot compete.
 - The `entry.XXXX` field IDs would be hardcoded, so editing the 구글폼 would require a developer — destroying the one property that made 구글폼 the right choice.
 
-**The real 접수 gate is Google's own "응답 받기" toggle, not our site.** Our date logic only decides what the page *shows*; anyone with the direct form link can submit regardless. So on 10-16, 담당자 must turn off 응답 받기 in the 구글폼 itself. Closing 접수 by editing our config alone does not close 접수.
+**Google's "응답 받기" toggle is the only 접수 gate. The site has none.**
+
+`/apply` shows the form at all times, regardless of `opensAt` / `closesAt`. Those dates are display text only.
+
+This was deliberate (2026-07-30). An earlier version hid the form outside the 접수 period, which protected nothing — the 구글폼 URL is public, so anyone with the link could submit anyway. All it did was create two gates that could disagree, and CLAUDE.md's own rule is that a successor must never have to reconcile two sources of truth. One gate, in one place:
+
+- **To close 접수:** 구글폼 → 응답 탭 → turn off **응답 받기**. Google then renders "더 이상 응답을 받지 않습니다" inside the frame on our page automatically.
+- **Editing `closesAt` does not close 접수.** It only changes the sentence on the page.
+- **Someone must own doing this on 마감일.** It is the one dated manual action in the whole project.
+
+A side benefit: with no date logic, `ApplyForm` needs no JavaScript, so the form renders server-side and works on locked-down school browsers.
 
 ---
 

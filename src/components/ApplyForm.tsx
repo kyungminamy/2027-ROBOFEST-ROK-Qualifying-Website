@@ -1,22 +1,28 @@
-"use client";
-
 import {
   applyFormDirectUrl,
   applyFormEmbedUrl,
   competition,
   formatKoreanDate,
-  hasApplyForm,
-  isRegistrationOpen,
 } from "@/config/competition";
-import { useIsClient } from "@/lib/useIsClient";
 
 /* ============================================================================
  *  참가 신청 — 구글폼을 페이지 안에 넣어 보여줍니다
  *
- *  ★ 왜 'use client' 인가 (지우지 마세요) ★
- *   지금이 접수 기간인지 판단하려면 '오늘'을 알아야 해서
- *   방문자의 브라우저에서 판단합니다.
- *   자세한 이유는 src/lib/useIsClient.ts 의 설명을 보세요.
+ *  ★ 접수 기간이 아니어도 폼은 항상 보입니다. (일부러 이렇게 했습니다) ★
+ *
+ *   예전에는 접수 시작일(9/1) 전에는 폼을 숨겼습니다. 그런데 그 방식은
+ *   실제로 아무것도 막지 못했습니다. 구글폼 주소를 아는 사람은 우리
+ *   사이트를 거치지 않고 언제든 제출할 수 있기 때문입니다.
+ *
+ *   ★★★ 접수를 실제로 열고 닫는 것은 '구글폼의 응답 받기' 설정입니다 ★★★
+ *
+ *    · 접수를 닫으려면 → 구글폼에서 '응답 받기'를 끄세요.
+ *      그러면 이 자리에 구글이 '더 이상 응답을 받지 않습니다'를 보여줍니다.
+ *    · 이 사이트의 날짜(opensAt/closesAt)는 '안내 문구'일 뿐입니다.
+ *      날짜만 바꿔도 접수는 닫히지 않습니다.
+ *
+ *   문 두 개(사이트 날짜 + 구글 설정)가 서로 다르게 말하는 상황을 없애려고
+ *   문을 하나(구글 설정)로 줄였습니다.
  *
  *  ★ 폼 안쪽은 우리가 꾸밀 수 없습니다 ★
  *   구글폼은 다른 사이트(구글)의 화면을 창처럼 끼워 넣는 방식입니다.
@@ -25,32 +31,6 @@ import { useIsClient } from "@/lib/useIsClient";
  *
  *  ★ 주소·높이·안내 문구는 config/competition.ts 에서 바꾸세요 ★
  * ========================================================================== */
-
-/** 접수 상태 — 'pending' 은 아직 브라우저에서 계산이 끝나지 않은 상태 */
-type State = "pending" | "before" | "open" | "closed";
-
-function currentState(now: Date): Exclude<State, "pending"> {
-  const opens = new Date(`${competition.registration.opensAt}T00:00:00+09:00`);
-  if (now < opens) return "before";
-  if (isRegistrationOpen(now)) return "open";
-  return "closed";
-}
-
-/** 안내 상자 — 접수 전/마감/준비 중 상황에서 같은 모양으로 보여줍니다 */
-function NoticeBox({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-7">
-      <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">{title}</h2>
-      <div className="mt-2 text-base text-ink sm:text-lg">{children}</div>
-    </div>
-  );
-}
 
 /** 새 창에서 폼 열기 — 폼이 안 보이는 사람을 위한 최후의 통로 */
 function DirectFormLink({ label }: { label: string }) {
@@ -70,63 +50,8 @@ function DirectFormLink({ label }: { label: string }) {
 }
 
 export function ApplyForm() {
-  const isClient = useIsClient();
-  const state: State = isClient ? currentState(new Date()) : "pending";
-
   const { registration } = competition;
-  const opensAt = formatKoreanDate(registration.opensAt);
-  const closesAt = formatKoreanDate(registration.closesAt);
-
   const embedUrl = applyFormEmbedUrl();
-
-  /* ---------------------------------------------------------- 접수 기간 안내 */
-
-  /* 브라우저 계산 전에는 날짜만 알려 줍니다.
-     이 상태에서 폼을 미리 보여주면, 접수 시작 전에도 폼이 잠깐
-     보였다 사라지는 일이 생깁니다. */
-  if (state === "pending") {
-    return (
-      <NoticeBox title="참가 접수">
-        <p>
-          접수 기간: {opensAt} ~ {closesAt}
-        </p>
-      </NoticeBox>
-    );
-  }
-
-  if (state === "before") {
-    return (
-      <NoticeBox title="접수 예정">
-        <p>{opensAt}부터 참가 접수를 시작합니다.</p>
-        <p className="mt-1 text-sm text-ink-soft">
-          접수가 시작되면 이 페이지에서 바로 신청하실 수 있습니다.
-        </p>
-      </NoticeBox>
-    );
-  }
-
-  if (state === "closed") {
-    return (
-      <NoticeBox title="접수 마감">
-        <p>{closesAt}에 참가 접수가 마감되었습니다.</p>
-        <p className="mt-1 text-sm text-ink-soft">
-          문의사항은 아래 문의처로 연락해 주세요.
-        </p>
-      </NoticeBox>
-    );
-  }
-
-  /* ------------------------------------------------------------- 접수 중 */
-
-  /* 구글폼 주소가 아직 비어 있는 경우.
-     config 의 registration.formUrl 에 주소를 넣으면 폼이 나타납니다. */
-  if (!hasApplyForm() || !embedUrl) {
-    return (
-      <NoticeBox title="접수 링크 준비 중">
-        <p>참가 신청 폼을 준비하고 있습니다. 잠시 후 다시 확인해 주세요.</p>
-      </NoticeBox>
-    );
-  }
 
   return (
     <div>
@@ -163,15 +88,29 @@ export function ApplyForm() {
         </p>
       </div>
 
+      {/* 접수 기간 안내 — 사실만 알려 줍니다. 폼을 막지는 않습니다. */}
       <p className="mt-6 text-base text-ink sm:text-lg">
-        {closesAt}까지 접수합니다.
+        접수 기간: {formatKoreanDate(registration.opensAt)} ~{" "}
+        {formatKoreanDate(registration.closesAt)}
       </p>
       <p className="mt-1 text-sm text-ink-soft">
         종목별 정원제로 조기 마감될 수 있습니다.
       </p>
 
       {/* --------------------------------------------------------- 폼 본체 */}
-      {registration.applyMode === "embed" ? (
+      {!embedUrl ? (
+        /* 구글폼 주소가 아직 비어 있습니다.
+           config 의 registration.formUrl 에 주소를 넣으면 폼이 나타납니다.
+           눌러도 아무 일 안 나는 버튼을 만들지 않기 위한 안전장치입니다. */
+        <div className="mt-5 rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-7">
+          <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+            접수 링크 준비 중
+          </h2>
+          <p className="mt-2 text-base text-ink sm:text-lg">
+            참가 신청 폼을 준비하고 있습니다. 잠시 후 다시 확인해 주세요.
+          </p>
+        </div>
+      ) : registration.applyMode === "embed" ? (
         <>
           <div className="mt-5 overflow-hidden rounded-xl border border-brand-200 bg-white">
             <iframe
