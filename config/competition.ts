@@ -570,13 +570,19 @@ export const competition = {
      * 카카오톡 문의
      *
      *  · searchName  : 카카오톡에서 검색할 이름
+     *
+     *      ⚠️ 이름이 자음으로 끝나는 말로 바뀌면 (예: '럭스로봇')
+     *         꼬리말 문장의 조사도 '를' → '을' 로 바꿔야 자연스럽습니다.
+     *         그 문장은 src/components/SiteFooter.tsx 에 있습니다.
+     *         지금 이름('럭스로보')은 모음으로 끝나므로 '를'이 맞습니다.
+     *
      *  · channelUrl  : 카카오톡 채널 주소 (예: 'http://pf.kakao.com/_xxxxx')
      *                  주소를 넣으면 꼬리말에 누를 수 있는 링크가 생깁니다.
-     *                  비어 있으면 '카카오톡에서 검색' 안내만 나옵니다.
+     *                  비어 있으면 검색 안내 문구만 나옵니다.
      *                  (없는 주소로 링크를 만들지 않기 위한 안전장치입니다)
      */
     kakao: {
-      searchName: 'Luxrobo',
+      searchName: '럭스로보',
       channelUrl: '',
     },
 
