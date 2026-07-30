@@ -114,7 +114,7 @@ Add a Korean comment above every field explaining what it is and what changes if
 
 | | |
 |---|---|
-| 대회명 | (가칭) 2027 ROBOFEST World Championship 국내예선대회 |
+| 대회명 | 2027 ROBOFEST World Championship 국내예선대회 — **the site drops the "(가칭)" prefix** (removed 2026-07-30; it read as unfinished to parents). The name is still not formally confirmed on paper, so if it changes, edit `competition.name`. |
 | 대회 일자 | **2026. 11. 27.(금) ~ 11. 28.(토)** ✅ confirmed · 설치 11. 26.(목) |
 | 장소 | 부산보건대학교 체육관 (예정) |
 | 주최·주관 | 부산광역시교육청 |
