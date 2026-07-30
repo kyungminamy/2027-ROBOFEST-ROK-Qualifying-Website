@@ -122,14 +122,15 @@ Add a Korean comment above every field explaining what it is and what changes if
 | 공식 예선 여부 | ✅ 공식 예선 (official qualifier) — confirmed |
 | 참가 대상 | 전국 초·중·고 — Junior(초5~중2) / Senior(중3~고2) |
 | 참가 규모 | 100팀 내외 (학생 400여 명, 총 600여 명) |
-| 접수 기간 | 2026. 9. 1.(화) ~ **10. 16.(금)** ⚠️ 마감일 미확정 — see below |
+| 접수 기간 | 2026. 9. 1.(화) ~ **10. 16.(금)** ✅ confirmed 2026-07-30 |
 | 참가비 | **무료** (부산광역시교육청 예산) |
 | 2027 세계대회 | **2027. 5. 서울 광운대학교** — Seoul, NOT Busan |
 
 **⚠️ Unconfirmed, do not present as settled:**
-- 접수 마감 could be 10/30 instead of 10/16. One-line change in the config.
 - Korea's 2027 quota per 종목 is unknown. **Never state a number of teams that will advance.**
 - 부산보건대학교 is 예정, not contracted. Word it as such until confirmed.
+
+**Resolved since first writing:** 접수 마감 is **10/16, confirmed 2026-07-30** — the 10/30 alternative was dropped. It may now be stated as a fixed date.
 
 ---
 

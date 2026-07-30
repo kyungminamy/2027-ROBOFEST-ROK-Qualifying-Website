@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { competition, visibleNavItems } from "@/config/competition";
+import { competition } from "@/config/competition";
 import { container } from "@/lib/layout";
 
 /* ============================================================================
@@ -32,38 +31,11 @@ export function SiteFooter() {
           {competition.shortName}
         </p>
 
-        {/* ★ 꼬리말 메뉴 (지우지 마세요) ★
-            상단 메뉴가 접혀 있거나 어떤 이유로 열리지 않아도,
-            여기서는 항상 모든 페이지로 갈 수 있습니다. */}
-        <nav aria-label="꼬리말 메뉴" className="mt-4">
-          <ul className="flex flex-wrap gap-x-4 gap-y-2">
-            <li>
-              <Link href="/" className="text-sm text-brand-200 sm:text-base">
-                홈
-              </Link>
-            </li>
-            {visibleNavItems().map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-sm text-brand-200 sm:text-base"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <Link
-                href={competition.navCta.href}
-                className="text-sm font-bold text-white sm:text-base"
-              >
-                {competition.navCta.label}
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        {/* 꼬리말에는 메뉴를 두지 않습니다.
+            상단 메뉴가 자바스크립트 없이도 열리므로 (SiteNav 참고)
+            같은 링크를 아래에 한 번 더 둘 필요가 없습니다. */}
 
-        <dl className="mt-6 space-y-2.5 border-t border-brand-800 pt-5">
+        <dl className="mt-5 space-y-2.5">
           <OrgRow label="주최·주관" value={competition.host} />
           <OrgRow label="운영·공인" value={competition.operators.join(" · ")} />
         </dl>
