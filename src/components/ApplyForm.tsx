@@ -130,13 +130,36 @@ export function ApplyForm() {
 
   return (
     <div>
-      {/* ⚠️ 법적으로 필요한 안내입니다. 폼보다 먼저 보여야 합니다. */}
+      {/* ⚠️ 법적으로 필요한 안내입니다. 폼보다 먼저 보여야 합니다.
+             문구는 config/competition.ts 에서 바꾸세요.
+             폼 마지막의 동의 항목과 내용이 어긋나지 않게 같이 고치세요. */}
       <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
-        <p className="text-sm font-bold text-brand-900 sm:text-base">
-          개인정보 처리 안내
-        </p>
-        <p className="mt-2 text-sm text-ink sm:text-base">
-          {registration.privacyNotice}
+        <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+          신청 전 안내
+        </h3>
+
+        <dl className="mt-3 space-y-3">
+          <div>
+            <dt className="text-sm font-bold text-brand-700 sm:text-base">
+              개인정보 처리
+            </dt>
+            <dd className="mt-1 text-sm text-ink sm:text-base">
+              {registration.privacyNotice}
+            </dd>
+          </div>
+
+          <div>
+            <dt className="text-sm font-bold text-brand-700 sm:text-base">
+              촬영 · 초상권
+            </dt>
+            <dd className="mt-1 text-sm text-ink sm:text-base">
+              {registration.portraitRightsNotice}
+            </dd>
+          </div>
+        </dl>
+
+        <p className="mt-3 border-t border-brand-200 pt-3 text-sm text-ink-soft">
+          {registration.consentNoticeFooter}
         </p>
       </div>
 
