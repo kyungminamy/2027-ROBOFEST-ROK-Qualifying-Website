@@ -143,6 +143,54 @@ time,
 }
 
 /* ==========================================================================
+ *  첫 화면 배경 사진 (.hero-photo)
+ *
+ *  ★ 사진 파일은 config/competition.ts 의 heroImage 에서 정합니다. ★
+ *    이 파일은 '사진 위에 어떻게 어두운 막을 씌울지'만 담당합니다.
+ *
+ *  ★★★ 어두운 막(overlay)을 지우지 마세요 ★★★
+ *   사진 위에 흰 글자를 올리기 때문입니다. 막이 없으면 밝은 부분에서
+ *   글자가 읽히지 않습니다. 규정상 흰 글자는 배경과 4.5배 이상 차이가
+ *   나야 합니다. 지금 값은 그 기준을 넘도록 맞춰 둔 것입니다.
+ *
+ *   사진을 바꿨는데 글자가 잘 안 보이면 아래 0.92 / 0.78 숫자를
+ *   1에 가깝게 올리세요. (1 = 완전히 불투명한 남색)
+ * ========================================================================== */
+.hero-photo {
+  /* 사진을 못 불러왔을 때 남는 바탕색 (글자는 계속 읽힙니다) */
+  background-color: var(--color-brand-900);
+  background-image:
+    linear-gradient(
+      100deg,
+      rgb(14 37 71 / 0.95) 0%,
+      rgb(14 37 71 / 0.9) 45%,
+      rgb(14 37 71 / 0.74) 100%
+    ),
+    var(--hero-image-small);
+  background-size: cover;
+  /* 어느 부분을 보여줄지는 config 의 heroImage.positionSmall 이 정합니다 */
+  background-position: var(--hero-pos-small, center);
+  background-repeat: no-repeat;
+}
+
+/* 화면이 넓어지면 고화질 사진으로 바꿉니다.
+   좁은 화면에서는 위의 작은 파일만 내려받습니다. */
+@media (min-width: 640px) {
+  .hero-photo {
+    background-image:
+      linear-gradient(
+        100deg,
+        rgb(14 37 71 / 0.94) 0%,
+        rgb(14 37 71 / 0.86) 45%,
+        rgb(14 37 71 / 0.66) 100%
+      ),
+      var(--hero-image-wide);
+    /* config 의 heroImage.positionWide */
+    background-position: var(--hero-pos-wide, center);
+  }
+}
+
+/* ==========================================================================
  *  등장 움직임 — 첫 화면에서 딱 한 번만
  *
  *  ★ 왜 '이미 보이는 상태'에서 시작하나 (중요) ★
