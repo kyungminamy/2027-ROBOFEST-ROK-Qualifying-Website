@@ -104,7 +104,9 @@ Checklist when adding anything:
 
 **The form must degrade to a plain link.** Keep the `registration.applyMode` switch (`'embed'` / `'link'`). If the iframe misbehaves — blocked on a school network, unusable on some phone, Google changes something — a non-technical person changes one word and applicants get a big button to the form instead. Test it once before 09-01. This is the most important safety valve in the project, because it needs no developer.
 
-**Never let a broken link be the failure mode.** If `formUrl` is empty the page must say 준비 중, never render a dead button. And the `/apply` page always shows a direct "새 창에서 열기" link *underneath* the iframe, so an applicant whose network blocks the frame can still reach the form.
+**Never let a broken link be the failure mode.** If `formUrl` is empty the page must say 준비 중, never render a dead button. And the `/apply` page always shows a direct "새 창에서 열기" link *above* the iframe, so an applicant whose network blocks the frame can still reach the form.
+
+It sat *underneath* the iframe until 2026-07-31. That put it in the worst possible place: someone whose school network blocks Google sees an empty box roughly a screen and a half tall, and had to scroll past all of it to find the one control that still worked. The person who most needs the escape hatch found it last. Above the frame, they see it before they ever hit the blank space. **Keep it above the iframe** — do not "fix" this back.
 
 Add a Korean comment above every field explaining what it is and what changes if you edit it.
 
@@ -159,7 +161,7 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 1. Skim `config/competition.ts` — it is the source of truth for competition facts, not this file.
 2. If asked to add a date or fact, put it in the config and reference it. Do not inline it.
 3. If a task would require a database, login, file uploads, email sending, cron, or an admin UI, stop and say so — out of scope by design; explain the unattended-failure reason.
-4. Anything touching `/apply`: confirm the 국외이전 안내 still renders above the form, the direct link still renders below it, and the `applyMode` fallback still works.
+4. Anything touching `/apply`: confirm the 국외이전 안내 still renders above the form, the direct link still renders above the iframe (moved there 2026-07-31 — see the 구글폼 section), and the `applyMode` fallback still works.
 
 ## Definition of done for handover (target 2026-08-14)
 

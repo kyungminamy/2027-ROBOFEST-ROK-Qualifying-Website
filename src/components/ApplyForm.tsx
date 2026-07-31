@@ -112,6 +112,24 @@ export function ApplyForm() {
         </div>
       ) : registration.applyMode === "embed" ? (
         <>
+          {/* ★ 지우지 마세요 ★
+              학교 인터넷이 구글을 막아 두면 아래 폼이 빈 칸으로 보입니다.
+              그런 사람에게 남는 유일한 통로입니다.
+
+              ℹ️ 2026-07-31: 이 버튼을 폼 '아래'에서 '위'로 옮겼습니다.
+                 폼이 막혀 빈 칸만 보이는 사람은 화면을 한참 내려야
+                 버튼을 찾을 수 있었습니다. 정작 이 버튼이 가장 필요한
+                 사람이 가장 늦게 발견하는 구조였습니다. */}
+          <div className="mt-5">
+            <p className="text-sm text-ink-soft">
+              아래 신청 폼이 보이지 않거나 작성이 어려우시면, 이 버튼으로 새
+              창에서 작성해 주세요.
+            </p>
+            <div className="mt-3">
+              <DirectFormLink label="새 창에서 신청 폼 열기" />
+            </div>
+          </div>
+
           <div className="mt-5 overflow-hidden rounded-xl border border-brand-200 bg-white">
             <iframe
               src={embedUrl}
@@ -136,19 +154,6 @@ export function ApplyForm() {
             >
               참가 신청 폼을 불러올 수 없습니다.
             </iframe>
-          </div>
-
-          {/* ★ 지우지 마세요 ★
-              학교 인터넷이 구글을 막아 두면 위 폼이 빈 칸으로 보입니다.
-              그런 사람에게 남는 유일한 통로입니다. */}
-          <div className="mt-5">
-            <p className="text-sm text-ink-soft">
-              위에 신청 폼이 보이지 않거나 작성이 어려우시면, 아래 버튼으로 새
-              창에서 작성해 주세요.
-            </p>
-            <div className="mt-3">
-              <DirectFormLink label="새 창에서 신청 폼 열기" />
-            </div>
           </div>
         </>
       ) : (
