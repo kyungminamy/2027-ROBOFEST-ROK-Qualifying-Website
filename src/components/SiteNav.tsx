@@ -51,16 +51,27 @@ export function SiteNav() {
     "flex min-h-[44px] items-center rounded-lg px-3 text-base font-bold";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-800 bg-brand-700 text-white">
+    <header className="sticky top-0 z-50 border-b border-brand-200 bg-paper-soft">
       <div className={container}>
         {/* 휴대폰 52px / 넓은 화면 64px */}
         <div className="flex h-[52px] items-center justify-between gap-2 sm:h-16">
-          {/* 사이트 이름 = 홈으로 가는 링크 */}
-          <Link
-            href="/"
-            className="flex min-h-[44px] items-center text-sm font-bold leading-tight sm:text-base"
-          >
-            {competition.shortName}
+          {/* 로고 = 홈으로 가는 링크
+              config 의 logoSrc 가 비어 있으면 대회 이름 글자로 대신합니다.
+              (경로가 잘못돼도 깨진 이미지가 뜨지 않게 하기 위함) */}
+          <Link href="/" className="flex min-h-[44px] items-center">
+            {competition.logoSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다.
+              <img
+                src={competition.logoSrc}
+                alt={competition.shortName}
+                decoding="async"
+                className="block h-7 w-auto sm:h-9"
+              />
+            ) : (
+              <span className="text-sm font-bold leading-tight text-brand-800 sm:text-base">
+                {competition.shortName}
+              </span>
+            )}
           </Link>
 
           <div className="flex items-center gap-1.5">
@@ -76,8 +87,8 @@ export function SiteNav() {
                       }
                       className={`${linkBase} ${
                         isCurrent(pathname, item.href)
-                          ? "bg-brand-800 text-white"
-                          : "text-brand-100"
+                          ? "bg-brand-100 text-brand-900"
+                          : "text-brand-700 hover:bg-brand-50"
                       }`}
                     >
                       {item.label}
@@ -93,7 +104,7 @@ export function SiteNav() {
               aria-current={
                 isCurrent(pathname, navCta.href) ? "page" : undefined
               }
-              className="flex min-h-[44px] items-center rounded-lg bg-white px-3 text-sm font-bold text-brand-700 sm:text-base"
+              className="flex min-h-[44px] items-center rounded-lg bg-brand-700 px-3 text-sm font-bold text-white sm:text-base"
             >
               {navCta.label}
             </Link>
@@ -103,7 +114,7 @@ export function SiteNav() {
               <details ref={menuRef} className="relative sm:hidden">
                 <summary
                   /* list-none: 삼각형 기본 표시를 없앱니다 */
-                  className="flex min-h-[44px] cursor-pointer list-none items-center rounded-lg px-3 text-sm font-bold text-white"
+                  className="flex min-h-[44px] cursor-pointer list-none items-center rounded-lg px-3 text-sm font-bold text-brand-800"
                   aria-label="메뉴 열기"
                 >
                   메뉴

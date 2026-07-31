@@ -45,6 +45,10 @@ export const competition = {
   /** 짧은 이름 — 메뉴, 브라우저 탭 제목 등에 사용 */
   shortName: '2027 ROBOFEST 국내예선대회',
 
+  // 상단 메뉴에 표시할 로고 이미지. public/ 폴더에 있는 파일 경로.
+  // 비워두면 로고 대신 대회 이름(shortName)이 글자로 표시됩니다. (깨진 이미지 방지)
+  logoSrc: '/robofest-logo.png',
+
   /** 주최·주관 기관 */
   host: '부산광역시교육청',
 
