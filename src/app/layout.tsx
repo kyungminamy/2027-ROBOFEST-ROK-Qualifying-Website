@@ -72,8 +72,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  // 휴대폰 주소창 색상 — 브랜드 파란색(brand-700)과 동일하게 맞춥니다
-  themeColor: "#1f4b74",
+  // 휴대폰 주소창 색상 — 브랜드 슬레이트색(brand-700)과 동일하게 맞춥니다
+  // ★ globals.css 의 --color-brand-700 을 바꾸면 이 값도 같이 바꿔야 합니다 ★
+  themeColor: "#47596a",
 };
 
 export default function RootLayout({

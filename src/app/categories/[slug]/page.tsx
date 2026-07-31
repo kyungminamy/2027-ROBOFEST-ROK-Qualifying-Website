@@ -66,7 +66,9 @@ function Section({
   return (
     <section className="border-t border-brand-100 py-8 first:border-t-0 sm:py-10">
       <h2 className="flex items-baseline gap-2 text-xl font-bold text-brand-900 sm:text-2xl">
-        <span className="text-base text-brand-500 sm:text-lg">{step}</span>
+        {/* brand-500 은 흰 배경에서 대비가 4.0:1 이라 규정(4.5:1)에 미달합니다.
+            한 단계 진한 brand-600(5.5:1)을 씁니다. 색 팔레트는 건드리지 마세요. */}
+        <span className="text-base text-brand-600 sm:text-lg">{step}</span>
         {title}
       </h2>
       <div className="mt-4">{children}</div>
