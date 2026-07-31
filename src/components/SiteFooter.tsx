@@ -52,9 +52,12 @@ export function SiteFooter() {
 
         {/* ------------------------------------------------------------ 문의처 */}
         <div className="mt-8">
-          <p className="text-xs font-bold uppercase tracking-wider text-brand-200">
-            문의
-          </p>
+          {/* ★ 아래 항목들보다 크게 유지하세요 ★
+                 이 글자는 아래 목록(카카오톡·이메일·전화)이 무엇에 대한
+                 것인지 알려 주는 제목입니다. 아래 항목이 text-sm/base 이므로
+                 제목은 한 단계 위인 text-base/lg 를 씁니다.
+                 제목이 내용보다 작으면 제목으로 보이지 않습니다. */}
+          <p className="text-base font-bold text-white sm:text-lg">문의</p>
 
           <dl className="mt-3 space-y-3">
             <Row label="카카오톡">
