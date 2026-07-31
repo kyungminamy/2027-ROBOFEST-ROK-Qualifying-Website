@@ -54,10 +54,12 @@ export default function ApplyPage() {
                   참가 대상
                 </dt>
                 <dd className="mt-2 text-base text-ink">
+                  {/* ⚠️ 2026-07-31: '초등학교 4학년 ~ 중학교 2학년
+                         (RoboParade 전용)' 줄을 없앴습니다.
+                         국내예선에서는 초4 이하를 받지 않습니다. */}
                   <ul className="ml-5 list-disc space-y-1 marker:text-brand-300">
                     <li>Junior 부문 — {eligibility.junior}</li>
                     <li>Senior 부문 — {eligibility.senior}</li>
-                    <li>{eligibility.expandedJunior}</li>
                   </ul>
                 </dd>
               </div>

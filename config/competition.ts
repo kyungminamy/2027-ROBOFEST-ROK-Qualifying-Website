@@ -523,8 +523,9 @@ export const competition = {
       name: 'RoboParade',
       nameKo: '로보퍼레이드',
       summary: '장식한 자율주행 로봇이 정해진 경로를 행진하는 창의·예술 종목',
-      // ⚠️ 초4까지 참가 가능한 유일한 종목입니다 (Expanded Junior)
-      divisions: ['Expanded Junior (초4~중2)'],
+      // ⚠️ 2026-07-31: 예전에는 'Expanded Junior (초4~중2)' 였습니다.
+      //    국내예선에서는 초4 이하를 받지 않기로 해서 Junior 로 맞췄습니다.
+      divisions: ['Junior'],
       maxTeamSize: 5,
       kitRestriction: '제한 없음',
       isWorldQualifier: false,
@@ -568,7 +569,12 @@ export const competition = {
     /** 학년 구분 — 미국 기준 학년을 한국 학제로 환산한 값 */
     junior: '초등학교 5학년 ~ 중학교 2학년',
     senior: '중학교 3학년 ~ 고등학교 2학년',
-    expandedJunior: '초등학교 4학년 ~ 중학교 2학년 (RoboParade 전용)',
+    /* ⚠️ 2026-07-31: 'expandedJunior'(초4~중2, RoboParade 전용) 항목을
+       없앴습니다. 국내예선에서는 초등학교 4학년 이하를 받지 않기로 했습니다.
+       RoboParade도 다른 종목과 같이 Junior(초5~중2) 기준을 씁니다.
+       ★ 초4 이하를 다시 받기로 하면 이 항목을 되살리고,
+         categories 의 RoboParade divisions 와 divisionGradeRange 도
+         함께 되돌려야 합니다. */
 
     /** 참가 규정 요약 — 안내 페이지에 목록으로 표시됩니다 */
     rules: [
@@ -918,7 +924,7 @@ export const categoryDetails: Record<CategorySlug, CategoryDetail> = {
   roboparade: {
     whatItIs: [
       '예쁘게 꾸민 로봇이 바닥의 검은 선을 따라 행진하는 종목입니다. 앞에 있는 로봇을 감지하면 멈추고, 길이 비면 다시 출발합니다.',
-      '초등학교 4학년부터 참가할 수 있는 유일한 종목입니다. 만들기와 꾸미기를 좋아하는 학생에게 잘 맞습니다.',
+      '만들기와 꾸미기를 좋아하는 학생에게 잘 맞는 입문 종목입니다.',
     ],
     howItRuns: [
       '12분씩 2번 행진합니다. 한 번은 시계 방향, 한 번은 반대 방향으로 돕니다.',
@@ -1135,13 +1141,12 @@ export function findCategory(slug: string): Category | undefined {
 /**
  * 부문 이름 → 학년 범위 안내 문구
  *
- * 'Junior', 'Junior Classic', 'Expanded Junior (초4~중2)' 처럼
+ * 'Junior', 'Junior Classic', 'Junior Unlimited' 처럼
  * 부문 이름이 여러 형태여도 학년 범위를 찾아 줍니다.
  * eligibility 의 학년 범위를 바꾸면 모든 종목 페이지에 함께 반영됩니다.
  */
 export function divisionGradeRange(division: string): string | null {
   const { eligibility } = competition;
-  if (division.includes('Expanded')) return eligibility.expandedJunior;
   if (division.includes('Junior')) return eligibility.junior;
   if (division.includes('Senior')) return eligibility.senior;
   return null;
