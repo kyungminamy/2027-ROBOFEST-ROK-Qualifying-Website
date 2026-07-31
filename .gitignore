@@ -39,6 +39,9 @@ yarn-error.log*
 # claude code — 개인 로컬 설정 (사람마다 다름, 공유 불필요)
 .claude/settings.local.json
 
+# impeccable(디자인 도구)이 만드는 임시 기록 — 공유할 내용이 아닙니다
+.impeccable/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

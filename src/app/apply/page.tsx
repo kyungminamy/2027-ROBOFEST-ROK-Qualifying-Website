@@ -42,39 +42,47 @@ export default function ApplyPage() {
 
       <main id="main" className="flex-1">
         {/* ------------------------------------------------- 신청 전 확인 사항 */}
-        <section className="py-9 sm:py-12">
+        <section className="py-12 sm:py-16">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">
               신청 전 확인해 주세요
             </h2>
 
-            <dl className="mt-5 space-y-4">
-              <div>
-                <dt className="text-base font-bold text-brand-700">참가 대상</dt>
-                <dd className="mt-1 text-base text-ink">
-                  <ul className="space-y-1">
-                    <li>· Junior 부문 — {eligibility.junior}</li>
-                    <li>· Senior 부문 — {eligibility.senior}</li>
-                    <li>· {eligibility.expandedJunior}</li>
+            <dl className="mt-7">
+              <div className="border-t border-brand-100 py-5 first:border-t-0 first:pt-0">
+                <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
+                  참가 대상
+                </dt>
+                <dd className="mt-2 text-base text-ink">
+                  <ul className="ml-5 list-disc space-y-1 marker:text-brand-300">
+                    <li>Junior 부문 — {eligibility.junior}</li>
+                    <li>Senior 부문 — {eligibility.senior}</li>
+                    <li>{eligibility.expandedJunior}</li>
                   </ul>
                 </dd>
               </div>
 
-              <div>
-                <dt className="text-base font-bold text-brand-700">참가비</dt>
-                <dd className="mt-1 text-base text-ink">
+              <div className="border-t border-brand-100 py-5">
+                <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
+                  참가비
+                </dt>
+                {/* 무료라는 사실은 지도교사가 가장 먼저 확인하는 정보라
+                    한 단계 크고 진하게 보여 줍니다. */}
+                <dd className="mt-2 text-base font-bold text-brand-900 sm:text-lg">
                   {feeKrw === 0
                     ? `무료입니다. ${competition.host} 예산으로 운영됩니다.`
                     : `${feeKrw.toLocaleString("ko-KR")}원`}
                 </dd>
               </div>
 
-              <div>
-                <dt className="text-base font-bold text-brand-700">참가 규정</dt>
-                <dd className="mt-1 text-base text-ink">
-                  <ul className="space-y-1.5">
+              <div className="border-t border-brand-100 py-5">
+                <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
+                  참가 규정
+                </dt>
+                <dd className="mt-2 text-base text-ink">
+                  <ul className="ml-5 list-disc space-y-2 marker:text-brand-300">
                     {eligibility.rules.map((rule) => (
-                      <li key={rule}>· {rule}</li>
+                      <li key={rule}>{rule}</li>
                     ))}
                   </ul>
                 </dd>
@@ -84,7 +92,7 @@ export default function ApplyPage() {
         </section>
 
         {/* ------------------------------------------------------- 신청 폼 */}
-        <section className="bg-paper-soft py-9 sm:py-12">
+        <section className="bg-paper-soft py-12 sm:py-16">
           <div className={container}>
             <ApplyForm />
           </div>

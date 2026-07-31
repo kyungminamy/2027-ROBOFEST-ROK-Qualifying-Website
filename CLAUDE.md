@@ -4,6 +4,8 @@ Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-K
 
 **This file is the single set of instructions for this project.** Do not add a second one — no `AGENTS.md`, no `.cursorrules`, no `CONTRIBUTING.md` full of build rules. `create-next-app` generates an `AGENTS.md`; it was deleted deliberately. If two instruction files disagree, a successor with no one to ask has no way to tell which is authoritative — so there is only ever one. Corrections and new conventions get edited **into this file**.
 
+**The one exception, added 2026-07-31: `PRODUCT.md` and `DESIGN.md`.** They are context for the Impeccable design tooling (`npx impeccable`, installed into `.claude/`) — `PRODUCT.md` records who the users are and what must not be fabricated; `DESIGN.md` records what the current look actually is (colors, type, spacing) so a later redesign knows what it is replacing. They hold **no build rules and no instructions**, and they are not a second authority: **where they and this file disagree, this file wins.** They exist because the design tooling reads them; if that tooling is ever removed, delete both with it. Facts in them are copies — the live source of truth is still `config/competition.ts`, and the live colors are still `src/app/globals.css`.
+
 ---
 
 ## The one constraint that governs every decision

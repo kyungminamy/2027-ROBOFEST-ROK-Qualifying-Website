@@ -73,9 +73,39 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   // 휴대폰 주소창 색상 — 화면 맨 위에 있는 상단 메뉴 띠 색과 맞춥니다
-  // ★ globals.css 의 --color-paper-soft 를 바꾸면 이 값도 같이 바꿔야 합니다 ★
-  themeColor: "#f1efea",
+  // ★ 상단 메뉴는 흰색입니다. 메뉴 색을 바꾸면 이 값도 같이 바꾸세요 ★
+  themeColor: "#ffffff",
 };
+
+/* ============================================================================
+ *  디자인 방향 계약 (design direction contract)
+ *
+ *  이 사이트를 왜 이렇게 생기게 만들었는지 적어 둔 메모입니다.
+ *  화면에는 보이지 않고, 페이지 소스에만 남습니다.
+ *  디자인을 크게 바꿀 때 이 메모를 먼저 읽고, 바꿨으면 같이 고치세요.
+ * ========================================================================== */
+const DIRECTION_CONTRACT = `<!--
+THESIS: Owns instant recognition as an official robotics qualifier. Refuses an
+invented visual world: offered a rolled direction twice, the user took the
+category standard both times, so convention is the commitment, played straight.
+
+OWN-WORLD: Competition navy (brand-900 ground, brand-700 structure) with a
+single signal orange (accent-600) reserved for the primary action and the open
+state. White cards, 1px navy-tinted rules, drawn SVG icons, Pretendard 400/700,
+tabular numerals. No photography exists for this event and none is invented.
+
+STORY: A teacher who has never heard of Robofest learns what it is, believes it
+is official and free, and reaches the 구글폼 on /apply.
+
+FIRST VIEWPORT: Navy field with a faint 44px grid. 대회명 large, then date and
+venue as a bordered meta row, then two buttons: orange 참가 신청, outlined
+종목 안내. 주최·주관 sits below as a credential strip, never as an eyebrow.
+
+FORM: category canon (standing exit), outside the grounded list; seed c2a062bf.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the
+finish review, the verdict, and DESIGN.md
+-->`;
 
 export default function RootLayout({
   children,
@@ -93,11 +123,15 @@ export default function RootLayout({
       className={`${pretendard.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
+        {/* 위에 적어 둔 디자인 방향 메모를 페이지 소스에 남깁니다.
+            화면에는 아무것도 보이지 않습니다. */}
+        <div hidden dangerouslySetInnerHTML={{ __html: DIRECTION_CONTRACT }} />
+
         {/* 키보드로만 이용하는 분이 메뉴를 건너뛰고 본문으로 갈 수 있게 합니다.
             평소에는 보이지 않고, Tab 키를 누르면 나타납니다. 지우지 마세요. */}
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-base focus:font-bold focus:text-brand-700"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-[60] focus:rounded-lg focus:bg-accent-600 focus:px-4 focus:py-2 focus:text-base focus:font-bold focus:text-white"
         >
           본문으로 바로 가기
         </a>

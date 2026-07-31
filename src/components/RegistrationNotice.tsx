@@ -8,6 +8,7 @@ import {
 } from "@/config/competition";
 import { container } from "@/lib/layout";
 import { useIsClient } from "@/lib/useIsClient";
+import { ArrowRight } from "@/components/icons";
 
 /* ============================================================================
  *  접수 안내 — 접수 시작 전 / 접수 중 / 마감 세 가지 상태
@@ -30,7 +31,7 @@ type State = "pending" | "before" | "open" | "closed";
 /**
  * 신청 페이지(/apply)로 가는 버튼.
  *
- * 접수 중에는 진한 버튼(solid), 그 외에는 테두리 버튼(outline)입니다.
+ * 접수 중에는 주황색 버튼(solid), 그 외에는 테두리 버튼(outline)입니다.
  * 색으로도 '지금 신청할 수 있는지'를 구분해 줍니다.
  */
 function ApplyLink({
@@ -41,15 +42,16 @@ function ApplyLink({
   variant: "solid" | "outline";
 }) {
   const base =
-    "inline-flex w-full items-center justify-center rounded-lg px-6 py-4 text-base font-bold sm:w-auto sm:text-lg";
+    "inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg px-7 text-base font-bold transition-colors sm:w-auto sm:text-lg";
   const style =
     variant === "solid"
-      ? "bg-brand-700 text-white"
-      : "border-2 border-brand-300 bg-white text-brand-700";
+      ? "bg-accent-600 text-white shadow-lg shadow-accent-600/20 hover:bg-accent-700"
+      : "border-2 border-brand-200 bg-paper text-brand-700 hover:border-brand-400";
 
   return (
     <Link href="/apply" className={`${base} ${style}`}>
       {label}
+      <ArrowRight className="h-5 w-5" />
     </Link>
   );
 }
@@ -81,21 +83,19 @@ export function RegistrationNotice() {
      실제로 신청할 수 있는 '접수 중'에만 상자와 진한 버튼을 씁니다. */
 
   return (
-    <section className="py-10 sm:py-14">
+    <section className="py-14 sm:py-20">
       <div className={container}>
         {state === "pending" && (
           /* 브라우저 계산 전 / 자바스크립트가 꺼진 경우에도
              '언제부터 언제까지'라는 사실은 그대로 보여 줍니다. */
           <div>
-            <h2 className="text-lg font-bold text-brand-900 sm:text-xl">
-              참가 접수
-            </h2>
-            <p className="mt-1 text-base text-ink">
+            <h2 className="text-xl text-brand-900 sm:text-2xl">참가 접수</h2>
+            <p className="tabular mt-2 text-base text-ink sm:text-lg">
               접수 기간: {opensAt} ~ {closesAt}
             </p>
             {/* 자바스크립트가 꺼진 브라우저에서도 신청 페이지로 갈 수
                 있어야 합니다. 이 상태에서 유일한 통로입니다. */}
-            <div className="mt-4">
+            <div className="mt-5">
               <ApplyLink label="참가 자격 · 신청 안내" variant="outline" />
             </div>
           </div>
@@ -103,10 +103,8 @@ export function RegistrationNotice() {
 
         {state === "before" && (
           <div>
-            <h2 className="text-lg font-bold text-brand-900 sm:text-xl">
-              접수 예정
-            </h2>
-            <p className="mt-1 text-base text-ink">
+            <h2 className="text-xl text-brand-900 sm:text-2xl">접수 예정</h2>
+            <p className="tabular mt-2 text-base text-ink sm:text-lg">
               참가 접수는 {opensAt}에 시작합니다.
             </p>
 
@@ -118,7 +116,7 @@ export function RegistrationNotice() {
                 다만 글씨는 '신청하기'가 아니라 '안내'입니다.
                 아직 신청을 받지 않으므로, 눌렀을 때 폼이 나오는 것처럼
                 보이면 안 됩니다. */}
-            <div className="mt-4">
+            <div className="mt-5">
               <ApplyLink label="참가 자격 · 신청 안내" variant="outline" />
             </div>
           </div>
@@ -128,40 +126,46 @@ export function RegistrationNotice() {
           /* ★ 접수 기간에만 나오는 화면입니다 ★
              실제로 신청할 수 있는 유일한 기간이므로, 첫 화면에서
              가장 눈에 띄어야 합니다. 상자와 진한 버튼을 빼지 마세요. */
-          <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-7">
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+          <div className="overflow-hidden rounded-2xl border-2 border-accent-200 bg-accent-50">
+            {/* 지금 접수 중이라는 것을 색과 글자로 함께 알립니다 */}
+            <p className="bg-accent-600 px-6 py-2.5 text-sm font-bold text-white">
               접수 중
-            </h2>
-            <p className="mt-2 text-base text-ink sm:text-lg">
-              {closesAt}까지 접수합니다.
-            </p>
-            <p className="mt-1 text-sm text-ink-soft">
-              종목별 정원제로 조기 마감될 수 있습니다.
             </p>
 
-            <div className="mt-5">
-              <ApplyLink label="참가 신청하기" variant="solid" />
+            <div className="p-6 sm:p-8">
+              <h2 className="text-2xl text-brand-900 sm:text-3xl">
+                지금 참가 신청할 수 있습니다
+              </h2>
+              <p className="tabular mt-2 text-base text-ink sm:text-lg">
+                {closesAt}까지 접수합니다.
+              </p>
+              <p className="mt-1 text-sm text-ink-soft">
+                종목별 정원제로 조기 마감될 수 있습니다.
+              </p>
+
+              <div className="mt-6">
+                <ApplyLink label="참가 신청하기" variant="solid" />
+              </div>
             </div>
           </div>
         )}
 
         {state === "closed" && (
           <div>
-            <h2 className="text-lg font-bold text-brand-900 sm:text-xl">
-              접수 마감
-            </h2>
-            <p className="mt-1 text-base text-ink">
+            <h2 className="text-xl text-brand-900 sm:text-2xl">접수 마감</h2>
+            <p className="tabular mt-2 text-base text-ink sm:text-lg">
               {closesAt}에 참가 접수가 마감되었습니다.
             </p>
             {/* 마감 뒤에도 안내 페이지로 갈 길은 남겨 둡니다.
                 '신청하기'가 아니라 '안내 보기'인 이유: 더 이상 신청할 수
                 없으므로, 신청할 수 있는 것처럼 보이면 안 됩니다. */}
-            <p className="mt-3">
+            <p className="mt-4">
               <Link
                 href="/apply"
-                className="text-base font-bold text-brand-700 underline"
+                className="group inline-flex items-center gap-1.5 text-base font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
               >
-                참가 안내 보기 →
+                참가 안내 보기
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </p>
           </div>

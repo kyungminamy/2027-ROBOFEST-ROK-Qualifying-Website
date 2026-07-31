@@ -11,6 +11,7 @@ import {
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { ArrowRight, ExternalLink } from "@/components/icons";
 
 /* ============================================================================
  *  종목 상세 페이지 (/categories/종목이름)
@@ -53,25 +54,25 @@ export async function generateMetadata({
   };
 }
 
-/** 본문 한 덩어리 — 번호와 제목이 붙은 구역 */
+/* 본문 한 덩어리 — 제목이 붙은 구역
+ *
+ * ℹ️ 예전에는 제목 앞에 1·2·3·4 번호가 붙어 있었습니다. 2026-07-31에
+ *    없앴습니다. 제목이 이미 '누가 나갈 수 있나요'처럼 질문 형태라서
+ *    번호가 알려 주는 정보가 따로 없었기 때문입니다.
+ *    ★ 구역의 순서 자체는 그대로 두세요 ★ (아래 순서 설명 참고) */
 function Section({
-  step,
   title,
   children,
 }: {
-  step: number;
   title: string;
   children: React.ReactNode;
 }) {
+  /* 제목 '위' 여백을 아래보다 넓게 둡니다. 그래야 제목이 아래 내용에
+     붙어 보여서, 어디까지가 한 덩어리인지 눈에 바로 들어옵니다. */
   return (
-    <section className="border-t border-brand-100 py-8 first:border-t-0 sm:py-10">
-      <h2 className="flex items-baseline gap-2 text-xl font-bold text-brand-900 sm:text-2xl">
-        {/* brand-500 은 흰 배경에서 대비가 4.0:1 이라 규정(4.5:1)에 미달합니다.
-            한 단계 진한 brand-600(5.5:1)을 씁니다. 색 팔레트는 건드리지 마세요. */}
-        <span className="text-base text-brand-600 sm:text-lg">{step}</span>
-        {title}
-      </h2>
-      <div className="mt-4">{children}</div>
+    <section className="border-t border-brand-100 pt-11 pb-8 first:border-t-0 sm:pt-14 sm:pb-10">
+      <h2 className="text-2xl text-brand-900 sm:text-3xl">{title}</h2>
+      <div className="mt-5">{children}</div>
     </section>
   );
 }
@@ -79,9 +80,11 @@ function Section({
 /** 라벨 + 내용 한 줄 */
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border-b border-brand-100 py-3 last:border-b-0">
-      <dt className="text-sm font-bold text-brand-700">{label}</dt>
-      <dd className="mt-1 text-base text-ink">{children}</dd>
+    <div className="border-b border-brand-100 py-4 last:border-b-0">
+      <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
+        {label}
+      </dt>
+      <dd className="mt-1.5 text-base text-ink">{children}</dd>
     </div>
   );
 }
@@ -89,13 +92,10 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 /** 점으로 시작하는 목록 */
 function Bullets({ items }: { items: readonly string[] }) {
   return (
-    <ul className="space-y-2">
+    <ul className="ml-5 list-disc space-y-2 marker:text-brand-300">
       {items.map((line) => (
-        <li key={line} className="flex gap-2 text-base text-ink">
-          <span aria-hidden="true" className="shrink-0 text-brand-400">
-            ·
-          </span>
-          <span>{line}</span>
+        <li key={line} className="text-base text-ink">
+          {line}
         </li>
       ))}
     </ul>
@@ -128,7 +128,7 @@ export default async function CategoryDetailPage({
       <main id="main" className="flex-1">
         <div className={container}>
           {/* ============================================ 1) 누가 나갈 수 있나 */}
-          <Section step={1} title="누가 나갈 수 있나요">
+          <Section title="누가 나갈 수 있나요">
             <dl>
               <Row label="참가 부문">
                 <ul className="space-y-1.5">
@@ -156,7 +156,7 @@ export default async function CategoryDetailPage({
           </Section>
 
           {/* ================================================ 2) 무엇을 하나 */}
-          <Section step={2} title="무엇을 하는 종목인가요">
+          <Section title="무엇을 하는 종목인가요">
             <div className="space-y-3">
               {detail.whatItIs.map((line) => (
                 <p key={line} className="text-base text-ink sm:text-lg">
@@ -166,7 +166,7 @@ export default async function CategoryDetailPage({
             </div>
 
             {detail.howItRuns.length > 0 && (
-              <div className="mt-6 rounded-xl bg-paper-soft p-5">
+              <div className="mt-7 rounded-2xl bg-paper-soft p-5 sm:p-6">
                 <p className="text-sm font-bold text-brand-700">
                   경기 진행 방식
                 </p>
@@ -178,7 +178,7 @@ export default async function CategoryDetailPage({
           </Section>
 
           {/* ========================================== 3) 무엇을 준비해야 하나 */}
-          <Section step={3} title="무엇을 준비해야 하나요">
+          <Section title="무엇을 준비해야 하나요">
             <dl>
               <Row label="로봇 · 키트">{detail.prepare.robotKit}</Row>
               <Row label="노트북 등 장비">{detail.prepare.computer}</Row>
@@ -193,7 +193,7 @@ export default async function CategoryDetailPage({
             </dl>
 
             {detail.notes.length > 0 && (
-              <div className="mt-6 rounded-xl border-2 border-brand-200 bg-brand-50 p-5">
+              <div className="mt-7 rounded-2xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
                 <p className="text-sm font-bold text-brand-900">
                   꼭 확인해 주세요
                 </p>
@@ -205,30 +205,32 @@ export default async function CategoryDetailPage({
           </Section>
 
           {/* ========================================= 4) 어디서 규정을 확인하나 */}
-          <Section step={4} title="공식 규정은 어디서 보나요">
+          <Section title="공식 규정은 어디서 보나요">
             <p className="text-base text-ink sm:text-lg">
               이 페이지는 이해를 돕기 위한 요약입니다. 규정은 ROBOFEST
               본부에서 정하며 바뀔 수 있으므로, 최종 확인은 반드시 아래 공식
               페이지에서 해 주세요.
             </p>
 
-            <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               {/* ⚠️ 외부 사이트이므로 새 창에서 엽니다 */}
               <a
                 href={category.rulesUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-brand-700 px-6 py-4 text-base font-bold text-white sm:text-lg"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-brand-700 px-7 text-base font-bold text-white transition-colors hover:bg-brand-800 sm:text-lg"
               >
                 {category.name} 공식 규정 보기
+                <ExternalLink className="h-5 w-5" />
               </a>
               <a
                 href={competition.links.generalRulesPdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg border-2 border-brand-300 bg-white px-6 py-4 text-base font-bold text-brand-700 sm:text-lg"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border-2 border-brand-200 bg-paper px-7 text-base font-bold text-brand-700 transition-colors hover:border-brand-400 sm:text-lg"
               >
                 공통 규정집 (PDF)
+                <ExternalLink className="h-5 w-5" />
               </a>
             </div>
 
@@ -239,7 +241,7 @@ export default async function CategoryDetailPage({
 
             {/* 세계대회 진출 안내 — 문구는 config 에서 관리합니다.
                 ⚠️ 진출 팀 수를 적지 마세요. 아직 정해지지 않았습니다. */}
-            <div className="mt-6 rounded-xl bg-paper-soft p-5">
+            <div className="mt-7 rounded-2xl bg-paper-soft p-5 sm:p-6">
               <p className="text-sm font-bold text-brand-700">
                 세계대회 진출 안내
               </p>
@@ -257,17 +259,18 @@ export default async function CategoryDetailPage({
           </Section>
 
           {/* ------------------------------------------------------ 이동 링크 */}
-          <div className="border-t border-brand-100 py-8 sm:py-10">
+          <div className="border-t border-brand-100 py-10 sm:py-12">
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/apply"
-                className="inline-flex items-center justify-center rounded-lg bg-brand-700 px-6 py-4 text-base font-bold text-white sm:text-lg"
+                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-accent-600/20 transition-colors hover:bg-accent-700 sm:text-lg"
               >
                 참가 신청 안내
+                <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 href="/categories"
-                className="inline-flex items-center justify-center rounded-lg border-2 border-brand-300 bg-white px-6 py-4 text-base font-bold text-brand-700 sm:text-lg"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-lg border-2 border-brand-200 bg-paper px-7 text-base font-bold text-brand-700 transition-colors hover:border-brand-400 sm:text-lg"
               >
                 다른 종목 보기
               </Link>

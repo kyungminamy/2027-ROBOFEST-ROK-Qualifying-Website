@@ -6,6 +6,7 @@ import { HomeIntro } from "@/components/HomeIntro";
 import { RegistrationNotice } from "@/components/RegistrationNotice";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { ArrowRight } from "@/components/icons";
 
 /* ============================================================================
  *  첫 화면(홈)
@@ -33,25 +34,26 @@ export default function Home() {
         {/* 3. 운영 종목 — 회백색 배경.
                위(대회 소개)와 아래(접수 안내)가 흰색이라 이 구역만
                색을 넣어 구분합니다. 흰색 → 회백색 → 흰색 순서입니다. */}
-        <section className="bg-paper-soft py-10 sm:py-14">
+        <section className="bg-paper-soft py-14 sm:py-20">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">
               운영 종목 {competition.categories.length}종목
             </h2>
-            <p className="mt-2 text-base text-ink-soft">
+            <p className="mt-3 text-base text-ink-soft">
               종목을 누르면 참가 자격과 준비물을 자세히 볼 수 있습니다.
             </p>
-            <p className="mt-3">
+            <p className="mt-4">
               <Link
                 href="/categories"
-                className="text-base font-bold text-brand-700 underline"
+                className="group inline-flex items-center gap-1.5 text-base font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
               >
-                종목 비교표 한눈에 보기 →
+                종목 비교표 한눈에 보기
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </p>
 
             {/* 휴대폰에서는 한 줄에 1개, 넓은 화면에서는 2개씩 배치합니다 */}
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {competition.categories.map((category) => (
                 <li key={category.slug}>
                   <CategoryCard category={category} />

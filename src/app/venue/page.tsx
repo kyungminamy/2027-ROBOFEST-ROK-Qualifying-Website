@@ -3,6 +3,7 @@ import { competition, venueDisplayName } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { ExternalLink } from "@/components/icons";
 
 /* ============================================================================
  *  장소 (/venue)
@@ -51,10 +52,10 @@ export default function VenuePage() {
       <main id="main" className="flex-1">
         {/* ------------------------------------------- 장소 확정 전 안내 (조건부) */}
         {!venue.isConfirmed && (
-          <section className="py-8 sm:py-10">
+          <section className="pt-12 pb-2 sm:pt-14 sm:pb-4">
             <div className={container}>
-              <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-7">
-                <p className="text-base font-bold text-brand-900 sm:text-lg">
+              <div className="rounded-2xl border-2 border-brand-200 bg-brand-50 p-6 sm:p-7">
+                <p className="text-lg font-bold text-brand-900 sm:text-xl">
                   장소는 아직 확정 전입니다
                 </p>
                 <p className="mt-2 text-base text-ink">
@@ -72,13 +73,11 @@ export default function VenuePage() {
         )}
 
         {/* ------------------------------------------------------------- 장소 */}
-        <section className="py-9 sm:py-12">
+        <section className="py-12 sm:py-16">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
-              장소
-            </h2>
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">장소</h2>
 
-            <dl className="mt-5">
+            <dl className="mt-6">
               <div className="border-b border-brand-100 py-3">
                 <dt className="text-sm font-bold text-brand-700">장소명</dt>
                 <dd className="mt-1 text-base text-ink sm:text-lg">
@@ -104,14 +103,15 @@ export default function VenuePage() {
             {/* ★ 지도 링크가 없으면 버튼을 아예 만들지 않습니다 ★
                 눌러도 아무 일 없는 버튼을 두지 않기 위한 규칙입니다. */}
             {mapUrl && (
-              <div className="mt-5">
+              <div className="mt-6">
                 <a
                   href={mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-brand-700 px-6 py-4 text-base font-bold text-white sm:w-auto sm:text-lg"
+                  className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-accent-600/20 transition-colors hover:bg-accent-700 sm:w-auto sm:text-lg"
                 >
                   지도 보기
+                  <ExternalLink className="h-5 w-5" />
                 </a>
                 <p className="mt-2 text-sm text-ink-soft">
                   새 창에서 열립니다.
@@ -122,16 +122,14 @@ export default function VenuePage() {
         </section>
 
         {/* --------------------------------------------------------- 오시는 길 */}
-        <section className="bg-paper-soft py-9 sm:py-12">
+        <section className="bg-paper-soft py-12 sm:py-16">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
-              오시는 길
-            </h2>
-            <p className="mt-2 text-base text-ink-soft">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">오시는 길</h2>
+            <p className="mt-3 text-base text-ink-soft">
               오시는 방법별로 안내를 준비하고 있습니다.
             </p>
 
-            <div className="mt-6 space-y-8">
+            <div className="mt-8 space-y-9">
               {venue.directions.map((way) => {
                 /* 위와 같은 이유로 문자열로 넓혀서 씁니다 */
                 const image: string = way.image;
@@ -170,12 +168,10 @@ export default function VenuePage() {
         </section>
 
         {/* --------------------------------------------------------- 주차 안내 */}
-        <section className="py-9 sm:py-12">
+        <section className="py-12 sm:py-16">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
-              주차 안내
-            </h2>
-            <p className="mt-3 text-base text-ink sm:text-lg">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">주차 안내</h2>
+            <p className="mt-4 text-base text-ink sm:text-lg">
               {venue.parkingNote}
             </p>
           </div>

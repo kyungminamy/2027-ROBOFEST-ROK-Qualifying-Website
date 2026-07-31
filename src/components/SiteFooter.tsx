@@ -1,5 +1,6 @@
 import { competition } from "@/config/competition";
 import { container } from "@/lib/layout";
+import { ExternalLink } from "@/components/icons";
 
 /* ============================================================================
  *  꼬리말 — 문의처 / 주최·주관 / 운영·공인 기관
@@ -26,7 +27,7 @@ function Row({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-0.5 sm:flex-row sm:gap-3">
+    <div className="flex flex-col gap-0.5 sm:flex-row sm:gap-4">
       <dt className="shrink-0 text-sm font-bold text-brand-200 sm:w-24 sm:text-base">
         {label}
       </dt>
@@ -45,17 +46,17 @@ export function SiteFooter() {
   const kakaoUrl: string = contact.kakao.channelUrl;
 
   return (
-    <footer className="bg-brand-900 py-9 text-white sm:py-12">
+    <footer className="bg-brand-900 py-12 text-white sm:py-16">
       <div className={container}>
-        <p className="text-base font-bold sm:text-lg">
-          {competition.shortName}
-        </p>
+        <p className="text-lg font-bold sm:text-xl">{competition.shortName}</p>
 
         {/* ------------------------------------------------------------ 문의처 */}
-        <div className="mt-6">
-          <p className="text-sm font-bold text-white sm:text-base">문의</p>
+        <div className="mt-8">
+          <p className="text-xs font-bold uppercase tracking-wider text-brand-200">
+            문의
+          </p>
 
-          <dl className="mt-2.5 space-y-2.5">
+          <dl className="mt-3 space-y-3">
             <Row label="카카오톡">
               {kakaoUrl ? (
                 /* 채널 주소가 있을 때만 링크로 만듭니다 */
@@ -63,9 +64,10 @@ export function SiteFooter() {
                   href={kakaoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline"
+                  className="inline-flex items-center gap-1.5 underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
                 >
                   {contact.kakao.searchName}
+                  <ExternalLink className="h-4 w-4" />
                 </a>
               ) : (
                 /* 주소가 없으면 검색해서 찾도록 안내만 합니다.
@@ -87,7 +89,10 @@ export function SiteFooter() {
             {email && (
               <Row label="이메일">
                 {/* 휴대폰에서 누르면 메일 앱이 바로 열립니다 */}
-                <a href={`mailto:${email}`} className="underline">
+                <a
+                  href={`mailto:${email}`}
+                  className="underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
+                >
                   {email}
                 </a>
               </Row>
@@ -95,7 +100,10 @@ export function SiteFooter() {
 
             {phone && (
               <Row label="전화">
-                <a href={`tel:${phone.replace(/[^0-9+]/g, "")}`} className="underline">
+                <a
+                  href={`tel:${phone.replace(/[^0-9+]/g, "")}`}
+                  className="tabular underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
+                >
                   {phone}
                 </a>
               </Row>
@@ -106,7 +114,7 @@ export function SiteFooter() {
         </div>
 
         {/* ------------------------------------------------------------ 기관 */}
-        <dl className="mt-6 space-y-2.5 border-t border-brand-800 pt-5">
+        <dl className="mt-8 space-y-3 border-t border-white/15 pt-6">
           <Row label="주최·주관">{competition.host}</Row>
           <Row label="운영·공인">{competition.operators.join(" · ")}</Row>
         </dl>

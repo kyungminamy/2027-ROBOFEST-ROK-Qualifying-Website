@@ -4,6 +4,7 @@ import {
   competition,
   formatKoreanDate,
 } from "@/config/competition";
+import { ExternalLink } from "@/components/icons";
 
 /* ============================================================================
  *  참가 신청 — 구글폼을 페이지 안에 넣어 보여줍니다
@@ -42,9 +43,10 @@ function DirectFormLink({ label }: { label: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex w-full items-center justify-center rounded-lg bg-brand-700 px-6 py-4 text-base font-bold text-white sm:w-auto sm:text-lg"
+      className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-accent-600/20 transition-colors hover:bg-accent-700 sm:w-auto sm:text-lg"
     >
       {label}
+      <ExternalLink className="h-5 w-5" />
     </a>
   );
 }
@@ -58,38 +60,40 @@ export function ApplyForm() {
       {/* ⚠️ 법적으로 필요한 안내입니다. 폼보다 먼저 보여야 합니다.
              문구는 config/competition.ts 에서 바꾸세요.
              폼 마지막의 동의 항목과 내용이 어긋나지 않게 같이 고치세요. */}
-      <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
-        <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+      <div className="overflow-hidden rounded-2xl border-2 border-brand-200 bg-paper">
+        <h3 className="bg-brand-700 px-5 py-3 text-base font-bold text-white sm:px-6 sm:text-lg">
           신청 전 안내
         </h3>
 
-        <dl className="mt-3 space-y-3">
-          <div>
-            <dt className="text-sm font-bold text-brand-700 sm:text-base">
-              개인정보 처리
-            </dt>
-            <dd className="mt-1 text-sm text-ink sm:text-base">
-              {registration.privacyNotice}
-            </dd>
-          </div>
+        <div className="p-5 sm:p-6">
+          <dl className="space-y-4">
+            <div>
+              <dt className="text-sm font-bold text-brand-700 sm:text-base">
+                개인정보 처리
+              </dt>
+              <dd className="mt-1 text-sm text-ink sm:text-base">
+                {registration.privacyNotice}
+              </dd>
+            </div>
 
-          <div>
-            <dt className="text-sm font-bold text-brand-700 sm:text-base">
-              촬영 · 초상권
-            </dt>
-            <dd className="mt-1 text-sm text-ink sm:text-base">
-              {registration.portraitRightsNotice}
-            </dd>
-          </div>
-        </dl>
+            <div>
+              <dt className="text-sm font-bold text-brand-700 sm:text-base">
+                촬영 · 초상권
+              </dt>
+              <dd className="mt-1 text-sm text-ink sm:text-base">
+                {registration.portraitRightsNotice}
+              </dd>
+            </div>
+          </dl>
 
-        <p className="mt-3 border-t border-brand-200 pt-3 text-sm text-ink-soft">
-          {registration.consentNoticeFooter}
-        </p>
+          <p className="mt-4 border-t border-brand-100 pt-4 text-sm text-ink-soft">
+            {registration.consentNoticeFooter}
+          </p>
+        </div>
       </div>
 
       {/* 접수 기간 안내 — 사실만 알려 줍니다. 폼을 막지는 않습니다. */}
-      <p className="mt-6 text-base text-ink sm:text-lg">
+      <p className="tabular mt-8 text-base font-bold text-brand-900 sm:text-lg">
         접수 기간: {formatKoreanDate(registration.opensAt)} ~{" "}
         {formatKoreanDate(registration.closesAt)}
       </p>
@@ -102,8 +106,8 @@ export function ApplyForm() {
         /* 구글폼 주소가 아직 비어 있습니다.
            config 의 registration.formUrl 에 주소를 넣으면 폼이 나타납니다.
            눌러도 아무 일 안 나는 버튼을 만들지 않기 위한 안전장치입니다. */
-        <div className="mt-5 rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-7">
-          <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+        <div className="mt-6 rounded-2xl border-2 border-brand-200 bg-brand-50 p-6 sm:p-8">
+          <h2 className="text-xl text-brand-900 sm:text-2xl">
             접수 링크 준비 중
           </h2>
           <p className="mt-2 text-base text-ink sm:text-lg">
@@ -120,8 +124,8 @@ export function ApplyForm() {
                  폼이 막혀 빈 칸만 보이는 사람은 화면을 한참 내려야
                  버튼을 찾을 수 있었습니다. 정작 이 버튼이 가장 필요한
                  사람이 가장 늦게 발견하는 구조였습니다. */}
-          <div className="mt-5">
-            <p className="text-sm text-ink-soft">
+          <div className="mt-6 rounded-2xl border border-brand-100 bg-paper-soft p-5">
+            <p className="text-sm text-ink">
               아래 신청 폼이 보이지 않거나 작성이 어려우시면, 이 버튼으로 새
               창에서 작성해 주세요.
             </p>
@@ -130,7 +134,7 @@ export function ApplyForm() {
             </div>
           </div>
 
-          <div className="mt-5 overflow-hidden rounded-xl border border-brand-200 bg-white">
+          <div className="mt-5 overflow-hidden rounded-2xl border border-brand-200 bg-paper">
             <iframe
               src={embedUrl}
               /* 높이는 config 의 embedHeight 에서 가져옵니다.
@@ -158,7 +162,7 @@ export function ApplyForm() {
         </>
       ) : (
         /* applyMode 가 'link' 일 때 — 폼을 넣지 않고 버튼만 보여줍니다 */
-        <div className="mt-5">
+        <div className="mt-6">
           <DirectFormLink label="구글폼에서 참가 신청하기" />
           <p className="mt-3 text-sm text-ink-soft">
             신청 폼은 새 창에서 열립니다.

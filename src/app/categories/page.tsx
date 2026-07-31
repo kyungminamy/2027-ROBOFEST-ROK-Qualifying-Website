@@ -27,7 +27,7 @@ function Th({ children }: { children: React.ReactNode }) {
   return (
     <th
       scope="col"
-      className="whitespace-nowrap border-b-2 border-brand-200 px-3 py-2.5 text-left text-sm font-bold text-brand-800"
+      className="whitespace-nowrap border-b-2 border-brand-200 bg-brand-50 px-3.5 py-3 text-left text-xs font-bold uppercase tracking-wider text-brand-800"
     >
       {children}
     </th>
@@ -36,7 +36,7 @@ function Th({ children }: { children: React.ReactNode }) {
 
 function Td({ children }: { children: React.ReactNode }) {
   return (
-    <td className="border-b border-brand-100 px-3 py-2.5 align-top text-sm text-ink">
+    <td className="border-b border-brand-100 px-3.5 py-3 align-top text-sm text-ink">
       {children}
     </td>
   );
@@ -59,10 +59,10 @@ export default function CategoriesPage() {
       <main id="main" className="flex-1">
         {/* ------------------------------------------------- 종목 고르기 도움말 */}
         {beginnerFriendly.length > 0 && (
-          <section className="py-8 sm:py-10">
+          <section className="pt-12 pb-2 sm:pt-14 sm:pb-4">
             <div className={container}>
-              <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
-                <p className="text-base font-bold text-brand-900">
+              <div className="rounded-2xl border-2 border-brand-200 bg-brand-50 p-6 sm:p-7">
+                <p className="text-lg font-bold text-brand-900">
                   처음 참가하신다면
                 </p>
                 <p className="mt-2 text-base text-ink">
@@ -80,16 +80,14 @@ export default function CategoriesPage() {
         )}
 
         {/* ------------------------------------------------------- 종목 카드 */}
-        <section className="pb-10 sm:pb-14">
+        <section className="pb-14 sm:pb-20">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
-              종목 목록
-            </h2>
-            <p className="mt-2 text-base text-ink-soft">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">종목 목록</h2>
+            <p className="mt-3 text-base text-ink-soft">
               종목을 누르면 참가 자격과 준비물을 자세히 볼 수 있습니다.
             </p>
 
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2">
               {categories.map((category) => (
                 <li key={category.slug}>
                   <CategoryCard category={category} />
@@ -100,18 +98,18 @@ export default function CategoriesPage() {
         </section>
 
         {/* --------------------------------------------------------- 비교표 */}
-        <section className="bg-paper-soft py-10 sm:py-14">
+        <section className="bg-paper-soft py-14 sm:py-20">
           <div className={container}>
-            <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">
               한눈에 비교하기
             </h2>
-            <p className="mt-2 text-base text-ink-soft">
+            <p className="mt-3 text-base text-ink-soft">
               표가 화면보다 넓으면 좌우로 밀어서 보실 수 있습니다.
             </p>
 
             {/* ⚠️ 표는 반드시 이 스크롤 상자 안에 두세요.
                    그러지 않으면 휴대폰에서 페이지 전체가 좌우로 흔들립니다. */}
-            <div className="mt-5 overflow-x-auto rounded-xl border border-brand-200 bg-white">
+            <div className="mt-6 overflow-x-auto rounded-2xl border border-brand-200 bg-paper">
               <table className="w-full min-w-[46rem] border-collapse">
                 <caption className="sr-only">
                   종목별 참가 부문, 최대 인원, 키트 제한, 난이도 비교표
@@ -131,7 +129,7 @@ export default function CategoriesPage() {
                       <Td>
                         <Link
                           href={`/categories/${category.slug}`}
-                          className="font-bold text-brand-700 underline"
+                          className="font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
                         >
                           {category.name}
                         </Link>

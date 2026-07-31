@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { competition, visibleNavItems } from "@/config/competition";
 import { container } from "@/lib/layout";
+import { ChevronDown } from "@/components/icons";
 
 /* ============================================================================
  *  상단 메뉴 (모든 페이지 맨 위)
@@ -26,6 +27,10 @@ import { container } from "@/lib/layout";
  *   휴대폰에서 52px 로 고정했습니다. 화면을 가리지 않으면서도
  *   손가락으로 누를 수 있는 최소 크기(44px)를 지키는 값입니다.
  *   더 줄이면 누르기 어려워집니다.
+ *
+ *  ★ 지금 보고 있는 페이지 표시 ★
+ *   글자를 진하게 하고 아래에 주황색 줄을 긋습니다. 색만으로 알리지 않는
+ *   이유: 색을 구분하기 어려운 분에게도 굵기 차이가 함께 보여야 합니다.
  * ========================================================================== */
 
 /** 지금 보고 있는 페이지인지 판단 (종목 상세 페이지도 '종목 안내'로 봅니다) */
@@ -47,18 +52,18 @@ export function SiteNav() {
   const items = visibleNavItems();
   const { navCta } = competition;
 
-  const linkBase =
-    "flex min-h-[44px] items-center rounded-lg px-3 text-base font-bold";
-
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-200 bg-paper-soft">
+    <header className="sticky top-0 z-50 border-b border-brand-100 bg-paper">
       <div className={container}>
         {/* 휴대폰 52px / 넓은 화면 64px */}
         <div className="flex h-[52px] items-center justify-between gap-2 sm:h-16">
           {/* 로고 = 홈으로 가는 링크
               config 의 logoSrc 가 비어 있으면 대회 이름 글자로 대신합니다.
               (경로가 잘못돼도 깨진 이미지가 뜨지 않게 하기 위함) */}
-          <Link href="/" className="flex min-h-[44px] items-center">
+          <Link
+            href="/"
+            className="flex min-h-[44px] items-center rounded-lg pr-2"
+          >
             {competition.logoSrc ? (
               // eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다.
               <img
@@ -68,81 +73,99 @@ export function SiteNav() {
                 className="block h-7 w-auto sm:h-9"
               />
             ) : (
-              <span className="text-sm font-bold leading-tight text-brand-800 sm:text-base">
+              <span className="text-sm font-bold leading-tight text-brand-900 sm:text-base">
                 {competition.shortName}
               </span>
             )}
           </Link>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             {/* ------------------------------------------- 넓은 화면: 펼친 메뉴 */}
             <nav aria-label="주요 메뉴" className="hidden sm:block">
-              <ul className="flex items-center gap-1">
-                {items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      aria-current={
-                        isCurrent(pathname, item.href) ? "page" : undefined
-                      }
-                      className={`${linkBase} ${
-                        isCurrent(pathname, item.href)
-                          ? "bg-brand-100 text-brand-900"
-                          : "text-brand-700 hover:bg-brand-50"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+              <ul className="flex items-center">
+                {items.map((item) => {
+                  const current = isCurrent(pathname, item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        aria-current={current ? "page" : undefined}
+                        className={`relative flex min-h-[44px] items-center px-3.5 text-base font-bold transition-colors ${
+                          current
+                            ? "text-brand-900"
+                            : "text-brand-700 hover:text-brand-900"
+                        }`}
+                      >
+                        {item.label}
+                        {/* 지금 보고 있는 페이지 아래 주황색 줄 */}
+                        {current && (
+                          <span
+                            aria-hidden="true"
+                            className="absolute inset-x-2.5 bottom-0 h-[3px] rounded-t bg-accent-600"
+                          />
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
 
-            {/* 참가 신청 — 메뉴가 접혀 있어도 항상 보입니다 */}
+            {/* 참가 신청 — 메뉴가 접혀 있어도 항상 보입니다.
+                사이트에서 가장 중요한 버튼이라 주황색을 씁니다. */}
             <Link
               href={navCta.href}
               aria-current={
                 isCurrent(pathname, navCta.href) ? "page" : undefined
               }
-              className="flex min-h-[44px] items-center rounded-lg bg-brand-700 px-3 text-sm font-bold text-white sm:text-base"
+              className="ml-1.5 flex min-h-[44px] items-center rounded-lg bg-accent-600 px-4 text-sm font-bold text-white transition-colors hover:bg-accent-700 sm:text-base"
             >
               {navCta.label}
             </Link>
 
             {/* ------------------------------------- 휴대폰: 접히는 메뉴 (JS 불필요) */}
             {items.length > 0 && (
-              <details ref={menuRef} className="relative sm:hidden">
+              <details ref={menuRef} className="group relative sm:hidden">
                 <summary
                   /* list-none: 삼각형 기본 표시를 없앱니다 */
-                  className="flex min-h-[44px] cursor-pointer list-none items-center rounded-lg px-3 text-sm font-bold text-brand-800"
+                  className="flex min-h-[44px] cursor-pointer list-none items-center gap-1 rounded-lg px-2.5 text-sm font-bold text-brand-800"
                   aria-label="메뉴 열기"
                 >
                   메뉴
+                  <ChevronDown className="h-4 w-4 transition-transform duration-200 group-open:rotate-180" />
                 </summary>
 
                 {/* 메뉴판은 띠 아래에 겹쳐서 펼쳐집니다 (내용을 밀어내지 않음) */}
                 <nav
                   aria-label="주요 메뉴"
-                  className="absolute right-0 top-full z-50 mt-1 w-56 rounded-xl border border-brand-200 bg-white p-2 shadow-lg"
+                  className="absolute right-0 top-full z-50 mt-2 w-60 rounded-xl border border-brand-100 bg-paper p-2 shadow-xl shadow-brand-900/10"
                 >
                   <ul>
-                    {items.map((item) => (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          aria-current={
-                            isCurrent(pathname, item.href) ? "page" : undefined
-                          }
-                          className={`flex min-h-[44px] items-center rounded-lg px-3 text-base font-bold ${
-                            isCurrent(pathname, item.href)
-                              ? "bg-brand-50 text-brand-900"
-                              : "text-brand-800"
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {items.map((item) => {
+                      const current = isCurrent(pathname, item.href);
+                      return (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            aria-current={current ? "page" : undefined}
+                            className={`flex min-h-[46px] items-center rounded-lg px-3 text-base font-bold ${
+                              current
+                                ? "bg-brand-50 text-brand-900"
+                                : "text-brand-800"
+                            }`}
+                          >
+                            {/* 지금 보고 있는 페이지 앞의 주황색 막대 */}
+                            {current && (
+                              <span
+                                aria-hidden="true"
+                                className="mr-2.5 h-4 w-[3px] rounded bg-accent-600"
+                              />
+                            )}
+                            {item.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
               </details>
