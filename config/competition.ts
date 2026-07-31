@@ -398,11 +398,6 @@ export const competition = {
 
   milestones: [
     {
-      date: '2026-08-24',
-      title: '모집 공고 및 홍보 개시',
-      description: '전국 시도교육청 공문 발송',
-    },
-    {
       date: '2026-09-01',
       title: '참가 접수 시작',
       description: '온라인 접수. 종목별 정원제로 조기 마감될 수 있습니다.',
