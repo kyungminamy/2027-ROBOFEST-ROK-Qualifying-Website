@@ -124,14 +124,19 @@ export function ApplyForm() {
                  폼이 막혀 빈 칸만 보이는 사람은 화면을 한참 내려야
                  버튼을 찾을 수 있었습니다. 정작 이 버튼이 가장 필요한
                  사람이 가장 늦게 발견하는 구조였습니다. */}
-          <div className="mt-6 rounded-2xl border border-brand-100 bg-paper-soft p-5">
-            <p className="text-sm text-ink">
-              아래 신청 폼이 보이지 않거나 작성이 어려우시면, 이 버튼으로 새
-              창에서 작성해 주세요.
-            </p>
-            <div className="mt-3">
-              <DirectFormLink label="새 창에서 신청 폼 열기" />
-            </div>
+          {/* ℹ️ 2026-07-31: 안내 문장('아래 신청 폼이 보이지 않거나…')과
+                 회색 상자를 뺐습니다. 구글폼이 파일 업로드 질문 때문에
+                 폼 내용을 우리 페이지 안에 그려 주지 않고, 대신 자기
+                 '설문지 작성' 버튼만 보여 주게 되었기 때문입니다.
+                 문장이 설명하던 상황('폼이 안 보이면')이 이제 상시 상태라
+                 문장이 오히려 헷갈리게 만듭니다.
+
+                 ★ 버튼 자체는 남겨 두었습니다 (지우지 마세요) ★
+                   구글폼의 '설문지 작성' 버튼은 구글이 열릴 때만 보입니다.
+                   학교 인터넷이 구글을 막으면 아래 칸이 통째로 비어서
+                   그 버튼도 같이 사라집니다. 그때 남는 유일한 통로입니다. */}
+          <div className="mt-6">
+            <DirectFormLink label="새 창에서 신청 폼 열기" />
           </div>
 
           <div className="mt-5 overflow-hidden rounded-2xl border border-brand-200 bg-paper">
