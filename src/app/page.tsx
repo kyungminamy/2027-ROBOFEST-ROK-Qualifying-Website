@@ -2,6 +2,7 @@ import Link from "next/link";
 import { competition } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Hero } from "@/components/Hero";
+import { HomeIntro } from "@/components/HomeIntro";
 import { RegistrationNotice } from "@/components/RegistrationNotice";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
@@ -23,10 +24,15 @@ export default function Home() {
       <Hero />
 
       <main id="main" className="flex-1">
-        {/* 2. 접수 안내 — 접수 전 / 접수 중 / 마감 상태에 따라 바뀝니다 */}
-        <RegistrationNotice />
+        {/* 2. 대회 소개 — 흰 배경.
+               '무엇에 신청하는 건지'를 먼저 설명합니다. 접수 안내(4)보다
+               위에 있어야 합니다. 순서를 바꾸면 설명 없이 신청부터
+               권하는 화면이 됩니다. */}
+        <HomeIntro />
 
-        {/* 3. 운영 종목 */}
+        {/* 3. 운영 종목 — 회백색 배경.
+               위(대회 소개)와 아래(접수 안내)가 흰색이라 이 구역만
+               색을 넣어 구분합니다. 흰색 → 회백색 → 흰색 순서입니다. */}
         <section className="bg-paper-soft py-10 sm:py-14">
           <div className={container}>
             <h2 className="text-xl font-bold text-brand-900 sm:text-2xl">
@@ -54,9 +60,13 @@ export default function Home() {
             </ul>
           </div>
         </section>
+
+        {/* 4. 접수 안내 — 흰 배경. 접수 전 / 접수 중 / 마감에 따라 바뀝니다.
+               설명을 다 읽은 뒤에 나오는 마무리 권유 자리입니다. */}
+        <RegistrationNotice />
       </main>
 
-      {/* 4. 꼬리말 — 주최·주관 / 운영·공인 */}
+      {/* 5. 꼬리말 — 주최·주관 / 운영·공인 */}
       <SiteFooter />
     </>
   );
