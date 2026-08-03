@@ -153,6 +153,7 @@ export function ApplyForm() {
                   "--form-h-phone": `${registration.embedHeight.phone}px`,
                   "--form-h-large-phone": `${registration.embedHeight.largePhone}px`,
                   "--form-h-desktop": `${registration.embedHeight.desktop}px`,
+                  "--form-h-wide-desktop": `${registration.embedHeight.wideDesktop}px`,
                 } as React.CSSProperties
               }
               /* CSS가 아직 적용되지 않은 아주 짧은 순간에도 칸이 찌그러지지
