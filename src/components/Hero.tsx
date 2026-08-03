@@ -78,21 +78,25 @@ export function Hero() {
   );
 
   return (
-    /* ★ 넓은 화면(1024px 이상)에서는 첫 화면이 화면 전체를 채웁니다 ★
+    /* ★ 첫 화면이 화면 전체를 채웁니다 (휴대폰 포함) ★
      *
-     *  calc(100svh - 4rem) 에서 4rem(64px)은 위 상단 메뉴의 높이입니다.
+     *  빼는 숫자는 위 상단 메뉴의 높이입니다. 메뉴 높이가 화면 크기에
+     *  따라 다르기 때문에 두 가지로 나눴습니다.
+     *    휴대폰      메뉴 52px = 3.25rem
+     *    640px 이상  메뉴 64px = 4rem
      *  이걸 빼지 않으면 메뉴 높이만큼 넘쳐서, 첫 화면 아래쪽을 보려고
      *  조금 스크롤해야 합니다. 메뉴 높이를 바꾸면 이 숫자도 같이 바꾸세요.
      *
      *  svh = 휴대폰 주소창이 보일 때를 기준으로 한 화면 높이입니다.
+     *  (vh 를 쓰면 주소창 때문에 아래쪽이 잘리는 기기가 있습니다)
      *
-     *  ⚠️ 휴대폰·작은 태블릿에는 일부러 적용하지 않았습니다.
-     *     좁은 화면에서 높이를 화면 전체로 고정하면, 글이 조금만 길어져도
-     *     버튼이 화면 밖으로 밀려납니다.
+     *  ★ h- 가 아니라 min-h- 입니다 (바꾸지 마세요) ★
+     *   글이 길어져 화면보다 커지면 칸이 늘어납니다. h- 로 고정하면
+     *   작은 휴대폰에서 '참가 신청' 버튼이 화면 밖으로 잘려 나갑니다.
      *
      *  isolate + overflow-hidden: 배경 사진이 이 칸 밖으로 삐져나오지
      *  않게 하고, 사진과 글의 앞뒤 순서를 이 칸 안에서만 따지게 합니다. */
-    <section className="relative isolate overflow-hidden bg-brand-900 text-white lg:flex lg:min-h-[calc(100svh-4rem)] lg:items-center">
+    <section className="relative isolate flex min-h-[calc(100svh-3.25rem)] items-center overflow-hidden bg-brand-900 text-white sm:min-h-[calc(100svh-4rem)]">
       {hasPhoto ? (
         <HeroSlides
           slides={slides}
