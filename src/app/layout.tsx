@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
-import { Analytics } from "@vercel/analytics/next";
 import { competition } from "@/config/competition";
 import { SiteNav } from "@/components/SiteNav";
 import "./globals.css";
@@ -140,21 +139,6 @@ export default function RootLayout({
         <SiteNav />
 
         {children}
-
-        {/* ------------------------------------------------------ 방문자 통계
-            Vercel 웹 애널리틱스 — '몇 명이 어느 페이지를 봤는지'만 셉니다.
-
-            · 화면에는 아무것도 보이지 않습니다.
-            · 쿠키를 쓰지 않고, 이름·연락처 같은 개인정보를 모으지 않습니다.
-              (신청자 정보는 여전히 구글폼에만 있습니다)
-            · 숫자는 Vercel 화면의 Analytics 탭에서 봅니다.
-
-            ★ 무료 요금제에서는 한 달에 셀 수 있는 양이 정해져 있습니다. ★
-              그 양을 넘기면 그 달의 통계만 더 이상 쌓이지 않습니다.
-              사이트 자체는 아무 문제 없이 그대로 동작합니다.
-
-            빼고 싶으면 이 줄과 맨 위 import 한 줄만 지우면 됩니다. */}
-        <Analytics />
       </body>
     </html>
   );
