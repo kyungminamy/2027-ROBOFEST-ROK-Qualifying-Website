@@ -591,9 +591,38 @@ export const competition = {
   //   현재 값은 임시 배분이며 담당자 확정이 필요합니다.
   // ==========================================================================
 
+  /* ==========================================================================
+   *  【 logoSrc — 종목 로고 】
+   *
+   *  ROBOFEST 본부가 만든 종목별 로고입니다. 파일은 public/categories/ 에
+   *  있고, 이름은 slug 와 같습니다 (game → /categories/game.png).
+   *
+   *  ★ 어디에 나오나 ★
+   *    종목 상세 페이지(종목 안내에서 '자세히'를 누르면 나오는 화면)의
+   *    맨 위에만 나옵니다. 종목 목록의 카드에는 넣지 않았습니다 —
+   *    카드에는 이미 남색 띠에 종목명이 있어서 같은 글자가 두 번
+   *    나오기 때문입니다.
+   *
+   *  ★ 로고는 '사진'이 아닙니다 ★
+   *    글자로 된 표식이라 잘라내면 안 됩니다. 상세 페이지에서는 잘리지
+   *    않게(object-contain) 통째로 넣습니다. 배경으로 깔거나 꽉 채우는
+   *    방식으로 바꾸지 마세요. 글자가 잘려 나갑니다.
+   *
+   *  【 로고를 바꾸려면 】
+   *   1. public/categories/ 에 같은 이름으로 덮어씁니다 (예: game.png)
+   *   2. 가로로 긴 그림입니다. 가로 600px 정도면 충분합니다.
+   *   3. 배경은 흰색이거나 투명이어야 합니다. 어두운 배경이면 페이지의
+   *      흰 바탕과 네모나게 어긋나 보입니다.
+   *
+   *  ⚠️ 경로를 비우거나 파일 이름을 틀리면 상세 페이지에 깨진 그림이
+   *     나옵니다. 로고를 빼고 싶으면 '' (빈 칸)으로 두세요. 빈 칸이면
+   *     아예 그리지 않습니다.
+   * ========================================================================== */
+
   categories: [
     {
       slug: 'game',
+      logoSrc: '/categories/game.png',
       name: 'Game',
       nameKo: '게임',
       summary: '매년 공개되는 미션을 자율주행 로봇으로 수행하는 ROBOFEST 대표 종목',
@@ -608,6 +637,7 @@ export const competition = {
     },
     {
       slug: 'exhibition',
+      logoSrc: '/categories/exhibition.png',
       name: 'Exhibition',
       nameKo: '전시',
       summary: '자유 주제의 창의 자율로봇 프로젝트를 전시하고 발표하는 종목',
@@ -621,6 +651,7 @@ export const competition = {
     },
     {
       slug: 'umc',
+      logoSrc: '/categories/umc.png',
       name: 'UMC',
       nameKo: '미지의 미션 챌린지',
       summary: '당일 공개되는 미션을 제한 시간(2시간) 안에 해결하는 즉석 문제해결 종목',
@@ -634,6 +665,7 @@ export const competition = {
     },
     {
       slug: 'bottlesumo',
+      logoSrc: '/categories/bottlesumo.png',
       name: 'BottleSumo',
       nameKo: '보틀스모',
       summary: '병을 밀어내고 상대 로봇과 겨루는 서바이벌 방식의 입문자 친화 종목',
@@ -648,6 +680,7 @@ export const competition = {
     },
     {
       slug: 'vcc',
+      logoSrc: '/categories/vcc.png',
       name: 'VCC',
       nameKo: '비전 중심 챌린지',
       summary: '카메라 영상인식(머신비전) 기반의 고급 로봇 종목',
@@ -661,6 +694,7 @@ export const competition = {
     },
     {
       slug: 'roboparade',
+      logoSrc: '/categories/roboparade.png',
       name: 'RoboParade',
       nameKo: '로보퍼레이드',
       summary: '장식한 자율주행 로봇이 정해진 경로를 행진하는 창의·예술 종목',
@@ -676,6 +710,7 @@ export const competition = {
     },
     {
       slug: 'roboarts',
+      logoSrc: '/categories/roboarts.png',
       name: 'RoboArts',
       nameKo: '로보아츠',
       summary: '음악·미술·퍼포먼스 등 예술과 로봇을 결합한 종목',
@@ -689,6 +724,7 @@ export const competition = {
     },
     {
       slug: 'robomed',
+      logoSrc: '/categories/robomed.png',
       name: 'RoboMed',
       nameKo: '로보메드',
       summary: '의료·바이오메디컬 분야의 로봇 및 기기 프로젝트 종목',

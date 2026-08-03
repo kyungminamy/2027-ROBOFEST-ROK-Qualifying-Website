@@ -61,3 +61,14 @@ background_images/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 종목 로고 원본 (ROBOFEST 본부 제공)
+# 사이트가 쓰는 것은 public/categories/ 의 줄인 PNG 입니다.
+# ⚠️ 폴더 이름의 'catgories' 는 오타지만, 실제 폴더 이름이 그렇습니다.
+# ★ 원본은 이 컴퓨터에만 있습니다. 공용 구글 드라이브에도 올려 두세요. ★
+catgories image/
+
+# 검토 의견 슬라이드 (종목 카드 디자인 피드백)
+# ⚠️ 따옴표를 붙이지 마세요. .gitignore 에서는 따옴표도 글자로 취급되어
+#    이름에 따옴표가 든 폴더를 찾게 됩니다. 빈칸은 그냥 두면 됩니다.
+categories reference/

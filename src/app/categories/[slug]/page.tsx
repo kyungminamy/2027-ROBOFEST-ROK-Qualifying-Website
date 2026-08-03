@@ -127,6 +127,42 @@ export default async function CategoryDetailPage({
       />
 
       <main id="main" className="flex-1">
+        {/* ------------------------------------------------------- 종목 로고
+            ROBOFEST 본부가 만든 종목 로고입니다.
+            파일 경로는 config 의 categories → logoSrc 에서 정합니다.
+
+            ★ alt 를 비워 둔 것은 실수가 아닙니다 ★
+              바로 위 제목이 이미 'Game 게임'이라고 말하고 있습니다.
+              로고에도 같은 글자를 넣으면 화면 낭독기가 종목 이름을 두 번
+              읽습니다. 그래서 '읽지 않는 그림'으로 표시했습니다.
+
+            ★ object-contain 을 cover 로 바꾸지 마세요 ★
+              로고는 글자로 된 표식이라 칸에 꽉 채우면 양옆이 잘립니다.
+
+            ℹ️ 로고마다 가로세로 비율이 제각각입니다(2:1 ~ 5.5:1).
+               그래서 '높이'를 정해 두고 가로는 알아서 늘어나게 했습니다.
+               그래야 8개 종목의 로고가 모두 같은 크기로 보입니다. */}
+        {/* ★ 바탕이 흰색인 것은 일부러입니다 (회색으로 바꾸지 마세요) ★
+            로고 8개 중 5개(Game·Exhibition·VCC·RoboArts·RoboMed)는 배경이
+            투명하지 않고 '흰색이 칠해진' 그림입니다. 바탕을 회색으로 두면
+            그 5개만 흰 네모가 도드라져 보입니다. 바탕을 흰색으로 맞추면
+            투명한 것과 흰 것이 똑같아 보입니다. */}
+        {category.logoSrc && (
+          <div className="border-b border-brand-100 bg-paper">
+            <div className={container}>
+              <div className="flex h-24 items-center justify-center py-4 sm:h-32">
+                {/* eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 그림만 쓰므로 기본 img 로 충분합니다. */}
+                <img
+                  src={category.logoSrc}
+                  alt=""
+                  decoding="async"
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className={container}>
           {/* ============================================ 1) 누가 나갈 수 있나 */}
           <Section title="누가 나갈 수 있나요">
