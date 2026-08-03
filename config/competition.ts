@@ -813,7 +813,11 @@ export const competition = {
       '부산광역시교육청은 지난 10년 동안 SW교육페스티벌, 학생 해커톤, 로봇·코딩 캠프처럼 학생이 직접 참여하는 SW·AI 교육을 이어 왔습니다. 이번 국내예선대회는 그 위에서 여는 전국 단위 대회입니다.',
     ],
 
-    /** 숫자로 보는 ROBOFEST — 큰 숫자와 설명 */
+    /* 숫자로 보는 ROBOFEST — 큰 숫자와 설명
+       ★ 이 구역은 홈과 'ROBOFEST 소개' 두 곳에 똑같이 나옵니다 ★
+         화면을 그리는 곳은 src/components/FigureBand.tsx 한 군데뿐이라,
+         아래 숫자를 고치면 두 페이지가 함께 바뀝니다. */
+    figuresHeading: '숫자로 보는 ROBOFEST',
     figures: [
       { value: '1999', unit: '년', label: '시작 연도' },
       { value: '39', unit: '개국', label: '참가 국가' },

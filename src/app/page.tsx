@@ -4,6 +4,7 @@ import {
   venueDisplayName,
 } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
+import { FigureBand } from "@/components/FigureBand";
 import { Hero } from "@/components/Hero";
 import { HomeIntro } from "@/components/HomeIntro";
 import { HomeSection } from "@/components/HomeSection";
@@ -48,10 +49,22 @@ export default function Home() {
       <Hero />
 
       <main id="main" className="flex-1">
-        {/* 2. 대회 소개 — 흰 배경 */}
+        {/* 2. 숫자로 보는 ROBOFEST — 첫 화면에 '붙어 있는' 남색 띠
+               ROBOFEST 소개(/about)에 나오는 것과 똑같은 구역입니다.
+               한 파일(FigureBand)을 두 곳에서 씁니다.
+
+               ★ 첫 화면과 붙어 있는 것이 의도입니다 ★
+                 사이에 여백을 넣지 마세요. 첫 화면도 같은 남색이라
+                 사진이 그대로 남색 띠로 이어져 보입니다.
+
+               ⚠️ 첫 화면(Hero)과 이 구역 사이에 다른 것을 끼워 넣지
+                  마세요. 끼우면 위 '이어져 보이는' 효과가 깨집니다. */}
+        <FigureBand />
+
+        {/* 3. 대회 소개 — 흰 배경 */}
         <HomeIntro />
 
-        {/* 3. 운영 종목 — 옅은 파랑 배경 */}
+        {/* 4. 운영 종목 — 옅은 파랑 배경 */}
         <HomeSection
           tone="soft"
           title={`운영 종목 ${competition.categories.length}종목`}
@@ -69,7 +82,7 @@ export default function Home() {
           </ul>
         </HomeSection>
 
-        {/* 4. 일정 — 흰 배경.
+        {/* 5. 일정 — 흰 배경.
                자세한 설명은 /schedule 에 있고, 여기서는 날짜와 제목만
                훑어볼 수 있게 합니다. config 의 milestones 를 그대로 씁니다. */}
         <HomeSection
@@ -111,7 +124,7 @@ export default function Home() {
           </ol>
         </HomeSection>
 
-        {/* 5. 장소 — 옅은 파랑 배경.
+        {/* 6. 장소 — 옅은 파랑 배경.
                ⚠️ 장소가 확정 전이면 그 사실을 반드시 함께 보여 줍니다.
                   숙소·교통편을 미리 예약하는 분이 있기 때문입니다. */}
         <HomeSection
@@ -148,7 +161,7 @@ export default function Home() {
           </dl>
         </HomeSection>
 
-        {/* 6. 접수 안내 — 흰 배경. 접수 전 / 접수 중 / 마감에 따라 바뀝니다. */}
+        {/* 7. 접수 안내 — 흰 배경. 접수 전 / 접수 중 / 마감에 따라 바뀝니다. */}
         <RegistrationNotice />
       </main>
 
