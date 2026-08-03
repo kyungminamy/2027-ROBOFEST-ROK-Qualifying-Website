@@ -9,6 +9,7 @@ import { Hero } from "@/components/Hero";
 import { HomeIntro } from "@/components/HomeIntro";
 import { HomeSection } from "@/components/HomeSection";
 import { RegistrationNotice } from "@/components/RegistrationNotice";
+import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 
 /* ============================================================================
@@ -74,9 +75,21 @@ export default function Home() {
         >
           {/* 휴대폰 1개 / 태블릿 2개 / 넓은 화면 3개씩 */}
           <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {competition.categories.map((category) => (
+            {competition.categories.map((category, index) => (
               <li key={category.slug}>
-                <CategoryCard category={category} />
+                {/* 카드가 아래에서 떠오릅니다.
+                    시간차(delayMs)를 index % 3 으로 주는 이유:
+                    넓은 화면에서 한 줄에 3개씩 놓이므로, 한 줄 안에서
+                    왼쪽→오른쪽으로 차례차례 뜨는 것처럼 보입니다.
+                    8개에 순서대로 시간차를 주면 마지막 카드가 0.56초나
+                    기다려서 느리게 느껴집니다.
+
+                    ⚠️ h-full 이 필요합니다. Reveal 이 카드를 한 겹 감싸므로,
+                       이 겹이 칸 높이를 꽉 채우지 않으면 같은 줄 카드들의
+                       높이가 서로 어긋납니다. */}
+                <Reveal className="h-full" delayMs={(index % 3) * 80}>
+                  <CategoryCard category={category} />
+                </Reveal>
               </li>
             ))}
           </ul>
@@ -96,28 +109,38 @@ export default function Home() {
           moreLabel="전체 일정 자세히 보기"
         >
           <ol className="grid gap-x-10 sm:grid-cols-2">
-            {milestones.map((milestone) => {
+            {milestones.map((milestone, index) => {
               /* 아직 확정되지 않은 날짜에는 '예정'을 붙입니다.
                  항목마다 isEstimated 가 없을 수도 있어 'in' 으로 확인합니다. */
               const isEstimated =
                 "isEstimated" in milestone && milestone.isEstimated === true;
 
               return (
-                <li
-                  key={milestone.date + milestone.title}
-                  className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-brand-100 py-4"
-                >
-                  <span className="tabular shrink-0 text-sm font-bold text-brand-700">
-                    {formatKoreanDate(milestone.date)}
-                  </span>
-                  <span className="text-base font-bold text-brand-900">
-                    {milestone.title}
-                  </span>
-                  {isEstimated && (
-                    <span className="rounded border border-brand-200 bg-brand-50 px-1.5 py-0.5 text-xs font-bold text-brand-700">
-                      예정
+                /* ★ li 에 있던 모양(줄·여백·flex)을 Reveal 로 옮겼습니다 ★
+                     떠오르는 것이 '내용'이라서 아래 줄(border-b)도 같이
+                     움직여야 합니다. li 에 줄을 남겨 두면 글자만 움직이고
+                     줄은 가만히 있어 어긋나 보입니다.
+                     ⚠️ 모양을 다시 li 로 옮기지 마세요.
+
+                   시간차는 index % 2 — 넓은 화면에서 한 줄에 2개씩
+                   놓이므로 왼쪽·오른쪽이 살짝 엇갈려 뜹니다. */
+                <li key={milestone.date + milestone.title}>
+                  <Reveal
+                    delayMs={(index % 2) * 80}
+                    className="flex flex-wrap items-baseline gap-x-3 gap-y-1 border-b border-brand-100 py-4"
+                  >
+                    <span className="tabular shrink-0 text-sm font-bold text-brand-700">
+                      {formatKoreanDate(milestone.date)}
                     </span>
-                  )}
+                    <span className="text-base font-bold text-brand-900">
+                      {milestone.title}
+                    </span>
+                    {isEstimated && (
+                      <span className="rounded border border-brand-200 bg-brand-50 px-1.5 py-0.5 text-xs font-bold text-brand-700">
+                        예정
+                      </span>
+                    )}
+                  </Reveal>
                 </li>
               );
             })}

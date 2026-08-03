@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { competition, formatKoreanDate } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
+import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 
@@ -64,33 +65,42 @@ export default function SchedulePage() {
                     key={milestone.date + milestone.title}
                     className="relative pb-7 pl-6 last:pb-0"
                   >
-                    {/* 점 — 왼쪽 선 위에 겹쳐 놓습니다 */}
+                    {/* 점 — 왼쪽 선 위에 겹쳐 놓습니다.
+                        ★ 점은 일부러 움직이지 않습니다 ★
+                          점과 왼쪽 세로선은 '일정표의 뼈대'입니다. 뼈대는
+                          가만히 있고 그 위의 글만 떠오르는 편이, 선까지
+                          함께 흔들리는 것보다 안정적으로 보입니다.
+                        ⚠️ 이 점을 Reveal 안으로 넣지 마세요. 위치를 li 기준
+                           (absolute)으로 잡고 있어서 안으로 들어가면
+                           기준이 바뀌어 엉뚱한 자리로 갑니다. */}
                     <span
                       aria-hidden="true"
                       className="absolute -left-[7px] top-2 h-3 w-3 rounded-full bg-brand-600 ring-4 ring-paper"
                     />
 
-                    <p className="tabular flex flex-wrap items-center gap-x-2 text-sm font-bold text-brand-700">
-                      {formatKoreanDate(milestone.date)}
-                      {isEstimated && (
-                        /* 확정되지 않은 날짜임을 알려 줍니다.
-                           (예: Game 미션 공개일은 ROBOFEST 본부가 정합니다) */
-                        <span className="rounded border border-brand-200 bg-brand-50 px-1.5 py-0.5 text-xs font-bold text-brand-700">
-                          예정
-                        </span>
-                      )}
-                    </p>
-
-                    <h3 className="mt-1 text-base font-bold text-brand-900 sm:text-lg">
-                      {milestone.title}
-                    </h3>
-
-                    {/* description 이 빈칸이면 이 줄은 나오지 않습니다 */}
-                    {milestone.description && (
-                      <p className="mt-1 text-sm text-ink-soft sm:text-base">
-                        {milestone.description}
+                    <Reveal>
+                      <p className="tabular flex flex-wrap items-center gap-x-2 text-sm font-bold text-brand-700">
+                        {formatKoreanDate(milestone.date)}
+                        {isEstimated && (
+                          /* 확정되지 않은 날짜임을 알려 줍니다.
+                             (예: Game 미션 공개일은 ROBOFEST 본부가 정합니다) */
+                          <span className="rounded border border-brand-200 bg-brand-50 px-1.5 py-0.5 text-xs font-bold text-brand-700">
+                            예정
+                          </span>
+                        )}
                       </p>
-                    )}
+
+                      <h3 className="mt-1 text-base font-bold text-brand-900 sm:text-lg">
+                        {milestone.title}
+                      </h3>
+
+                      {/* description 이 빈칸이면 이 줄은 나오지 않습니다 */}
+                      {milestone.description && (
+                        <p className="mt-1 text-sm text-ink-soft sm:text-base">
+                          {milestone.description}
+                        </p>
+                      )}
+                    </Reveal>
                   </li>
                 );
               })}

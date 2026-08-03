@@ -3,6 +3,7 @@ import Link from "next/link";
 import { competition } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
 import { PageHeader } from "@/components/PageHeader";
+import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 
@@ -89,9 +90,16 @@ export default function CategoriesPage() {
             </p>
 
             <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-              {categories.map((category) => (
+              {categories.map((category, index) => (
                 <li key={category.slug}>
-                  <CategoryCard category={category} />
+                  {/* 홈의 종목 카드와 같은 '아래에서 떠오르는' 효과입니다.
+                      시간차는 index % 2 — 이 페이지는 한 줄에 2개씩
+                      놓이므로 왼쪽·오른쪽이 살짝 엇갈려 뜹니다.
+                      ⚠️ h-full 이 필요합니다. 없으면 같은 줄 카드의 높이가
+                         서로 어긋납니다. */}
+                  <Reveal className="h-full" delayMs={(index % 2) * 80}>
+                    <CategoryCard category={category} />
+                  </Reveal>
                 </li>
               ))}
             </ul>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { competition } from "@/config/competition";
 import { FigureBand } from "@/components/FigureBand";
 import { PageHeader } from "@/components/PageHeader";
+import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 import { ArrowRight, ExternalLink } from "@/components/icons";
@@ -78,9 +79,14 @@ export default function AboutPage() {
               다른 로봇 대회와 무엇이 다른가요
             </h2>
 
+            {/* Reveal 은 <div> 를 그대로 그리므로, 예전 <div> 자리에
+                그대로 끼워 넣었습니다. DOM 모양이 바뀌지 않아
+                first:border-t-0(첫 항목의 윗줄 없애기)이 그대로 동작합니다.
+                ⚠️ Reveal 을 <dl> 바로 안이 아닌 다른 겹으로 옮기지 마세요.
+                   그러면 '첫 번째'를 못 찾아 첫 항목에 윗줄이 생깁니다. */}
             <dl className="mt-8">
               {aboutPage.faq.map((item) => (
-                <div
+                <Reveal
                   key={item.q}
                   className="border-t border-brand-100 py-6 first:border-t-0 first:pt-0"
                 >
@@ -90,7 +96,7 @@ export default function AboutPage() {
                   <dd className="mt-2 text-base text-ink sm:text-lg">
                     {item.a}
                   </dd>
-                </div>
+                </Reveal>
               ))}
             </dl>
           </div>
@@ -111,25 +117,32 @@ export default function AboutPage() {
 
             <ol className="mt-8 space-y-4">
               {about.pillars.map((pillar, index) => (
-                <li
-                  key={pillar.title}
-                  className="flex gap-4 rounded-2xl border border-brand-100 bg-paper p-5 sm:gap-5 sm:p-6"
-                >
-                  {/* 번호는 '네 가지 중 몇 번째'라는 정보를 담고 있어
-                      화면에 드러냅니다. 낭독기에는 목록 번호가 이미
-                      전달되므로 중복해서 읽지 않도록 숨깁니다. */}
-                  <span
-                    aria-hidden="true"
-                    className="tabular shrink-0 text-2xl font-bold text-brand-200 sm:text-3xl"
+                /* ★ 상자 모양(테두리·여백·flex)을 li 에서 Reveal 로 옮겼습니다 ★
+                     떠오르는 것이 '상자 전체'라서 테두리도 같이 움직여야
+                     합니다. li 에 테두리를 남겨 두면 글자만 움직이고
+                     테두리는 가만히 있어 어긋나 보입니다.
+                   시간차는 위에서 아래로 차례차례 (네 개니까 최대 0.24초). */
+                <li key={pillar.title}>
+                  <Reveal
+                    delayMs={index * 80}
+                    className="flex gap-4 rounded-2xl border border-brand-100 bg-paper p-5 sm:gap-5 sm:p-6"
                   >
-                    {index + 1}
-                  </span>
-                  <div>
-                    <h3 className="text-base font-bold text-brand-900 sm:text-lg">
-                      {pillar.title}
-                    </h3>
-                    <p className="mt-1.5 text-base text-ink">{pillar.body}</p>
-                  </div>
+                    {/* 번호는 '네 가지 중 몇 번째'라는 정보를 담고 있어
+                        화면에 드러냅니다. 낭독기에는 목록 번호가 이미
+                        전달되므로 중복해서 읽지 않도록 숨깁니다. */}
+                    <span
+                      aria-hidden="true"
+                      className="tabular shrink-0 text-2xl font-bold text-brand-200 sm:text-3xl"
+                    >
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+                        {pillar.title}
+                      </h3>
+                      <p className="mt-1.5 text-base text-ink">{pillar.body}</p>
+                    </div>
+                  </Reveal>
                 </li>
               ))}
             </ol>

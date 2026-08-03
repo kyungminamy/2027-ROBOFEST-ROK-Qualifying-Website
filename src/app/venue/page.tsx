@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { competition, venueDisplayName } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
+import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 import { ExternalLink } from "@/components/icons";
@@ -138,7 +139,9 @@ export default function VenuePage() {
                 const description: string = way.description;
 
                 return (
-                  <div key={way.key}>
+                  /* Reveal 은 <div> 를 그대로 그리므로 예전 <div> 자리에
+                     그대로 끼워 넣었습니다. 화면 구조가 바뀌지 않습니다. */
+                  <Reveal key={way.key}>
                     <h3 className="text-lg font-bold text-brand-900">
                       {way.label}
                     </h3>
@@ -161,7 +164,7 @@ export default function VenuePage() {
                     ) : (
                       <p className="mt-2 text-base text-ink-soft">추후 공지</p>
                     )}
-                  </div>
+                  </Reveal>
                 );
               })}
             </div>
