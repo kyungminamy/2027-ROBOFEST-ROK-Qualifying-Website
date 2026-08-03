@@ -25,21 +25,31 @@ export function CategoryCard({ category }: { category: Category }) {
     >
       <article className="flex h-full flex-col">
         {/* ------------------------------------------------------- 제목 띠
-            종목명을 남색 띠 위의 흰 상자에 넣습니다.
+            종목명을 남색 띠 위에 흰 글자로 얹습니다.
 
             ℹ️ 2026-08-03: 검토 의견('대회별 박스에 대회명을 박스처리해서
                음영 표시')에 따라 추가했습니다. 카드가 8장 늘어서 있을 때
                어디서 어디까지가 한 종목인지 한눈에 갈리게 하는 것이
                목적입니다.
 
+            ℹ️ 처음에는 종목명을 '흰 알약 상자' 안에 넣었다가 같은 날
+               없앴습니다. 띠 안에 또 상자가 들어가 테두리가 두 겹이 되고,
+               상자 크기가 종목명 길이에 따라 제각각이라 카드 여덟 장이
+               나란히 놓였을 때 들쭉날쭉해 보였습니다.
+               ★ 알약 상자를 되살리지 마세요 ★
+
             ★ 띠 색은 brand-700 입니다 ★
               사이트의 기본 브랜드색이며, 참가 신청의 '신청 전 안내' 머리
               띠와 같은 색입니다. 검토 의견의 '전체 Key 컬러와 어울리게'가
               바로 이 뜻입니다. 다른 색을 새로 만들지 마세요. */}
-        <div className="bg-brand-700 px-4 py-3 text-center">
-          <h3 className="inline-block rounded-md bg-paper px-3 py-1 text-base font-bold text-brand-900 sm:text-lg">
+        <div className="bg-brand-700 px-4 py-3.5 text-center">
+          <h3 className="text-base font-bold text-white sm:text-lg">
             {category.name}
-            <span className="ml-1.5 text-sm font-bold text-ink-soft sm:text-base">
+            {/* 한글 이름은 한 단계 연하게 — 영문 이름이 먼저 읽히도록.
+                ⚠️ 색을 brand-300 이하로 낮추지 마세요. 남색 바탕 위에서
+                   글자 대비가 규정(4.5:1)에 못 미칩니다.
+                   brand-200 은 5.9:1 로 통과합니다. */}
+            <span className="ml-1.5 text-sm font-bold text-brand-200 sm:text-base">
               {category.nameKo}
             </span>
           </h3>
