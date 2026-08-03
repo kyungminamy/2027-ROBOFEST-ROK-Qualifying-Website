@@ -60,3 +60,40 @@ export function ChevronDown({ className }: IconProps) {
     </svg>
   );
 }
+
+/** 왼쪽 꺾쇠 — 첫 화면 사진을 이전 것으로 넘길 때 */
+export function ChevronLeft({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
+}
+
+/** 오른쪽 꺾쇠 — 첫 화면 사진을 다음 것으로 넘길 때 */
+export function ChevronRight({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
+
+/** 일시정지 — 사진이 저절로 넘어가는 것을 멈춥니다 */
+export function Pause({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M10 5v14" />
+      <path d="M14 5v14" />
+    </svg>
+  );
+}
+
+/** 재생 — 멈춰 둔 슬라이드쇼를 다시 시작합니다 */
+export function Play({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} fill="currentColor">
+      <path d="M8 5.5v13l11-6.5z" />
+    </svg>
+  );
+}

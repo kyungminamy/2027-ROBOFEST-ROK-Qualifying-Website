@@ -220,6 +220,32 @@ time,
   animation-delay: 0.16s;
 }
 
+/* ==========================================================================
+ *  첫 화면 슬라이드쇼 — 다음 사진까지 남은 시간 막대
+ *
+ *  ★ 시간(몇 초에 걸쳐 채울지)은 여기가 아니라 config 의
+ *    heroSlideIntervalMs 에서 정합니다. ★
+ *
+ *  width 가 아니라 transform(scaleX)으로 늘립니다.
+ *  그래야 화면이 부드럽게 그려집니다.
+ * ========================================================================== */
+@keyframes heroProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hero-progress {
+  transform-origin: left center;
+  animation-name: heroProgress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
 /* 움직임을 불편해하는 분에게는 애니메이션을 끕니다. 지우지 마세요. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -228,6 +254,16 @@ time,
 
   .rise {
     animation: none;
+  }
+
+  /* 막대가 움직이지 않게 하고, 사진이 바뀔 때 서서히 겹치는 효과도 끕니다 */
+  .hero-progress {
+    animation: none;
+    transform: scaleX(1);
+  }
+
+  .hero-photo {
+    transition: none !important;
   }
 }
 
