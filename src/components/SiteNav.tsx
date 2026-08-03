@@ -58,20 +58,54 @@ export function SiteNav() {
         {/* 휴대폰 52px / 넓은 화면 64px */}
         <div className="flex h-[52px] items-center justify-between gap-2 sm:h-16">
           {/* 로고 = 홈으로 가는 링크
-              config 의 logoSrc 가 비어 있으면 대회 이름 글자로 대신합니다.
-              (경로가 잘못돼도 깨진 이미지가 뜨지 않게 하기 위함) */}
+              ★ 두 로고를 '하나의 링크' 안에 함께 둡니다 (중요) ★
+                따로 나누면, 교육청 로고를 누른 사람이 교육청 누리집으로
+                갈 것이라고 기대하게 됩니다. 하나로 묶어 두면 '이 대회의
+                로고 묶음'으로 읽히고, 눌렀을 때 이 사이트 첫 화면으로
+                갑니다. 화면 낭독기에는 아래 aria-label 만 읽힙니다.
+
+              config 의 로고 경로가 둘 다 비어 있으면 대회 이름 글자로
+              대신합니다. (경로가 잘못돼도 깨진 이미지가 뜨지 않게 하기 위함) */}
           <Link
             href="/"
-            className="flex min-h-[44px] items-center rounded-lg pr-2"
+            aria-label={`${competition.shortName} 홈`}
+            className="flex min-h-[44px] items-center gap-3 rounded-lg pr-2 md:gap-4"
           >
-            {competition.logoSrc ? (
-              // eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다.
-              <img
-                src={competition.logoSrc}
-                alt={competition.shortName}
-                decoding="async"
-                className="block h-7 w-auto sm:h-9"
-              />
+            {competition.hostLogoSrc || competition.logoSrc ? (
+              <>
+                {/* 주최·주관 기관 로고 — 더 크고 먼저 옵니다 */}
+                {competition.hostLogoSrc && (
+                  // eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다.
+                  <img
+                    src={competition.hostLogoSrc}
+                    alt=""
+                    decoding="async"
+                    className="block h-7 w-auto sm:h-8 lg:h-9"
+                  />
+                )}
+
+                {/* 두 로고 사이의 얇은 세로선.
+                    로고가 둘 다 있을 때만 나옵니다. */}
+                {competition.hostLogoSrc && competition.logoSrc && (
+                  <span
+                    aria-hidden="true"
+                    className="hidden h-6 w-px bg-brand-200 md:block lg:h-7"
+                  />
+                )}
+
+                {/* 대회 로고 — 교육청 로고보다 작게.
+                    ⚠️ 휴대폰(768px 미만)에서는 숨깁니다. 둘 다 넣으면
+                       '참가 신청' 버튼과 '메뉴'가 밀려납니다. */}
+                {competition.logoSrc && (
+                  // eslint-disable-next-line @next/next/no-img-element -- 위와 같은 이유
+                  <img
+                    src={competition.logoSrc}
+                    alt=""
+                    decoding="async"
+                    className="hidden h-6 w-auto md:block lg:h-7"
+                  />
+                )}
+              </>
             ) : (
               <span className="text-sm font-bold leading-tight text-brand-900 sm:text-base">
                 {competition.shortName}
