@@ -86,7 +86,9 @@ export function HeroSlides({
 
   /* 자동 넘김 — 멈춤 상태이거나 사진이 1장이면 돌지 않습니다.
      index 가 바뀔 때마다 타이머를 다시 겁니다. 그래서 버튼으로 직접
-     넘기면 그 시점부터 다시 7초를 셉니다. */
+     넘기면 그 시점부터 간격을 처음부터 다시 셉니다.
+     ⚠️ 몇 초인지 여기에 적지 마세요. config 의 heroSlideIntervalMs 를
+        고쳤을 때 이 설명만 옛날 숫자로 남습니다. (실제로 그런 적 있음) */
   useEffect(() => {
     if (!many || paused) return;
     const timer = window.setTimeout(() => go(index + 1), intervalMs);
