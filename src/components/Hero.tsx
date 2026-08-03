@@ -37,7 +37,6 @@ export function Hero() {
      (경로가 잘못돼도 깨진 사진 대신 격자무늬가 보이게 하기 위함) */
   const { heroImage } = competition;
   const hasPhoto = heroImage.wide.trim() !== "" && heroImage.small.trim() !== "";
-  const credit: string = competition.heroImageCredit;
 
   return (
     <section
@@ -56,9 +55,13 @@ export function Hero() {
       {/* 좌우 여백만 주고 가운데 정렬은 하지 않습니다 (왼쪽 끝에 붙임).
           휴대폰 여백(px-5)은 다른 페이지와 똑같이 맞췄습니다. */}
       <div className="w-full px-5 sm:px-8 lg:px-12">
-        <div className="max-w-3xl py-14 sm:py-20 lg:py-24">
-          {/* 대회 정식 명칭 */}
-          <h1 className="rise max-w-[20ch] text-[1.75rem] leading-[1.25] sm:text-4xl lg:text-5xl">
+        <div className="max-w-4xl py-14 sm:py-20 lg:py-24">
+          {/* 대회 정식 명칭 — 첫 화면의 주인공입니다.
+              ★ 크기를 줄이지 마세요 ★ 구분선 아래 글을 모두 뺀 뒤로
+                이 제목이 첫 화면의 대부분을 차지하도록 키운 것입니다.
+              leading(줄 간격)을 1.1로 좁혀서 여러 줄이 한 덩어리로
+              보이게 했습니다. */}
+          <h1 className="rise text-[2rem] leading-[1.1] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl">
             {competition.name}
           </h1>
 
@@ -93,24 +96,14 @@ export function Hero() {
             </Link>
           </div>
 
-          {/* 주최·운영 기관 — 처음 보는 학부모가 '진짜 공식 대회인지'를
-              확인하는 줄입니다. 푸터에도 같은 내용이 있습니다. */}
-          <p className="mt-9 border-t border-white/15 pt-5 text-sm text-brand-200 sm:mt-10">
-            <span className="font-bold text-white">주최·주관</span>{" "}
-            {competition.host}
-            <span className="mx-2 text-white/30">|</span>
-            <span className="font-bold text-white">운영·공인</span>{" "}
-            {competition.operators.join(" · ")}
-          </p>
+          {/* ℹ️ 2026-07-31: 구분선 아래에 있던 글을 전부 뺐습니다.
+                 · 주최·주관 / 운영·공인 → 꼬리말(SiteFooter)에 그대로 있습니다.
+                 · 사진 출처 → 지금은 화면 어디에도 표시되지 않습니다.
 
-          {/* ⚠️ 사진 출처 — 지우지 마세요 (사진을 쓰는 동안은)
-                 지금 배경은 미국에서 열린 세계대회 사진입니다.
-                 이 줄이 없으면 부산 국내예선 현장 사진으로 오해합니다.
-                 CLAUDE.md: '세계대회와 국내예선을 절대 혼동시키지 말 것'.
-                 우리 대회 사진으로 바꾸면 config 에서 ''로 비우세요. */}
-          {hasPhoto && credit && (
-            <p className="mt-2 text-xs text-brand-200/80">사진: {credit}</p>
-          )}
+                 ⚠️ 배경 사진은 미국 LTU에서 열린 '세계대회' 사진입니다.
+                    부산 국내예선 사진이 아닙니다. 지금은 그 사실을 알리는
+                    문구가 화면에 없습니다. 사진을 계속 쓰려면 꼬리말 등
+                    다른 자리에 출처를 밝히는 편이 좋습니다. */}
         </div>
       </div>
     </section>
