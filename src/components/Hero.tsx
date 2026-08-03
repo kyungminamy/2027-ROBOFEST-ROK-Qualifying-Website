@@ -39,8 +39,20 @@ export function Hero() {
   const hasPhoto = heroImage.wide.trim() !== "" && heroImage.small.trim() !== "";
 
   return (
+    /* ★ 넓은 화면(1024px 이상)에서는 첫 화면이 화면 전체를 채웁니다 ★
+     *
+     *  calc(100svh - 4rem) 에서 4rem(64px)은 위 상단 메뉴의 높이입니다.
+     *  이걸 빼지 않으면 메뉴 높이만큼 넘쳐서, 첫 화면 아래쪽을 보려고
+     *  조금 스크롤해야 합니다. 메뉴 높이를 바꾸면 이 숫자도 같이 바꾸세요.
+     *
+     *  svh = 휴대폰 주소창이 보일 때를 기준으로 한 화면 높이입니다.
+     *  (vh 를 쓰면 주소창 때문에 화면이 잘리는 기기가 있습니다)
+     *
+     *  ⚠️ 휴대폰·작은 태블릿에는 일부러 적용하지 않았습니다.
+     *     좁은 화면에서 높이를 화면 전체로 고정하면, 글이 조금만 길어져도
+     *     버튼이 화면 밖으로 밀려납니다. */
     <section
-      className={`${hasPhoto ? "hero-photo" : "hero-field"} text-white`}
+      className={`${hasPhoto ? "hero-photo" : "hero-field"} text-white lg:flex lg:min-h-[calc(100svh-4rem)] lg:items-center`}
       style={
         hasPhoto
           ? ({
