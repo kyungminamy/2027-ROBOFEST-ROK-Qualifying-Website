@@ -916,7 +916,9 @@ export const competition = {
     robot: {
       wide: '/header/robot.jpg',
       small: '/header/robot-sm.jpg',
-      position: 'center',
+      /* 45% = 가운데보다 조금 위쪽을 보여 줍니다.
+         로봇 팔의 집게(머리) 부분이 띠 윗변에 딱 붙지 않게 하기 위함입니다. */
+      position: 'center 45%',
       overlay: 0.72,
       alt: '실험실에서 움직이는 흰색 로봇 팔',
     },
@@ -925,7 +927,10 @@ export const competition = {
     compass: {
       wide: '/header/compass.jpg',
       small: '/header/compass-sm.jpg',
-      position: 'center',
+      /* 62% = 가운데보다 아래쪽을 보여 줍니다.
+         나침반 눈금판이 사진 아래쪽에 있어, 가운데로 두면 판의 아랫부분이
+         잘립니다. */
+      position: 'center 62%',
       overlay: 0.58,
       alt: '나무 탁자 위에 놓인 황동 나침반',
     },
