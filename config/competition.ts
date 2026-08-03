@@ -729,9 +729,9 @@ export const competition = {
 
     /** 숫자로 보는 ROBOFEST — 큰 숫자와 설명 */
     figures: [
-      { value: '1999', label: '시작한 해', note: '미국 LTU' },
+      { value: '1999', unit: '년', label: '시작 연도' },
       { value: '39', unit: '개국', label: '참가 국가' },
-      { value: '38,700', unit: '여 명', label: '지금까지 참가한 학생' },
+      { value: '38,700', unit: '명', label: '총 참여 학생' },
       { value: '27', unit: '번', label: '치른 시즌' },
     ],
 

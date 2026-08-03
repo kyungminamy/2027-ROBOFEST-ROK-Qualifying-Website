@@ -65,9 +65,21 @@ export default function AboutPage() {
               숫자로 보는 ROBOFEST
             </h2>
 
-            <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
+            {/* ★ grid 가 아니라 flex 입니다 (바꾸지 마세요) ★
+                   grid 로 4칸을 나누면 칸 너비는 같아지지만, 숫자 길이가
+                   제각각이라('1999년' vs '38,700명') 눈에 보이는 간격은
+                   들쭉날쭉해집니다. flex + gap 은 항목 사이 간격 자체를
+                   똑같이 벌려 주므로 시각적으로 균일합니다. */}
+            <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-8 sm:gap-x-14 lg:gap-x-16">
               {aboutPage.figures.map((figure) => (
-                <div key={figure.label}>
+                /* 휴대폰에서는 한 줄에 정확히 2개씩 놓습니다.
+                   (basis 를 빼면 390px 화면에서 3개 + 1개로 갈라져
+                    마지막 하나만 덩그러니 남습니다)
+                   1.25rem 은 위 gap-x-10(40px)의 절반입니다. */
+                <div
+                  key={figure.label}
+                  className="max-sm:basis-[calc(50%-1.25rem)]"
+                >
                   <dt className="sr-only">{figure.label}</dt>
                   <dd>
                     {/* ⚠️ whitespace-nowrap 을 지우지 마세요.
@@ -84,11 +96,6 @@ export default function AboutPage() {
                     <span className="mt-2 block text-sm font-bold text-brand-200">
                       {figure.label}
                     </span>
-                    {"note" in figure && figure.note && (
-                      <span className="mt-0.5 block text-xs text-brand-200/80">
-                        {figure.note}
-                      </span>
-                    )}
                   </dd>
                 </div>
               ))}

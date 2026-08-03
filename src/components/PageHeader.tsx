@@ -34,7 +34,11 @@ export function PageHeader({
   return (
     <section className="hero-field text-white">
       <div className={container}>
-        <div className="py-10 sm:py-14">
+        {/* ★ 띠 높이 ★
+            2026-08-03에 1.5배쯤 키웠습니다. 그 전에는 넓은 화면에서 199px
+            이었는데, 아래 본문에 비해 눌린 느낌이 있었습니다.
+            줄이려면 아래 py- 값을 낮추면 됩니다. */}
+        <div className="py-16 sm:py-20 lg:py-24">
           {backHref && (
             <Link
               href={backHref}
@@ -45,10 +49,14 @@ export function PageHeader({
             </Link>
           )}
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl">{title}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl">{title}</h1>
 
+          {/* ⚠️ 여기에 max-w-[..ch] 를 다시 넣지 마세요.
+                 ch 는 영문 '0' 한 글자 너비 기준이라, 한글에서는 칸의
+                 절반 남짓에서 줄이 바뀝니다. 줄 길이는 위 container 가
+                 이미 정하고 있습니다. */}
           {description && (
-            <p className="mt-3 max-w-[52ch] text-base text-brand-100 sm:text-lg">
+            <p className="mt-4 text-base text-brand-100 sm:text-lg lg:text-xl">
               {description}
             </p>
           )}
