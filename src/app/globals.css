@@ -155,22 +155,20 @@ time,
 }
 
 /* ==========================================================================
- *  히어로 바탕 무늬
+ *  사진이 없을 때의 바탕 (.hero-field)
  *
- *  대회 사진이 아직 한 장도 없어서, 사진 대신 옅은 격자무늬로 첫 화면을
- *  채웁니다. 없는 사진을 지어내지 않기 위한 선택입니다.
- *  ★ 실제 대회 사진이 생기면 이 무늬 대신 사진을 넣어도 됩니다. ★
+ *  첫 화면과 하위 페이지 머리띠는 모두 사진을 씁니다. 이 규칙은 config 에
+ *  사진 경로가 비어 있거나 잘못됐을 때만 쓰이는 '대비책'입니다.
+ *  덕분에 경로가 틀려도 깨진 사진 대신 남색 띠가 나오고, 그 위의 흰 글자는
+ *  그대로 읽힙니다.
+ *
+ *  ℹ️ 2026-08-03: 예전에는 여기에 옅은 격자무늬를 깔았습니다.
+ *     사진이 한 장도 없던 시절, 없는 사진을 지어내는 대신 화면을 채우려고
+ *     넣은 것이었습니다. 이제 모든 화면에 실제 사진이 있어 격자무늬는
+ *     어디에도 나타나지 않으므로, 장식을 걷어내고 단색으로 되돌렸습니다.
  * ========================================================================== */
 .hero-field {
   background-color: var(--color-brand-900);
-  background-image:
-    linear-gradient(
-      to right,
-      rgb(255 255 255 / 0.06) 1px,
-      transparent 1px
-    ),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-  background-size: 44px 44px;
 }
 
 /* ==========================================================================
@@ -249,6 +247,43 @@ time,
 
 .rise-3 {
   animation-delay: 0.16s;
+}
+
+/* ==========================================================================
+ *  하위 페이지 머리띠의 배경 사진 (.header-photo)
+ *
+ *  ★ 사진과 막 진하기는 config/competition.ts 의 headerImages 에서 정합니다. ★
+ *
+ *  ★★★ 남색 막(overlay)을 지우지 마세요 ★★★
+ *   머리띠에는 흰 글자가 올라갑니다. 막이 없으면 밝은 사진 위에서 글자가
+ *   전혀 읽히지 않습니다. 진하기는 사진마다 다르게 줄 수 있도록
+ *   --header-overlay 값으로 받습니다. (config 의 overlay)
+ * ========================================================================== */
+.header-photo {
+  /* 사진을 못 불러왔을 때 남는 바탕색 (글자는 계속 읽힙니다) */
+  background-color: var(--color-brand-900);
+  background-image:
+    linear-gradient(
+      rgb(14 37 71 / var(--header-overlay, 0.88)),
+      rgb(14 37 71 / var(--header-overlay, 0.88))
+    ),
+    var(--header-image-small);
+  background-size: cover;
+  background-position: var(--header-pos, center);
+  background-repeat: no-repeat;
+}
+
+/* 화면이 넓어지면 고화질 사진으로 바꿉니다.
+   좁은 화면에서는 위의 작은 파일만 내려받습니다. */
+@media (min-width: 640px) {
+  .header-photo {
+    background-image:
+      linear-gradient(
+        rgb(14 37 71 / var(--header-overlay, 0.88)),
+        rgb(14 37 71 / var(--header-overlay, 0.88))
+      ),
+      var(--header-image-wide);
+  }
 }
 
 /* ==========================================================================
@@ -337,7 +372,11 @@ time,
     color: #000;
   }
 
-  .hero-field {
+  /* 배경 사진·남색 띠는 인쇄할 때 잉크만 먹으므로 흰 바탕으로 바꿉니다.
+     학교에서 공문처럼 출력하는 경우가 많습니다. */
+  .hero-field,
+  .hero-photo,
+  .header-photo {
     background: #fff !important;
     color: #000 !important;
   }

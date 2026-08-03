@@ -38,7 +38,11 @@ export default function AboutPage() {
 
   return (
     <>
-      <PageHeader title="ROBOFEST 소개" description={aboutPage.summary} />
+      <PageHeader
+        title="ROBOFEST 소개"
+        description={aboutPage.summary}
+        image={competition.headerImages.robot}
+      />
 
       <main id="main" className="flex-1">
         {/* ------------------------------------------------------- 여는 글 */}

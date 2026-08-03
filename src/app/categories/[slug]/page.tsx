@@ -123,6 +123,7 @@ export default async function CategoryDetailPage({
         description={category.summary}
         backHref="/categories"
         backLabel="종목 안내"
+        image={competition.headerImages.compass}
       />
 
       <main id="main" className="flex-1">

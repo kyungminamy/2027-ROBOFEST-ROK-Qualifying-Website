@@ -47,6 +47,7 @@ export default function VenuePage() {
       <PageHeader
         title="장소"
         description={`${venueDisplayName()}에서 열립니다.`}
+        image={competition.headerImages.compass}
       />
 
       <main id="main" className="flex-1">

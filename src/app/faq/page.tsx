@@ -39,6 +39,7 @@ export default function FaqPage() {
       <PageHeader
         title="자주 묻는 질문"
         description="접수와 규정에 대해 가장 많이 받는 질문을 모았습니다."
+        image={competition.headerImages.compass}
       />
 
       <main id="main" className="flex-1">

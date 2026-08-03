@@ -38,6 +38,7 @@ export default function ApplyPage() {
         description={`접수 기간: ${formatKoreanDate(
           registration.opensAt,
         )} ~ ${formatKoreanDate(registration.closesAt)}`}
+        image={competition.headerImages.hands}
       />
 
       <main id="main" className="flex-1">

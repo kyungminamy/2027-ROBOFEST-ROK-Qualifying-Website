@@ -37,6 +37,7 @@ export default function SchedulePage() {
         description={`대회는 ${formatKoreanDate(dates.day1)} ~ ${formatKoreanDate(
           dates.day2,
         )} 이틀간 열립니다.`}
+        image={competition.headerImages.compass}
       />
 
       <main id="main" className="flex-1">

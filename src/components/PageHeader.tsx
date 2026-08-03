@@ -18,11 +18,22 @@ import { ArrowRight } from "@/components/icons";
  *     같은 대회 사이트 안에 있다는 느낌을 유지하기 위해서입니다.
  * ========================================================================== */
 
+/** 머리띠 배경 사진 한 장 (config 의 headerImages 항목과 같은 모양) */
+export type HeaderImage = {
+  wide: string;
+  small: string;
+  position: string;
+  /** 사진 위에 덮는 남색 막의 진하기 (0~1). 밝은 사진일수록 크게. */
+  overlay: number;
+  alt: string;
+};
+
 export function PageHeader({
   title,
   description,
   backHref,
   backLabel,
+  image,
 }: {
   title: string;
   /** 제목 아래 한 줄 설명 (없으면 생략) */
@@ -30,9 +41,30 @@ export function PageHeader({
   /** 상위 페이지 주소 (없으면 되돌아가기 링크를 표시하지 않습니다) */
   backHref?: string;
   backLabel?: string;
+  /** 배경 사진 (없으면 남색 격자무늬가 나옵니다) */
+  image?: HeaderImage;
 }) {
+  /* 사진 경로가 비어 있으면 사진 없이 격자무늬로 돌아갑니다.
+     (경로가 잘못돼도 깨진 사진 대신 격자무늬가 보이게 하기 위함) */
+  const hasImage =
+    !!image && image.wide.trim() !== "" && image.small.trim() !== "";
+
   return (
-    <section className="hero-field text-white">
+    <section
+      className={`${hasImage ? "header-photo" : "hero-field"} text-white`}
+      /* 사진은 배경이라 화면 낭독기에 읽히지 않습니다.
+         내용을 설명하는 사진이 아니라 분위기용이므로 이대로 둡니다. */
+      style={
+        hasImage
+          ? ({
+              "--header-image-wide": `url(${image.wide})`,
+              "--header-image-small": `url(${image.small})`,
+              "--header-pos": image.position,
+              "--header-overlay": String(image.overlay),
+            } as React.CSSProperties)
+          : undefined
+      }
+    >
       <div className={container}>
         {/* ★ 띠 높이 ★
             2026-08-03에 1.5배쯤 키웠습니다. 그 전에는 넓은 화면에서 199px

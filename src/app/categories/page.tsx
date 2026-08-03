@@ -54,6 +54,7 @@ export default function CategoriesPage() {
       <PageHeader
         title="종목 안내"
         description={`${categories.length}개 종목을 운영합니다. 팀마다 한 종목을 선택해 참가합니다.`}
+        image={competition.headerImages.compass}
       />
 
       <main id="main" className="flex-1">
