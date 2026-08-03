@@ -6,7 +6,7 @@ import {
   formatKoreanDate,
   isRegistrationOpen,
 } from "@/config/competition";
-import { container } from "@/lib/layout";
+import { homeSection } from "@/lib/layout";
 import { useIsClient } from "@/lib/useIsClient";
 import { ArrowRight } from "@/components/icons";
 
@@ -83,13 +83,13 @@ export function RegistrationNotice() {
      실제로 신청할 수 있는 '접수 중'에만 상자와 진한 버튼을 씁니다. */
 
   return (
-    <section className="py-14 sm:py-20">
-      <div className={container}>
+    <section className="bg-paper py-20 sm:py-28 lg:py-32">
+      <div className={homeSection}>
         {state === "pending" && (
           /* 브라우저 계산 전 / 자바스크립트가 꺼진 경우에도
              '언제부터 언제까지'라는 사실은 그대로 보여 줍니다. */
           <div>
-            <h2 className="text-xl text-brand-900 sm:text-2xl">참가 접수</h2>
+            <h2 className="text-3xl text-brand-900 sm:text-4xl">참가 접수</h2>
             <p className="tabular mt-2 text-base text-ink sm:text-lg">
               접수 기간: {opensAt} ~ {closesAt}
             </p>
@@ -103,7 +103,7 @@ export function RegistrationNotice() {
 
         {state === "before" && (
           <div>
-            <h2 className="text-xl text-brand-900 sm:text-2xl">접수 예정</h2>
+            <h2 className="text-3xl text-brand-900 sm:text-4xl">접수 예정</h2>
             <p className="tabular mt-2 text-base text-ink sm:text-lg">
               참가 접수는 {opensAt}에 시작합니다.
             </p>
@@ -133,7 +133,7 @@ export function RegistrationNotice() {
             </p>
 
             <div className="p-6 sm:p-8">
-              <h2 className="text-2xl text-brand-900 sm:text-3xl">
+              <h2 className="text-3xl text-brand-900 sm:text-4xl">
                 지금 참가 신청할 수 있습니다
               </h2>
               <p className="tabular mt-2 text-base text-ink sm:text-lg">
@@ -152,7 +152,7 @@ export function RegistrationNotice() {
 
         {state === "closed" && (
           <div>
-            <h2 className="text-xl text-brand-900 sm:text-2xl">접수 마감</h2>
+            <h2 className="text-3xl text-brand-900 sm:text-4xl">접수 마감</h2>
             <p className="tabular mt-2 text-base text-ink sm:text-lg">
               {closesAt}에 참가 접수가 마감되었습니다.
             </p>

@@ -26,3 +26,23 @@ export const container = "mx-auto w-full max-w-3xl px-5 sm:px-6";
  *    (1024px → 약 82px, 1920px → 약 154px)
  */
 export const edgePadding = "px-5 sm:px-8 lg:px-[8%]";
+
+/**
+ * 첫 화면(홈)의 각 구역이 쓰는 폭.
+ *
+ * 본문 페이지(container)보다 넓습니다. 홈은 '무엇이 있는지 훑어보는 곳'이라
+ * 종목 카드를 한 줄에 3장까지 놓을 수 있어야 하기 때문입니다.
+ *
+ * ⚠️ 글(설명 문장)까지 이 폭으로 늘리지 마세요. 한 줄이 너무 길어져
+ *    읽기 어려워집니다. 문장에는 아래 proseWidth 를 함께 쓰세요.
+ */
+export const homeSection = "mx-auto w-full max-w-5xl px-5 sm:px-8 lg:px-12";
+
+/**
+ * 문장(설명글)의 최대 폭.
+ *
+ * 한글은 한 글자가 영문보다 넓어서, 줄이 길면 눈이 다음 줄을 찾기 어렵습니다.
+ * ⚠️ ch 단위(max-w-[46ch] 등)는 쓰지 마세요. ch 는 영문 '0' 한 글자를
+ *    기준으로 재기 때문에, 한글에서는 의도한 것의 절반쯤에서 줄이 바뀝니다.
+ */
+export const proseWidth = "max-w-3xl";

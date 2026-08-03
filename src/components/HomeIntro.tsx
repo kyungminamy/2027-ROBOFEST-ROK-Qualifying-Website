@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { competition } from "@/config/competition";
-import { container } from "@/lib/layout";
+import { homeSection, proseWidth } from "@/lib/layout";
 import { ArrowRight } from "@/components/icons";
 
 /* ============================================================================
@@ -26,9 +26,9 @@ export function HomeIntro() {
   const { about } = competition;
 
   return (
-    <section className="py-14 sm:py-20">
-      <div className={container}>
-        <h2 className="text-2xl text-brand-900 sm:text-3xl">
+    <section className="bg-paper py-20 sm:py-28 lg:py-32">
+      <div className={homeSection}>
+        <h2 className="text-3xl text-brand-900 sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]">
           {about.heading}
         </h2>
 
@@ -36,10 +36,12 @@ export function HomeIntro() {
                ch 단위는 영문 '0' 한 글자 너비를 기준으로 잽니다. 한글은 그보다
                두 배쯤 넓어서, 46ch 라고 적으면 실제로는 칸의 절반 남짓에서
                줄이 바뀝니다. 줄 길이는 container(=본문 폭)에 맡기세요. */}
-        <p className="mt-4 text-base text-ink sm:text-lg">{about.lead}</p>
+        <p className={`mt-4 text-base text-ink sm:mt-5 sm:text-lg ${proseWidth}`}>
+          {about.lead}
+        </p>
 
         {/* 특징 — 휴대폰에서는 한 줄에 1개, 넓은 화면에서는 2개 */}
-        <ul className="mt-10 grid gap-x-10 sm:grid-cols-2">
+        <ul className="mt-12 grid gap-x-12 sm:grid-cols-2">
           {about.pillars.map((pillar) => (
             <li
               key={pillar.title}
@@ -67,7 +69,7 @@ export function HomeIntro() {
 
         {/* 참가부터 세계대회까지의 흐름 —
             일정 안내 페이지의 세로선 목록과 같은 모양으로 맞췄습니다 */}
-        <p className="mt-12 text-base text-ink sm:text-lg">
+        <p className={`mt-16 text-base text-ink sm:text-lg ${proseWidth}`}>
           {about.journeyLead}
         </p>
 
