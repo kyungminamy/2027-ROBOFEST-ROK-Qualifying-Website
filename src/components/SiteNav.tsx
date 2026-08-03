@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { competition, visibleNavItems } from "@/config/competition";
-import { container } from "@/lib/layout";
 import { ChevronDown } from "@/components/icons";
 
 /* ============================================================================
@@ -24,9 +23,8 @@ import { ChevronDown } from "@/components/icons";
  *   메뉴가 저절로 닫히는' 편의 기능일 뿐이고, 없어도 메뉴는 동작합니다.
  *
  *  ★ 높이 ★
- *   휴대폰에서 52px 로 고정했습니다. 화면을 가리지 않으면서도
- *   손가락으로 누를 수 있는 최소 크기(44px)를 지키는 값입니다.
- *   더 줄이면 누르기 어려워집니다.
+ *   globals.css 의 --nav-h 한 곳에서 정합니다. 첫 화면(Hero)의 높이
+ *   계산도 같은 값을 쓰기 때문에, 여기에 숫자를 따로 적지 마세요.
  *
  *  ★ 지금 보고 있는 페이지 표시 ★
  *   글자를 진하게 하고 아래에 주황색 줄을 긋습니다. 색만으로 알리지 않는
@@ -54,9 +52,15 @@ export function SiteNav() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-brand-100 bg-paper">
-      <div className={container}>
-        {/* 휴대폰 52px / 넓은 화면 64px */}
-        <div className="flex h-[52px] items-center justify-between gap-2 sm:h-16">
+      {/* 좌우 여백만 주고 가운데 정렬은 하지 않습니다.
+          ★ 첫 화면(Hero)과 똑같은 여백 값을 씁니다 ★
+            그래야 로고 왼쪽 끝과 대회 제목 왼쪽 끝이 한 줄로 맞습니다.
+            예전에는 메뉴만 가운데 정렬된 좁은 칸을 써서, 넓은 화면에서
+            로고가 제목보다 한참 안쪽에서 시작했습니다. */}
+      <div className="w-full px-5 sm:px-8 lg:px-12">
+        {/* 높이는 globals.css 의 --nav-h 에서 옵니다 (한 곳에서 관리).
+            휴대폰 52px / 640px 이상 64px / 1024px 이상 80px */}
+        <div className="flex h-[var(--nav-h)] items-center justify-between gap-2">
           {/* 로고 = 홈으로 가는 링크
               ★ 두 로고를 '하나의 링크' 안에 함께 둡니다 (중요) ★
                 따로 나누면, 교육청 로고를 누른 사람이 교육청 누리집으로
@@ -80,7 +84,7 @@ export function SiteNav() {
                     src={competition.hostLogoSrc}
                     alt=""
                     decoding="async"
-                    className="block h-7 w-auto sm:h-8 lg:h-9"
+                    className="block h-7 w-auto sm:h-8 lg:h-12"
                   />
                 )}
 
@@ -89,7 +93,7 @@ export function SiteNav() {
                 {competition.hostLogoSrc && competition.logoSrc && (
                   <span
                     aria-hidden="true"
-                    className="hidden h-6 w-px bg-brand-200 md:block lg:h-7"
+                    className="hidden h-6 w-px bg-brand-200 md:block lg:h-10"
                   />
                 )}
 
@@ -102,7 +106,7 @@ export function SiteNav() {
                     src={competition.logoSrc}
                     alt=""
                     decoding="async"
-                    className="hidden h-6 w-auto md:block lg:h-7"
+                    className="hidden h-6 w-auto md:block lg:h-9"
                   />
                 )}
               </>
