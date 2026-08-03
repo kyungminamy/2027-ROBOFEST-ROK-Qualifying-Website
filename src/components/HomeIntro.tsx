@@ -55,21 +55,32 @@ export function HomeIntro() {
           ))}
         </ul>
 
-        {/* 한눈에 보는 사실 — 작은 알약 모양 */}
-        <ul className="mt-8 flex flex-wrap gap-2">
-          {about.facts.map((fact) => (
-            <li
-              key={fact}
-              className="rounded-full border border-brand-100 bg-brand-50 px-3.5 py-1.5 text-sm font-bold text-brand-800"
-            >
-              {fact}
-            </li>
-          ))}
-        </ul>
+        {/* ℹ️ 2026-08-03: 여기 있던 '한눈에 보는 사실' 알약 목록
+               ('전국 초·중·고' · '참가비 무료' · '8개 종목' …)을 없앴습니다.
+               다섯 가지 모두 바로 위 소개 글이나 아래 일정·신청 안내에
+               이미 나오는 내용이라, 같은 말을 한 번 더 하는 것 말고는
+               하는 일이 없었습니다.
+               ★ 되살리지 마세요 ★ 새로 알릴 것이 생기면 알약을 늘리지
+                 말고, 그 내용을 설명하는 자리에 문장으로 적으세요. */}
+
+        {/* 구분선 — 여기서 이야기가 바뀝니다.
+            위는 'ROBOFEST가 어떤 대회인가', 아래는 '어떻게 참가하는가'입니다.
+            알약 목록이 있을 때는 그것이 두 이야기 사이의 칸막이 노릇을
+            했는데, 없애고 나니 네 가지 특징과 참가 흐름이 한 덩어리로
+            붙어 보여서 선을 넣었습니다.
+
+            ℹ️ 위 여백(mt-10)이 아래(mt-14)보다 작은 것은 실수가 아닙니다.
+               바로 위 특징 목록이 이미 아래쪽에 py-5 만큼 여백을 가지고
+               있어서, 같은 숫자를 주면 선이 아래로 치우쳐 보입니다.
+
+            ℹ️ hr 은 '여기서 내용이 바뀝니다'라는 뜻을 가진 표준 태그라
+               화면 낭독기도 구분을 알려 줍니다. 그냥 선을 그리는 div 로
+               바꾸지 마세요. */}
+        <hr className="mt-10 border-t border-brand-100" />
 
         {/* 참가부터 세계대회까지의 흐름 —
             일정 안내 페이지의 세로선 목록과 같은 모양으로 맞췄습니다 */}
-        <p className={`mt-16 text-base text-ink sm:text-lg ${proseWidth}`}>
+        <p className={`mt-14 text-base text-ink sm:text-lg ${proseWidth}`}>
           {about.journeyLead}
         </p>
 
