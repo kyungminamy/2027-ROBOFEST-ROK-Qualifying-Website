@@ -157,17 +157,22 @@ export default function Home() {
           moreHref="/venue"
           moreLabel="오시는 길 자세히 보기"
         >
+          {/* Reveal 은 <div> 를 그대로 그리므로 예전 <div> 자리에 그대로
+              끼워 넣었습니다. 상자 두 개가 살짝 엇갈려 떠오릅니다. */}
           <dl className="grid gap-5 sm:grid-cols-2">
-            <div className="rounded-2xl border border-brand-100 bg-paper p-6">
+            <Reveal className="rounded-2xl border border-brand-100 bg-paper p-6">
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                 장소
               </dt>
               <dd className="mt-2 text-lg font-bold text-brand-900">
                 {venueDisplayName()}
               </dd>
-            </div>
+            </Reveal>
 
-            <div className="rounded-2xl border border-brand-100 bg-paper p-6">
+            <Reveal
+              delayMs={80}
+              className="rounded-2xl border border-brand-100 bg-paper p-6"
+            >
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                 주소
               </dt>
@@ -180,7 +185,7 @@ export default function Home() {
                   </span>
                 )}
               </dd>
-            </div>
+            </Reveal>
           </dl>
         </HomeSection>
 

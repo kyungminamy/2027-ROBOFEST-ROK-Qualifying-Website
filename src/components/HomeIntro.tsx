@@ -2,6 +2,7 @@ import Link from "next/link";
 import { competition } from "@/config/competition";
 import { homeSection, proseWidth } from "@/lib/layout";
 import { ArrowRight } from "@/components/icons";
+import { Reveal } from "@/components/Reveal";
 
 /* ============================================================================
  *  대회 소개 — 첫 화면에서 'ROBOFEST가 뭔가요?'에 답하는 부분
@@ -42,15 +43,26 @@ export function HomeIntro() {
 
         {/* 특징 — 휴대폰에서는 한 줄에 1개, 넓은 화면에서는 2개 */}
         <ul className="mt-12 grid gap-x-12 sm:grid-cols-2">
-          {about.pillars.map((pillar) => (
+          {about.pillars.map((pillar, index) => (
+            /* ★ 칸을 나누는 줄(border-t)은 li 에 그대로 둡니다 ★
+                 first:· nth-child(2): 는 '몇 번째 칸인지'를 보고 윗줄을
+                 없애는 규칙입니다. 이 class 를 Reveal 로 옮기면 Reveal 이
+                 언제나 li 의 첫째 자식이라 규칙이 전부 참이 되어, 네 칸
+                 모두 윗줄이 사라집니다. ⚠️ 옮기지 마세요.
+
+                 줄은 가만히 있고 글만 떠오릅니다. 줄은 칸을 나누는
+                 '틀'이라서, 틀은 고정하고 내용만 들어오는 편이
+                 안정적으로 보입니다. */
             <li
               key={pillar.title}
               className="border-t border-brand-100 py-5 first:border-t-0 first:pt-0 sm:[&:nth-child(2)]:border-t-0 sm:[&:nth-child(2)]:pt-0"
             >
-              <h3 className="text-base font-bold text-brand-900 sm:text-lg">
-                {pillar.title}
-              </h3>
-              <p className="mt-1.5 text-base text-ink">{pillar.body}</p>
+              <Reveal delayMs={(index % 2) * 80}>
+                <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+                  {pillar.title}
+                </h3>
+                <p className="mt-1.5 text-base text-ink">{pillar.body}</p>
+              </Reveal>
             </li>
           ))}
         </ul>
@@ -88,17 +100,25 @@ export function HomeIntro() {
           {about.journey.map((stage, index) => (
             <li key={stage.step} className="relative pb-7 pl-6 last:pb-0">
               {/* 순서를 나타내는 점. 화면 낭독기에는 <ol> 의 번호가 이미
-                  전달되므로, 이 점은 읽지 않도록 숨깁니다. */}
+                  전달되므로, 이 점은 읽지 않도록 숨깁니다.
+                  ★ 점은 일부러 움직이지 않습니다 ★ 왼쪽 세로선과 점은
+                    '흐름을 나타내는 뼈대'입니다. 일정 안내 페이지와 같은
+                    처리입니다.
+                  ⚠️ 이 점을 Reveal 안으로 넣지 마세요. 위치를 li 기준
+                     (absolute)으로 잡고 있어 안으로 들어가면 엉뚱한
+                     자리로 갑니다. */}
               <span
                 aria-hidden="true"
                 className="absolute -left-[7px] top-2 h-3 w-3 rounded-full bg-brand-600 ring-4 ring-paper"
               />
 
-              <h3 className="text-base font-bold text-brand-900 sm:text-lg">
-                <span className="tabular text-brand-500">{index + 1}. </span>
-                {stage.step}
-              </h3>
-              <p className="mt-1 text-base text-ink">{stage.body}</p>
+              <Reveal>
+                <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+                  <span className="tabular text-brand-500">{index + 1}. </span>
+                  {stage.step}
+                </h3>
+                <p className="mt-1 text-base text-ink">{stage.body}</p>
+              </Reveal>
             </li>
           ))}
         </ol>
