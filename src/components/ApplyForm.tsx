@@ -67,9 +67,11 @@ export function ApplyForm() {
 
         <div className="p-5 sm:p-6">
           <dl className="space-y-4">
+            {/* 제목 글자도 config 에서 가져옵니다.
+                '동의'는 따로 붙이는 표시가 아니라 제목의 일부입니다. */}
             <div>
               <dt className="text-sm font-bold text-brand-700 sm:text-base">
-                개인정보 처리
+                {registration.privacyNoticeTitle}
               </dt>
               <dd className="mt-1 text-sm text-ink sm:text-base">
                 {registration.privacyNotice}
@@ -78,7 +80,7 @@ export function ApplyForm() {
 
             <div>
               <dt className="text-sm font-bold text-brand-700 sm:text-base">
-                촬영 · 초상권
+                {registration.portraitRightsNoticeTitle}
               </dt>
               <dd className="mt-1 text-sm text-ink sm:text-base">
                 {registration.portraitRightsNotice}
