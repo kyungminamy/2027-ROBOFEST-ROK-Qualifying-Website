@@ -94,20 +94,21 @@ export function SiteNav() {
                 {competition.hostLogoSrc && competition.logoSrc && (
                   <span
                     aria-hidden="true"
-                    className="hidden h-6 w-px bg-brand-200 md:block lg:h-10"
+                    className="hidden h-6 w-px bg-brand-200 xl:block xl:h-10"
                   />
                 )}
 
                 {/* 대회 로고 — 교육청 로고보다 작게.
-                    ⚠️ 휴대폰(768px 미만)에서는 숨깁니다. 둘 다 넣으면
-                       '참가 신청' 버튼과 '메뉴'가 밀려납니다. */}
+                    ⚠️ 1280px 미만에서는 숨깁니다. 메뉴가 5개로 늘어난 뒤로,
+                       로고 두 개까지 넣으면 메뉴 글자와 겹칩니다.
+                       (ROBOFEST 이름은 첫 화면 제목과 브라우저 탭에 나옵니다) */}
                 {competition.logoSrc && (
                   // eslint-disable-next-line @next/next/no-img-element -- 위와 같은 이유
                   <img
                     src={competition.logoSrc}
                     alt=""
                     decoding="async"
-                    className="hidden h-6 w-auto md:block lg:h-9"
+                    className="hidden h-6 w-auto xl:block xl:h-9"
                   />
                 )}
               </>
@@ -120,7 +121,7 @@ export function SiteNav() {
 
           <div className="flex items-center gap-1">
             {/* ------------------------------------------- 넓은 화면: 펼친 메뉴 */}
-            <nav aria-label="주요 메뉴" className="hidden sm:block">
+            <nav aria-label="주요 메뉴" className="hidden lg:block">
               <ul className="flex items-center">
                 {items.map((item) => {
                   const current = isCurrent(pathname, item.href);
@@ -164,7 +165,7 @@ export function SiteNav() {
 
             {/* ------------------------------------- 휴대폰: 접히는 메뉴 (JS 불필요) */}
             {items.length > 0 && (
-              <details ref={menuRef} className="group relative sm:hidden">
+              <details ref={menuRef} className="group relative lg:hidden">
                 <summary
                   /* list-none: 삼각형 기본 표시를 없앱니다 */
                   className="flex min-h-[44px] cursor-pointer list-none items-center gap-1 rounded-lg px-2.5 text-sm font-bold text-brand-800"
