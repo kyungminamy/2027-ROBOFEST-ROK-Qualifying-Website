@@ -92,22 +92,18 @@ export function HomeIntro() {
           ))}
         </ol>
 
-        {/* 다음에 볼 만한 곳 — 여기서는 '신청하세요'라고 하지 않습니다.
-            신청 권유는 이 아래 접수 안내 구역이 담당합니다. */}
-        <p className="mt-10 flex flex-wrap gap-x-7 gap-y-3">
+        {/* 자세히 보기 — 다른 구역(종목·일정·장소)과 같은 모양의 버튼입니다.
+            ℹ️ 2026-08-03: ROBOFEST 소개 페이지(/about)를 만들면서 넣었습니다.
+               홈의 이 구역은 '요약'이고, 자세한 설명은 그 페이지에 있습니다.
+               여기서 '신청하세요'라고 하지 않는 이유: 신청 권유는 이 아래
+               접수 안내 구역이 담당합니다. */}
+        <p className="mt-10 sm:mt-12">
           <Link
-            href="/categories"
-            className="group inline-flex items-center gap-1.5 text-base font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
+            href="/about"
+            className="group inline-flex min-h-[52px] items-center gap-2 rounded-lg border-2 border-brand-200 bg-paper px-6 text-base font-bold text-brand-700 transition-colors hover:border-brand-400 hover:text-accent-600 sm:text-lg"
           >
-            종목 자세히 보기
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="/apply"
-            className="group inline-flex items-center gap-1.5 text-base font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
-          >
-            참가 자격 확인하기
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            ROBOFEST 소개 자세히 보기
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
           </Link>
         </p>
       </div>
