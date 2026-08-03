@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { competition, visibleNavItems } from "@/config/competition";
+import { edgePadding } from "@/lib/layout";
 import { ChevronDown } from "@/components/icons";
 
 /* ============================================================================
@@ -57,7 +58,7 @@ export function SiteNav() {
             그래야 로고 왼쪽 끝과 대회 제목 왼쪽 끝이 한 줄로 맞습니다.
             예전에는 메뉴만 가운데 정렬된 좁은 칸을 써서, 넓은 화면에서
             로고가 제목보다 한참 안쪽에서 시작했습니다. */}
-      <div className="w-full px-5 sm:px-8 lg:px-12">
+      <div className={`w-full ${edgePadding}`}>
         {/* 높이는 globals.css 의 --nav-h 에서 옵니다 (한 곳에서 관리).
             휴대폰 52px / 640px 이상 64px / 1024px 이상 80px */}
         <div className="flex h-[var(--nav-h)] items-center justify-between gap-2">

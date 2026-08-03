@@ -2,6 +2,7 @@ import Link from "next/link";
 import { competition, formatKoreanDate } from "@/config/competition";
 import { ArrowRight } from "@/components/icons";
 import { HeroSlides } from "@/components/HeroSlides";
+import { edgePadding } from "@/lib/layout";
 
 /* ============================================================================
  *  첫 화면 대표 영역 — 대회명, 일정, 신청 버튼 + 배경 사진 슬라이드쇼
@@ -111,7 +112,7 @@ export function Hero() {
       )}
 
       {!hasPhoto && (
-        <div className="relative w-full px-5 sm:px-8 lg:px-12">
+        <div className={`relative w-full ${edgePadding}`}>
           <div className="max-w-4xl py-14 sm:py-20 lg:py-24">{content}</div>
         </div>
       )}

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useIsClient } from "@/lib/useIsClient";
+import { edgePadding } from "@/lib/layout";
 import {
   ChevronLeft,
   ChevronRight,
@@ -121,7 +122,7 @@ export function HeroSlides({
       </div>
 
       {/* --------------------------------------------------------- 글·버튼 */}
-      <div className="relative w-full px-5 sm:px-8 lg:px-12">
+      <div className={`relative w-full ${edgePadding}`}>
         <div className="max-w-4xl py-14 sm:py-20 lg:py-24">
           {/* 넘김 조작줄 — 자바스크립트가 동작할 때만 나타납니다.
               사진이 1장뿐이면 넘길 것이 없으므로 나타나지 않습니다. */}
