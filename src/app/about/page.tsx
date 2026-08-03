@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { competition } from "@/config/competition";
+import { CountUp } from "@/components/CountUp";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
@@ -89,8 +90,12 @@ export default function AboutPage() {
                     {/* ⚠️ whitespace-nowrap 을 지우지 마세요.
                            이게 없으면 '38,700여 / 명' 처럼 숫자와 단위가
                            두 줄로 나뉘어 읽기 어려워집니다. */}
+                    {/* ⚠️ tabular 를 지우지 마세요.
+                           숫자가 올라가는 동안 자릿수마다 글자 너비가
+                           달라지면 숫자 전체가 좌우로 떨립니다.
+                           tabular 는 모든 숫자를 같은 너비로 그립니다. */}
                     <span className="tabular block whitespace-nowrap text-2xl font-bold leading-none sm:text-3xl">
-                      {figure.value}
+                      <CountUp value={figure.value} />
                       {"unit" in figure && figure.unit && (
                         <span className="ml-0.5 text-base font-bold sm:text-lg">
                           {figure.unit}
