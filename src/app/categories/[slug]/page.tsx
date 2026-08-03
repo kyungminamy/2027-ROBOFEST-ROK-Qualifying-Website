@@ -163,6 +163,36 @@ export default async function CategoryDetailPage({
           </div>
         )}
 
+        {/* ------------------------------------------------------- 소개 영상
+            로고 바로 아래, 본문이 시작되기 전에 나옵니다.
+
+            ★ 영상 번호는 config 의 categories → youtubeId 에서 정합니다 ★
+              비어 있는 종목은 이 칸이 아예 나오지 않습니다.
+              지금은 Game 에만 영상이 있습니다.
+
+            ℹ️ aspect-video = 가로세로 16:9.
+               유튜브 영상은 항상 이 비율이라 높이를 적지 않아도 화면
+               크기에 맞춰 알아서 늘어나고 줄어듭니다.
+               ★ 높이를 px 로 고정하지 마세요 ★ 휴대폰에서 위아래에 검은
+                 띠가 생기거나 화면이 옆으로 밀립니다.
+               (참가 신청의 구글폼과 달리 높이를 재서 적어 넣을 일이
+                없습니다. 구글폼은 비율이 정해져 있지 않아서 그렇습니다.) */}
+        {category.youtubeId && (
+          <div className={container}>
+            <div className="mt-10 overflow-hidden rounded-2xl bg-brand-900 sm:mt-12">
+              <iframe
+                className="aspect-video block w-full"
+                src={`https://www.youtube.com/embed/${category.youtubeId}`}
+                title={`${category.name} ${category.nameKo} 소개 영상`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+          </div>
+        )}
+
         <div className={container}>
           {/* ============================================ 1) 누가 나갈 수 있나 */}
           <Section title="누가 나갈 수 있나요">

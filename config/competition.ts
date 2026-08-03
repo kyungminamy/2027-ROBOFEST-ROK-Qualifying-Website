@@ -620,12 +620,38 @@ export const competition = {
    *  ⚠️ 경로를 비우거나 파일 이름을 틀리면 상세 페이지에 깨진 그림이
    *     나옵니다. 로고를 빼고 싶으면 '' (빈 칸)으로 두세요. 빈 칸이면
    *     아예 그리지 않습니다.
+   *
+   * --------------------------------------------------------------------------
+   *  【 youtubeId — 종목 소개 영상 】
+   *
+   *  종목 상세 페이지의 '무엇을 하는 종목인가요' 안에 영상이 들어갑니다.
+   *  빈 칸('')이면 그 종목에는 영상 칸이 아예 생기지 않습니다.
+   *  ★ 지금은 Game 에만 영상이 있습니다. 나머지는 구해지는 대로 채우세요. ★
+   *
+   *  【 무엇을 적나 — 주소 전체가 아니라 '영상 번호'만 】
+   *
+   *    유튜브 주소            : https://www.youtube.com/watch?v=hlNvoUl5_lc
+   *                                                          └─ 이 부분만 ─┘
+   *    공유 버튼의 짧은 주소  : https://youtu.be/hlNvoUl5_lc
+   *                                              └─ 이 부분만 ─┘
+   *
+   *    → youtubeId: 'hlNvoUl5_lc'
+   *
+   *  ⚠️ 주소를 통째로 붙여넣지 마세요. 영상이 나오지 않습니다.
+   *  ⚠️ ?si=... 나 &t=... 처럼 뒤에 붙은 것은 빼고 적으세요.
+   *  ⚠️ 번호를 잘못 적으면 화면에 유튜브 오류 메시지가 나옵니다.
+   *     사이트가 깨지지는 않지만, 바꾼 뒤에는 꼭 한 번 열어서 확인하세요.
+   *
+   *  ℹ️ 영상 크기는 맞출 필요가 없습니다. 유튜브 영상은 가로세로 비율이
+   *     항상 16:9 로 정해져 있어서 화면이 알아서 맞춥니다.
+   *     (참가 신청의 구글폼처럼 높이를 재서 적어 넣지 않아도 됩니다)
    * ========================================================================== */
 
   categories: [
     {
       slug: 'game',
       logoSrc: '/categories/game.png',
+      youtubeId: 'hlNvoUl5_lc',
       name: 'Game',
       nameKo: '게임',
       summary: '매년 공개되는 미션을 자율주행 로봇으로 수행하는 ROBOFEST 대표 종목',
@@ -641,6 +667,7 @@ export const competition = {
     {
       slug: 'exhibition',
       logoSrc: '/categories/exhibition.png',
+      youtubeId: 'k9kcZCDmm8Y',
       name: 'Exhibition',
       nameKo: '전시',
       summary: '자유 주제의 창의 자율로봇 프로젝트를 전시하고 발표하는 종목',
@@ -655,6 +682,7 @@ export const competition = {
     {
       slug: 'umc',
       logoSrc: '/categories/umc.png',
+      youtubeId: 'BqPwjH4DuIU',
       name: 'UMC',
       nameKo: '미지의 미션 챌린지',
       summary: '당일 공개되는 미션을 제한 시간(2시간) 안에 해결하는 즉석 문제해결 종목',
@@ -669,6 +697,7 @@ export const competition = {
     {
       slug: 'bottlesumo',
       logoSrc: '/categories/bottlesumo.png',
+      youtubeId: 'OwKmCqtBhZw',
       name: 'BottleSumo',
       nameKo: '보틀스모',
       summary: '병을 밀어내고 상대 로봇과 겨루는 서바이벌 방식의 입문자 친화 종목',
@@ -684,6 +713,7 @@ export const competition = {
     {
       slug: 'vcc',
       logoSrc: '/categories/vcc.png',
+      youtubeId: 'tMc7kyTQcSA',
       name: 'VCC',
       nameKo: '비전 중심 챌린지',
       summary: '카메라 영상인식(머신비전) 기반의 고급 로봇 종목',
@@ -698,6 +728,7 @@ export const competition = {
     {
       slug: 'roboparade',
       logoSrc: '/categories/roboparade.png',
+      youtubeId: 'Cd9d2tkCDB8',
       name: 'RoboParade',
       nameKo: '로보퍼레이드',
       summary: '장식한 자율주행 로봇이 정해진 경로를 행진하는 창의·예술 종목',
@@ -714,6 +745,7 @@ export const competition = {
     {
       slug: 'roboarts',
       logoSrc: '/categories/roboarts.png',
+      youtubeId: 'Lbhfv1HLzhc',
       name: 'RoboArts',
       nameKo: '로보아츠',
       summary: '음악·미술·퍼포먼스 등 예술과 로봇을 결합한 종목',
@@ -728,6 +760,7 @@ export const competition = {
     {
       slug: 'robomed',
       logoSrc: '/categories/robomed.png',
+      youtubeId: 'HFxABTz47D8',
       name: 'RoboMed',
       nameKo: '로보메드',
       summary: '의료·바이오메디컬 분야의 로봇 및 기기 프로젝트 종목',
