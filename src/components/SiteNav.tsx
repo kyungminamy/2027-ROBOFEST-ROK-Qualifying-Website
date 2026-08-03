@@ -52,7 +52,11 @@ export function SiteNav() {
   const { navCta } = competition;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-100 bg-paper">
+    /* nav-glass = 반투명 + 뒤쪽 흐리게 (globals.css 에 있습니다).
+       ★ 진하기는 globals.css 의 --nav-glass 에서 바꿉니다 (지금 0.45) ★
+         어두운 구역이 뒤로 지나갈 때 글자가 옅어 보입니다. 값을 올리면
+         진해집니다. 대비 수치표가 globals.css 설명에 있습니다. */
+    <header className="nav-glass sticky top-0 z-50 border-b border-brand-100">
       {/* 좌우 여백만 주고 가운데 정렬은 하지 않습니다.
           ★ 첫 화면(Hero)과 똑같은 여백 값을 씁니다 ★
             그래야 로고 왼쪽 끝과 대회 제목 왼쪽 끝이 한 줄로 맞습니다.
@@ -83,7 +87,11 @@ export function SiteNav() {
                   // eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다.
                   <img
                     src={competition.hostLogoSrc}
-                    alt=""
+                    /* ★ 이 alt 는 '그림이 안 뜰 때' 대신 보일 글자입니다 ★
+                       화면 낭독기는 이 글자를 읽지 않습니다. 위 Link 의
+                       aria-label 이 안쪽 내용을 덮기 때문입니다.
+                       자세한 이유는 config 의 hostLogoAlt 설명을 보세요. */
+                    alt={competition.hostLogoAlt}
                     decoding="async"
                     className="block h-7 w-auto sm:h-8 lg:h-12"
                   />
@@ -106,7 +114,9 @@ export function SiteNav() {
                   // eslint-disable-next-line @next/next/no-img-element -- 위와 같은 이유
                   <img
                     src={competition.logoSrc}
-                    alt=""
+                    /* 위 로고와 같은 이유입니다 — 그림이 안 뜰 때를 위한
+                       글자이며, 낭독기가 읽는 말은 바뀌지 않습니다. */
+                    alt={competition.logoAlt}
                     decoding="async"
                     className="hidden h-6 w-auto xl:block xl:h-9"
                   />
