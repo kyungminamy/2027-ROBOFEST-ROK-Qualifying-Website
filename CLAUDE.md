@@ -164,6 +164,7 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 
 ## Before you start work each session
 
+0. Read the top 2–3 entries of `docs/SESSION-LOG.md` — what happened recently, and which decisions are already settled. You have no memory of previous sessions; that file is the substitute. Append an entry there when the session's work is done. It is a record, not a rulebook: anything that must hold *from now on* belongs in this file instead.
 1. Skim `config/competition.ts` — it is the source of truth for competition facts, not this file.
 2. If asked to add a date or fact, put it in the config and reference it. Do not inline it.
 3. If a task would require a database, login, file uploads, email sending, cron, or an admin UI, stop and say so — out of scope by design; explain the unattended-failure reason.
