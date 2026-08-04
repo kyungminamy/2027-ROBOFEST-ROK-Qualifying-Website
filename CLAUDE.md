@@ -53,9 +53,13 @@ Rationale for TypeScript over plain JSON for content: a malformed edit fails the
 
 **The form is not ours and we cannot style it.** An embedded form is a cross-origin iframe: we control the box, Google controls everything inside it. Pretendard, 브랜드 색, `word-break: keep-all` — none of it crosses the boundary. Do not spend time trying. The design job is to make the page *around* the form good.
 
-**The iframe cannot auto-fit its height.** Browsers forbid measuring inside a cross-origin frame and Google exposes no resize signal, so the height is a hardcoded number in `config/competition.ts` (`embedHeightPx`). Consequences a successor must know:
+**⚠️ Since 2026-07-31 the 구글폼 contains a file-upload question, and that changes what the embed actually shows.** Google will not render questions inside a third-party iframe when the form has an upload question — uploading needs a Google login, which cannot happen inside someone else's page. So the frame shows **only the form title, the form's 설명글, and Google's own `설문지 작성` button**. No questions. This is Google policy, not our bug, and it cannot be fixed from our side. Everything below about height still applies, but read the trigger carefully.
+
+**2026-08-04 decision: `applyMode` stays `'embed'`.** The 설명글 carries 참가 규정, 팀 구성, 준비 사항 and the 개인정보 안내, and an applicant should be able to read that without clicking. `'link'` remains correct if the frame ever goes fully blank (school network blocking Google) — and note it would also remove the height chore entirely.
+
+**The iframe cannot auto-fit its height.** Browsers forbid measuring inside a cross-origin frame and Google exposes no resize signal, so the height lives in `config/competition.ts` as `embedHeight` — an object with five breakpoints (`narrowPhone` / `phone` / `largePhone` / `desktop` / `wideDesktop`), not a single number. Consequences a successor must know:
 - Too short → the form scrolls inside a box while the page also scrolls. Two scrollbars on a phone.
-- **Every time you add or remove a question in the 구글폼, the height is wrong again.** Re-measure and update the config. This is the one recurring manual task in the project — `docs/RUNBOOK.md` must explain it.
+- **Re-measure when the form's 설명글 or title changes — not when a question changes.** Questions are not rendered (see above), so adding or removing one does not move the height. This is the one recurring manual task in the project — `docs/RUNBOOK.md` §4 explains it.
 
 **Never rebuild the form's inputs in our own components.** It is technically possible to POST our own themed fields to Google's `formResponse` endpoint. It was considered and rejected, for reasons that still apply:
 - The endpoint is undocumented; Google can break it silently.
@@ -168,7 +172,8 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 ## Definition of done for handover (target 2026-08-14)
 
 - [ ] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`
-- [ ] `docs/RUNBOOK.md` — how to change a date, post a 공지, check 신청 현황, re-measure `embedHeightPx` after editing the 폼, flip `applyMode` to `'link'`, close 접수 (both the config *and* 구글폼 응답 받기), who to call
+- [x] `docs/RUNBOOK.md` — how to change a date, check 신청 현황, re-measure `embedHeight` after editing the 폼's 설명글, flip `applyMode` to `'link'`, close 접수 (구글폼 응답 받기 — the config date does *not* close it), who to call. Plus `docs/RUNBOOK-CLAUDE-CODE.md` for the same job via Claude Code. **Written 2026-08-03/04.** Its remaining `확인 필요` rows are listed in the RUNBOOK itself and are the departing owner's to fill.
+  - *(A 공지 feature was considered and dropped — announcements go in `config/competition.ts` directly. It used to be listed here; removed 2026-08-04 so this checklist stops asking for something that does not exist.)*
 - [ ] Successor has personally edited one file and seen it go live, while being watched
 - [ ] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does.
 - [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
