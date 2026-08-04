@@ -537,7 +537,13 @@ export const competition = {
   // ==========================================================================
   //  4. 대회 장소
   //  ⚠️ 2026-07-29 기준 '예정' 상태입니다. 계약 확정 후 isConfirmed를 true로 바꾸세요.
-  //     false인 동안에는 사이트에 '(예정)'이 자동으로 붙습니다.
+  //     false인 동안에는 '장소' 화면 맨 위에 '장소는 아직 확정 전입니다'
+  //     안내 박스가 나옵니다. true로 바꾸면 그 박스가 사라집니다.
+  //
+  //     ℹ️ 2026-08-04: 장소 '이름' 뒤에 붙던 '(예정)'은 담당자 요청으로
+  //        떼었습니다. 그래서 이 값이 false여도 이름은
+  //        '부산보건대학교 체육관' 으로만 나옵니다 — 미확정 표시는
+  //        위의 안내 박스가 담당합니다. (venueDisplayName 함수 참고)
   // ==========================================================================
 
   venue: {
@@ -1716,9 +1722,22 @@ export function divisionGradeRange(division: string): string | null {
   return null;
 }
 
-/** 장소명 — 미확정이면 '(예정)'을 자동으로 붙임 */
+/** 장소명 — 언제나 장소 이름만 돌려줍니다
+ *
+ *  ℹ️ 2026-08-04: 예전에는 venue.isConfirmed 가 false 일 때 이름 뒤에
+ *     '(예정)'을 자동으로 붙였습니다. 담당자 요청으로 떼었습니다.
+ *
+ *  ★ '아직 확정 전'이라는 사실은 없어진 것이 아닙니다 ★
+ *    /venue 화면 맨 위의 '장소는 아직 확정 전입니다' 안내 박스가
+ *    그 역할을 이어받았습니다. 그 박스는 venue.isConfirmed 가 false 인
+ *    동안에만 나옵니다. (src/app/venue/page.tsx)
+ *
+ *    그래서 지금은 한 곳(안내 박스)만 미확정을 말합니다.
+ *    이름 뒤에 '(예정)'을 다시 붙이고 싶으면 아래처럼 되돌리세요:
+ *      return competition.venue.isConfirmed
+ *        ? competition.venue.name
+ *        : `${competition.venue.name} (예정)`;
+ */
 export function venueDisplayName(): string {
-  return competition.venue.isConfirmed
-    ? competition.venue.name
-    : `${competition.venue.name} (예정)`;
+  return competition.venue.name;
 }
