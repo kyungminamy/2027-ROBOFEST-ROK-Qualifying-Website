@@ -82,6 +82,43 @@ docs/SESSION-LOG.md 의 맨 위 3개 항목과 CLAUDE.md 를 읽고 시작해 �
 
 ---
 
+## 2026-08-05 (6) — '일정'·'장소' 머리띠 배경 사진 교체
+
+**한 일**
+
+- **`/schedule`('일정') 과 `/venue`('장소') 머리띠 배경을 담당자가 준
+  `image/나침반.jpg`(지도 위의 나침반)로 바꿨습니다.** 바로 앞 항목
+  (종목 안내)과 같은 방식입니다.
+  - `config/competition.ts` 의 `headerImages` 에 **`compassMap` 항목을 새로
+    만들고**, 두 화면에서 `headerImages.compass` → `headerImages.compassMap`
+    으로 한 단어만 바꿨습니다.
+  - `public/header/compass-map.jpg`(가로 1600px, 167KB) 와
+    `compass-map-sm.jpg`(가로 900px, 71KB) 를 넣었습니다.
+    원본은 3360x2004 / 1.3MB 였습니다.
+  - `overlay` 0.68, `position` `center 52%`. 띠 비율(1440x395)로 잘라 막을
+    씌워 그려 보고 흰 글씨가 읽히는지 눈으로 확인했습니다.
+
+**⚠️ `compass` 와 `compassMap` 은 다른 사진입니다 — 헷갈리지 마세요**
+
+| 이름 | 사진 | 쓰는 화면 |
+|---|---|---|
+| `compass` | 나무 탁자 위 황동 나침반 | 자주 묻는 질문, 종목 상세 |
+| `compassMap` | 지도 위의 검은 나침반 | 일정, 장소 |
+| `modi` | 선반 위 로봇들 | 종목 안내 |
+| `robot` | 흰 로봇 팔 | 대회 소개, 참가 신청 |
+| `hands` | 로봇 손·사람 손 | (안 씀) |
+
+**`compass` 를 지우지 마세요.** '일정'·'장소'가 더 이상 쓰지 않게 되었지만
+'자주 묻는 질문'과 '종목 상세' 화면이 계속 쓰고 있습니다.
+
+- 확인: `npm run build` 성공(19개 화면 전부), `npx tsc --noEmit` 통과,
+  `/schedule`·`/venue` 는 `compass-map`, `/faq` 는 예전 `compass` 를
+  가리키는 것 확인.
+- 원본 폴더 `image/` 는 이번에도 저장소에 올리지 않았습니다
+  (앞 항목과 같은 이유).
+
+---
+
 ## 2026-08-05 (5) — '종목 안내' 머리띠 배경 사진 교체
 
 **한 일**

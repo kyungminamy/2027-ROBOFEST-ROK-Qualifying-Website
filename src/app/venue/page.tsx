@@ -49,7 +49,9 @@ export default function VenuePage() {
       <PageHeader
         title="장소"
         description={`${venueDisplayName()}에서 열립니다.`}
-        image={competition.headerImages.compass}
+        /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
+           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
+        image={competition.headerImages.compassMap}
       />
 
       <main id="main" className="flex-1">
