@@ -1,7 +1,8 @@
-# `image/` — 머리띠 사진 **원본** 보관함
+# `image/` — 사진 **원본** 보관함
 
-이 폴더는 **사이트가 직접 쓰지 않습니다.** 화면에 나가는 사진은
-`public/header/` 에 있는 줄인 파일들입니다.
+이 폴더는 **사이트가 직접 쓰지 않습니다.** 화면에 나가는 사진은 `public/`
+아래에 있는 줄인 파일들입니다 (머리띠는 `public/header/`, 본문에 들어가는
+사진은 `public/about/`).
 
 여기에는 그 원본(크고 무거운 파일)을 남겨 둡니다. 나중에 사진을 다시
 자르거나 다른 크기로 뽑아야 할 때 원본이 없으면 처음부터 사진을 다시
@@ -15,6 +16,12 @@
 | `나침반.jpg` | 3360×2004, 1.3MB | `public/header/compass-map.jpg`, `compass-map-sm.jpg` | 일정, 장소 |
 | `질문.jpg` | 7296×4225, 3.1MB | `public/header/question.jpg`, `question-sm.jpg` | 자주 묻는 질문 |
 | `로봇 손 사람 손.jpg` | 2160×2700, 0.9MB | `public/header/hands.jpg`, `hands-sm.jpg` | (지금은 안 씀) |
+| `대회장.jpg` | 4897×3266, 3.1MB | `public/about/hall.jpg`, `hall-sm.jpg` | ROBOFEST 소개 **(머리띠 아님, 본문 사진)** |
+
+> ⚠️ **`대회장.jpg` 는 세계대회 현장 사진입니다. 부산 국내예선 사진이
+> 아닙니다.** 그래서 화면에 '지난 ROBOFEST 세계대회 현장입니다'라는 설명이
+> 함께 나갑니다. 사진을 부산 사진으로 바꾸게 되면
+> `config/competition.ts` 의 `aboutPage.photo.caption` 도 같이 고치세요.
 
 `public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
 (`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.

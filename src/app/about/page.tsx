@@ -191,6 +191,36 @@ export default function AboutPage() {
                 {aboutPage.worldSupport.body}
               </p>
             </div>
+
+            {/* 대회장 사진 (2026-08-05 부산광역시교육청 요청)
+
+                ★ 아래 설명(caption)을 지우지 마세요 ★
+                 세계대회 사진이지 부산 국내예선 사진이 아닙니다.
+                 설명이 없으면 '부산 대회장이 이렇게 생겼구나' 하고
+                 오해하게 됩니다. 부산 장소는 아직 확정 전입니다.
+
+                ⚠️ next/image 를 쓰지 않는 이유는 venue 화면과 같습니다 —
+                   설정이 필요해 비개발자가 유지하기 어렵습니다.
+                   대신 화면 크기에 따라 두 장 중 하나만 내려받도록
+                   srcSet 을 지정했습니다. 좁은 화면은 900px 짜리만
+                   받으므로 휴대폰 데이터가 덜 듭니다. */}
+            <figure className="mt-10">
+              {/* eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다. */}
+              <img
+                src={aboutPage.photo.wide}
+                srcSet={`${aboutPage.photo.small} 900w, ${aboutPage.photo.wide} 1600w`}
+                sizes="(min-width: 640px) 42rem, 100vw"
+                alt={aboutPage.photo.alt}
+                width={1600}
+                height={1067}
+                loading="lazy"
+                decoding="async"
+                className="block h-auto w-full rounded-2xl border border-brand-100"
+              />
+              <figcaption className="mt-3 text-sm text-ink-soft">
+                {aboutPage.photo.caption}
+              </figcaption>
+            </figure>
           </div>
         </section>
 
