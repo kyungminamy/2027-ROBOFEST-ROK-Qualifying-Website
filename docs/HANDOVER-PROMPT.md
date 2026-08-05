@@ -56,10 +56,28 @@ setShown(t >= 1 ? value : format(n));
 
 ## 3. 사소하지만 고쳐 둘 것
 
-- **`CLAUDE.md` 58행이 `embedHeightPx` 라고 적고 있지만, 실제 config 키는 `embedHeight` 이며 값은 5개 구간을 가진 객체입니다** (`narrowPhone` / `phone` / `largePhone` / `desktop` / `wideDesktop`). 문서와 코드가 어긋나 있습니다.
-- 404 페이지가 영어입니다 ("This page could not be found.") — 한국어 사이트이므로 `src/app/not-found.tsx` 를 만들어 한국어로.
-- `docs/BUILD-GUIDE.ko.md` 는 폐기 안내문만 남은 파일입니다. 삭제하세요.
-- 현재 공유된 배포 주소는 **preview 배포**라 Vercel 로그인 화면이 먼저 뜹니다. 교육청·학교에 보낼 주소는 **production 주소**여야 합니다. RUNBOOK에 정식 주소를 적어 두세요.
+> **2026-08-05 확인: 이 절의 항목은 대부분 이미 처리되었습니다.**
+> 아래에 처리 결과를 함께 적어 둡니다. 지우지 않고 남기는 이유는,
+> '무엇을 왜 그렇게 정했는지'가 기록으로 남아야 하기 때문입니다.
+
+- ~~**`CLAUDE.md` 가 `embedHeightPx` 라고 적고 있다**~~ → **처리됨.** 지금은
+  실제 키 이름인 `embedHeight` 로 적혀 있습니다 (5개 구간:
+  `narrowPhone` / `phone` / `largePhone` / `desktop` / `wideDesktop`).
+- ~~404 페이지가 영어입니다~~ → **처리됨 (2026-08-05).**
+  `src/app/not-found.tsx` 를 만들어 한국어로 바꿨습니다.
+- ~~`docs/BUILD-GUIDE.ko.md` 는 폐기 안내문만 남은 파일입니다. 삭제하세요.~~
+  → **이 지적이 틀렸습니다 (2026-08-05 확인).** 그 파일은 안내문만 남은
+  파일이 아니라 **635줄짜리 전체 문서**입니다. 확인하지 않고 지웠다면
+  내용이 통째로 사라질 뻔했습니다. 이 파일은 '버린 계획(Supabase·자체 폼)'을
+  담고 있어 **따라 하면 안 되는 문서**이지만, 기록으로는 남겨 둡니다.
+  문서 지도(`docs/RUNBOOK-CLAUDE-CODE.md` 4절)에 🔴 표시가 되어 있습니다.
+- ~~공유된 주소가 preview 라 Vercel 로그인 화면이 먼저 뜹니다~~
+  → **절반만 맞았습니다 (2026-08-05 확인).** 로그인 화면이 뜨는 것은
+  **배포마다 새로 생기는 임시 주소**(`...-fwq4g492q.vercel.app` 처럼 생긴
+  것)뿐입니다. **공개 주소는 그냥 열립니다.**
+  공개 주소: `https://2027-robofest-rok-qualifying-websit.vercel.app`
+  (Vercel 의 Standard Protection 이 임시 주소만 막는 정상 설정입니다.
+  끄지 마세요. 자세히는 `docs/SESSION-LOG.md` 2026-08-04 항목)
 
 ---
 ---
@@ -186,7 +204,9 @@ config 키 이름을 추측하지 말고 config/competition.ts 를 실제로 읽
 
 ## 4. 프롬프트를 쓴 뒤 할 일
 
-1. **`CLAUDE.md` 171행에서 "post a 공지"를 지우세요.** 공지 기능을 만들지 않기로 정했으므로 그 체크리스트 항목은 이제 틀린 지시입니다. 같은 줄의 `embedHeightPx` 도 실제 키 이름인 `embedHeight` 로 고치세요.
+1. ~~**`CLAUDE.md` 에서 "post a 공지"를 지우세요.**~~ → **처리됨 (2026-08-04).**
+   공지 기능은 만들지 않기로 했으므로 그 체크리스트 항목은 삭제되었고,
+   `embedHeightPx` 도 실제 키 이름인 `embedHeight` 로 고쳐졌습니다.
 2. **RUNBOOK을 직접 읽으면서 따라해 보세요.** 날짜 하나를 바꿔 보고, 응답 시트를 내려받아 보고, `applyMode` 를 `'link'` 로 바꿨다 되돌려 보세요. 막히는 곳이 있으면 문서를 고칩니다.
 3. **동료 한 명에게 문서만 주고 시켜 보세요.** 옆에서 보되 알려주지 마세요. 못 하면 사람이 아니라 문서 문제입니다.
 4. **production 배포 주소를 문서에 적으세요.** 현재 공유되는 preview 주소는 Vercel 로그인 화면이 먼저 떠서, 교육청·학교에서는 사이트를 볼 수 없습니다.

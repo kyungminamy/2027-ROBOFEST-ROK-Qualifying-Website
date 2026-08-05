@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 2027 ROBOFEST World Championship 국내예선대회 누리집
 
-## Getting Started
+부산광역시교육청이 주최하는 **2027 ROBOFEST World Championship 대한민국 공식
+예선대회**의 안내 웹사이트입니다.
 
-First, run the development server:
+**공개 주소:** https://2027-robofest-rok-qualifying-websit.vercel.app
+
+| | |
+| --- | --- |
+| 참가 접수 | 2026. 9. 1.(화) ~ 10. 16.(금) |
+| 대회 | 2026. 11. 27.(금) ~ 11. 28.(토) |
+| 장소 | 부산보건대학교 체육관 *(확정 전)* |
+| 대상 | 전국 초·중·고 학생 · 8개 종목 · 참가비 무료 |
+
+---
+
+## 📖 먼저 읽을 문서 — 무엇을 하려는지에 따라 다릅니다
+
+| 하려는 일 | 읽을 문서 |
+| --- | --- |
+| **사이트를 운영·수정한다** (날짜 변경, 접수 마감 등) | **[`docs/RUNBOOK.md`](docs/RUNBOOK.md)** ← 대부분 여기입니다 |
+| 새 화면을 만드는 등 큰 작업을 한다 | [`docs/RUNBOOK-CLAUDE-CODE.md`](docs/RUNBOOK-CLAUDE-CODE.md) |
+| 지난 작업 내역을 알고 싶다 | [`docs/SESSION-LOG.md`](docs/SESSION-LOG.md) |
+| 코드를 고친다 / AI 에게 시킨다 | [`CLAUDE.md`](CLAUDE.md) ← **규칙은 이 파일 하나뿐입니다** |
+| 대회 자체를 알고 싶다 | [`docs/ROBOFEST-KR-CONTEXT.md`](docs/ROBOFEST-KR-CONTEXT.md) |
+
+> ⚠️ `docs/BUILD-GUIDE.md` · `docs/BUILD-GUIDE.ko.md` · `docs/schema.sql` 은
+> **채택하지 않은 옛 계획**입니다. 따라 하지 마세요. 기록으로만 남겨 둡니다.
+> (자세한 문서 지도는 `docs/RUNBOOK-CLAUDE-CODE.md` 4절)
+
+---
+
+## ⭐ 이 프로젝트에서 가장 중요한 두 가지
+
+**1. 화면의 거의 모든 글자는 `config/competition.ts` 한 파일에서 나옵니다.**
+날짜·장소·종목 설명·문의처를 바꾸려면 그 파일만 고치면 됩니다.
+같은 내용을 두 곳에 적어 두지 않았으므로, 한쪽만 고쳐 어긋나는 일이 없습니다.
+
+**2. 참가 접수는 구글폼이 받습니다. 이 사이트에는 데이터베이스가 없습니다.**
+신청 데이터는 전부 구글에 저장됩니다. 그래서 **사이트가 멈춰도 접수는
+계속됩니다.** 반대로 **접수를 닫는 것도 사이트가 아니라 구글폼에서** 합니다
+(구글폼 → `응답` 탭 → `응답 받기` 끄기). 사이트의 날짜를 바꿔도 접수는
+닫히지 않습니다.
+
+---
+
+## 🛠 개발자용 — 내 컴퓨터에서 실행하기
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| 명령 | 설명 |
+| --- | --- |
+| `npm run dev` | 개발 서버 |
+| `npm run build` | 배포용 빌드. **깨진 수정은 여기서 실패합니다** |
+| `npm run lint` | 코드 검사 |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**기술 구성:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4
+· 전부 정적 파일 · 운영 의존성 3개뿐 · 데이터베이스 없음 · 환경변수 없음
+· 글꼴(Pretendard)은 저장소에 포함되어 있어 외부 CDN 을 쓰지 않습니다
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**배포:** `main` 에 올리면 Vercel 이 자동으로 공개 사이트를 갱신합니다.
+**파일이 깨지면 빌드가 실패하고, 실패하면 이전 사이트가 그대로 서비스됩니다.**
+아무도 지켜보지 않아도 고장난 화면이 올라가지 않도록 일부러 이렇게 했습니다.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ⚠️ 인수인계 상태
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+이 사이트를 만든 담당자는 **2026년 8월 14일에 퇴사**하며, 접수는 그로부터
+18일 뒤인 **9월 1일**에 시작됩니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+남은 인수인계 항목은 **[`CLAUDE.md`](CLAUDE.md) 맨 아래 체크리스트**와
+`docs/RUNBOOK.md` 의 `확인 필요` 표시에 정리되어 있습니다.
+새로 맡으신 분은 **`docs/RUNBOOK.md` 부터** 읽으세요.
