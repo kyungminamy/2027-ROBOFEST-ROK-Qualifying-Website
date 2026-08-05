@@ -1,0 +1,36 @@
+# `image/` — 머리띠 사진 **원본** 보관함
+
+이 폴더는 **사이트가 직접 쓰지 않습니다.** 화면에 나가는 사진은
+`public/header/` 에 있는 줄인 파일들입니다.
+
+여기에는 그 원본(크고 무거운 파일)을 남겨 둡니다. 나중에 사진을 다시
+자르거나 다른 크기로 뽑아야 할 때 원본이 없으면 처음부터 사진을 다시
+구해야 하기 때문입니다.
+
+## 지금 들어 있는 것
+
+| 원본 | 크기 | 줄여서 넣은 곳 | 쓰는 화면 |
+|---|---|---|---|
+| `modi.jpg` | 5116×3410, 1.7MB | `public/header/modi.jpg`, `modi-sm.jpg` | 종목 안내 |
+| `나침반.jpg` | 3360×2004, 1.3MB | `public/header/compass-map.jpg`, `compass-map-sm.jpg` | 일정, 장소 |
+| `질문.jpg` | 7296×4225, 3.1MB | `public/header/question.jpg`, `question-sm.jpg` | 자주 묻는 질문 |
+| `로봇 손 사람 손.jpg` | 2160×2700, 0.9MB | `public/header/hands.jpg`, `hands-sm.jpg` | (지금은 안 씀) |
+
+`public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
+(`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
+
+## 사진을 바꾸려면
+
+**⚠️ 원본을 `public/` 에 그대로 올리지 마세요.** 1.7MB짜리 사진을 휴대폰에서
+내려받게 되어 화면이 늦게 뜹니다. 반드시 두 크기로 줄여서 넣습니다.
+
+1. 새 원본을 이 폴더에 넣습니다.
+2. 가로 **1600px** 와 **900px** 두 장으로 줄여
+   `public/header/이름.jpg` 와 `public/header/이름-sm.jpg` 로 저장합니다.
+   (줄이는 도구는 무엇이든 됩니다 — 그림판, 미리보기, 온라인 도구)
+3. `config/competition.ts` 의 `headerImages` 에서 그 이름을 가리키게 합니다.
+   각 항목 위에 한국어 설명이 붙어 있습니다.
+
+`wide`(1600px)는 640px 이상 넓은 화면에서, `small`(900px)은 그보다 좁은
+화면에서 쓰입니다. 나뉘는 규칙은 `src/app/globals.css` 의 `.header-photo` 에
+있습니다.

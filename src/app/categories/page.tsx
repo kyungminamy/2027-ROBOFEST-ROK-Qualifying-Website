@@ -55,7 +55,9 @@ export default function CategoriesPage() {
       <PageHeader
         title="종목 안내"
         description={`${categories.length}개 종목을 운영합니다. 팀마다 한 종목을 선택해 참가합니다.`}
-        image={competition.headerImages.compass}
+        /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
+           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
+        image={competition.headerImages.modi}
       />
 
       <main id="main" className="flex-1">

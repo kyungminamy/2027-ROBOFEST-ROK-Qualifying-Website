@@ -49,7 +49,9 @@ export default function VenuePage() {
       <PageHeader
         title="장소"
         description={`${venueDisplayName()}에서 열립니다.`}
-        image={competition.headerImages.compass}
+        /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
+           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
+        image={competition.headerImages.compassMap}
       />
 
       <main id="main" className="flex-1">
@@ -84,7 +86,19 @@ export default function VenuePage() {
               <div className="border-b border-brand-100 py-3">
                 <dt className="text-sm font-bold text-brand-700">장소명</dt>
                 <dd className="mt-1 text-base text-ink sm:text-lg">
-                  {venueDisplayName()}
+                  {/* ℹ️ 2026-08-05 담당자 요청: '장소명' 제목은 그대로 두고
+                         장소 이름('부산보건대학교 체육관')만 뺐습니다.
+                         바로 위 페이지 헤더가 이미 '○○○에서 열립니다.' 로
+                         이름을 말하고 있어 한 화면에 두 번 나왔습니다.
+
+                         ★ 이름을 다시 보이게 하려면 아래 <span> 한 줄을
+                           {venueDisplayName()} 로 바꾸면 됩니다. ★
+
+                         이름 자체는 config 의 venue.name 에 그대로 있고,
+                         홈 2곳과 이 페이지 헤더에는 계속 나옵니다. */}
+                  <span className="text-ink-soft">
+                    장소명은 확정 후 공지 예정입니다.
+                  </span>
                 </dd>
               </div>
 
