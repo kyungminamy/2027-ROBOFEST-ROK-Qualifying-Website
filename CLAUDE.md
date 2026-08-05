@@ -72,9 +72,10 @@ Rationale for TypeScript over plain JSON for content: a malformed edit fails the
 
 This was deliberate (2026-07-30). An earlier version hid the form outside the 접수 period, which protected nothing — the 구글폼 URL is public, so anyone with the link could submit anyway. All it did was create two gates that could disagree, and CLAUDE.md's own rule is that a successor must never have to reconcile two sources of truth. One gate, in one place:
 
-- **To close 접수:** 구글폼 → 응답 탭 → turn off **응답 받기**. Google then renders "더 이상 응답을 받지 않습니다" inside the frame on our page automatically.
+- **The 구글폼 is scheduled to accept responses 2026-09-01 → 2026-10-16** (confirmed by the owner 2026-08-05). It opens and closes itself; nobody has to flip a switch.
+- **To close 접수 by hand** (only if the schedule misfires): 구글폼 → 응답 탭 → turn off **응답 받기**. Google then renders "더 이상 응답을 받지 않습니다" inside the frame on our page automatically.
 - **Editing `closesAt` does not close 접수.** It only changes the sentence on the page.
-- **Someone must own doing this on 마감일.** It is the one dated manual action in the whole project.
+- **The dated action is now verification, not operation.** Someone must *look* on 2026-09-01 that 접수 actually opened, and on 2026-10-17 that it actually closed. Scheduling removes the work, not the need to check — an unattended site cannot notice a misconfigured schedule, and a 접수 that silently never opens on 9/1 is the worst outcome in this project. Opening matters more than closing: a form left open past 마감 can be switched off late, but schools that find a closed form on 9/1 simply leave.
 
 A side benefit: with no date logic, `ApplyForm` needs no JavaScript, so the form renders server-side and works on locked-down school browsers.
 
@@ -178,7 +179,7 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 
 ## Definition of done for handover (target 2026-08-14)
 
-- [ ] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`
+- [x] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`. **Confirmed 2026-08-05 and written into `docs/RUNBOOK.md` §6:** Vercel, 구글폼 and 응답 시트 are all on `luxrobo.education@gmail.com`; GitHub accepts either that account or `lux_1@luxrobo.com`. No domain is registered yet — the site runs on its `vercel.app` address. *(Remaining nuance: GitHub still works from the personal account too. Prefer the shared one after handover, since the personal one may be deprovisioned.)*
 - [x] `docs/RUNBOOK.md` — how to change a date, check 신청 현황, re-measure `embedHeight` after editing the 폼's 설명글, flip `applyMode` to `'link'`, close 접수 (구글폼 응답 받기 — the config date does *not* close it), who to call. Plus `docs/RUNBOOK-CLAUDE-CODE.md` for the same job via Claude Code. **Written 2026-08-03/04.** Its remaining `확인 필요` rows are listed in the RUNBOOK itself and are the departing owner's to fill.
   - *(A 공지 feature was considered and dropped — announcements go in `config/competition.ts` directly. It used to be listed here; removed 2026-08-04 so this checklist stops asking for something that does not exist.)*
 - [ ] Successor has personally edited one file and seen it go live, while being watched
@@ -186,4 +187,4 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 - [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
 - [ ] **`applyMode: 'link'` tested once**, then switched back to `'embed'`
 - [ ] **국외이전 동의 and 법정대리인 동의 questions present in the 구글폼**, reviewed by a 담당자
-- [ ] Someone owns turning off **응답 받기** on 접수 마감일
+- [ ] Someone owns **verifying** 접수 opened on 2026-09-01 and closed on 2026-10-17. The 구글폼 is scheduled to do both by itself (confirmed 2026-08-05), so this is a two-minute look in an incognito window, not an operation — but nobody else will notice if the schedule misfired.
