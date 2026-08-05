@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { competition, formatKoreanDate } from "@/config/competition";
+import {
+  competition,
+  formatKoreanDate,
+  formatKoreanDateRange,
+} from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -35,7 +39,8 @@ export default function SchedulePage() {
     <>
       <PageHeader
         title="일정"
-        description={`대회는 ${formatKoreanDate(dates.day1)} ~ ${formatKoreanDate(
+        description={`대회는 ${formatKoreanDateRange(
+          dates.day1,
           dates.day2,
         )} 이틀간 열립니다.`}
         image={competition.headerImages.compass}

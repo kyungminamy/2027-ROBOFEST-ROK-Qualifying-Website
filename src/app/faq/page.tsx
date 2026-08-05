@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { competition, formatKoreanDate } from "@/config/competition";
+import { competition, formatKoreanDateRange } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
@@ -48,8 +48,11 @@ export default function FaqPage() {
             {/* 접수 기간은 자주 묻는 첫 번째 질문이라 맨 위에 못박아 둡니다.
                 날짜는 config 에서 가져오므로 여기서 고치지 마세요. */}
             <p className="tabular rounded-2xl border-2 border-brand-200 bg-brand-50 p-5 text-base font-bold text-brand-900 sm:p-6 sm:text-lg">
-              접수 기간: {formatKoreanDate(registration.opensAt)} ~{" "}
-              {formatKoreanDate(registration.closesAt)}
+              접수 기간:{" "}
+              {formatKoreanDateRange(
+                registration.opensAt,
+                registration.closesAt,
+              )}
             </p>
 
             {faqPage.map((section) => (

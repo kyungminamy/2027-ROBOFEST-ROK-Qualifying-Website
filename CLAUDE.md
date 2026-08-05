@@ -87,7 +87,7 @@ A side benefit: with no date logic, `ApplyForm` needs no JavaScript, so the form
 
 So the following are requirements, not polish:
 
-- **A 국외이전 안내 must appear above the form on `/apply`**, before the applicant starts typing. Wording lives in `config/competition.ts` so a 담당자 can revise it without touching code.
+- **A 국외이전 안내 must appear above the form on `/apply`**, before the applicant starts typing. Wording lives in `config/competition.ts` so a 담당자 can revise it without touching code. Since 2026-08-05 it renders inside the single **신청 전 확인해 주세요** box in `src/app/apply/page.tsx`, alongside 참가 대상 / 참가비 / 참가 규정 — 부산광역시교육청 asked for one box rather than two similarly-named ones, because readers were stopping at the first and never reaching the consent notice. `ApplyForm` no longer renders a notice of its own; if that component is ever reused on another page, that page must supply the notice above the form itself.
 - **The 구글폼's own first question must be an explicit 국외이전 동의** (필수). Our page's notice is context; the consent record has to live with the data, in Google's response sheet.
 - **만 14세 미만 참가자는 법정대리인 동의가 필수입니다.** Junior starts at 초5 (~11세), so this covers most Junior participants. Add a 필수 question having 지도교사 confirm they obtained it. A 담당자 must decide whether that indirect confirmation suffices — it is weaker than verifying directly, and that is their call to make, not ours.
 - **Do not collect more than you need.** Every extra field is 개인정보 we are responsible for. 주민등록번호는 절대 수집하지 마세요. 생년월일보다 학년이 충분합니다.

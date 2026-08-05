@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { competition } from "@/config/competition";
 import { SiteNav } from "@/components/SiteNav";
+import { BackToTop } from "@/components/BackToTop";
 import "./globals.css";
 
 /* ============================================================================
@@ -139,6 +140,12 @@ export default function RootLayout({
         <SiteNav />
 
         {children}
+
+        {/* 맨 위로 돌아가는 떠 있는 단추.
+            모든 화면에 나오도록 여기(공통 틀)에 둡니다.
+            자바스크립트가 없으면 나오지 않습니다 — 자세한 이유는
+            src/components/BackToTop.tsx 의 설명을 보세요. */}
+        <BackToTop />
       </body>
     </html>
   );

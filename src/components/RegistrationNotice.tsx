@@ -4,6 +4,7 @@ import Link from "next/link";
 import {
   competition,
   formatKoreanDate,
+  formatKoreanDateRange,
   isRegistrationOpen,
 } from "@/config/competition";
 import { homeSection } from "@/lib/layout";
@@ -108,7 +109,11 @@ export function RegistrationNotice() {
             <div>
               <h2 className="text-3xl text-brand-900 sm:text-4xl">참가 접수</h2>
               <p className="tabular mt-2 text-base text-ink sm:text-lg">
-                접수 기간: {opensAt} ~ {closesAt}
+                접수 기간:{" "}
+                {formatKoreanDateRange(
+                  registration.opensAt,
+                  registration.closesAt,
+                )}
               </p>
               {/* 자바스크립트가 꺼진 브라우저에서도 신청 페이지로 갈 수
                 있어야 합니다. 이 상태에서 유일한 통로입니다. */}

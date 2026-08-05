@@ -312,6 +312,31 @@ time,
   animation-iteration-count: 1;
 }
 
+/* ==========================================================================
+ *  '아래로 더 있습니다' 화살표 (첫 화면 맨 아래)
+ *
+ *  왜 필요한가: 첫 화면이 화면을 꽉 채우기 때문에, 스크롤하지 않으면
+ *  아래에 내용이 더 있다는 것을 모르는 분이 많습니다.
+ *  (2026-08-05 부산광역시교육청 의견)
+ *
+ *  ★ 자바스크립트 없이 동작합니다 ★
+ *    그냥 <a href="#main"> 링크입니다. 아래 움직임은 장식일 뿐이고,
+ *    움직임이 없어도 누르면 본문으로 이동합니다.
+ * ========================================================================== */
+@keyframes scrollCue {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.3rem);
+  }
+}
+
+.scroll-cue-arrow {
+  animation: scrollCue 1.8s ease-in-out infinite;
+}
+
 /* 움직임을 불편해하는 분에게는 애니메이션을 끕니다. 지우지 마세요. */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -319,6 +344,11 @@ time,
   }
 
   .rise {
+    animation: none;
+  }
+
+  /* 화살표는 그대로 보이되 움직이지만 않습니다 */
+  .scroll-cue-arrow {
     animation: none;
   }
 

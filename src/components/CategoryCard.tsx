@@ -87,10 +87,21 @@ export function CategoryCard({ category }: { category: Category }) {
             <p className="text-sm text-ink-soft">
               학생 최대 {category.maxTeamSize}명 · 난이도 {category.difficulty}
             </p>
-            {/* 누를 수 있다는 것을 눈으로 알려 줍니다 */}
+            {/* 누를 수 있다는 것을 눈으로 알려 줍니다.
+
+                ★ 적색(accent)입니다 — 남색으로 되돌리지 마세요 ★
+                2026-08-05 부산광역시교육청 요청입니다.
+
+                예전에는 평소 남색이고 마우스를 올렸을 때만 적색이었습니다.
+                그런데 휴대폰에는 '마우스 올림'이 없습니다. 그래서 방문자
+                대부분에게는 언제나 남색으로만 보였고, 눈에 띄지 않았습니다.
+
+                ⚠️ 순수한 빨강(#ff0000)으로 바꾸지 마세요. 흰 배경에서 대비가
+                   약 4:1 이라 기준(4.5:1)에 미달합니다.
+                   지금 쓰는 accent-600 은 5.1:1 로 통과합니다. */}
             <span
               aria-hidden="true"
-              className="flex shrink-0 items-center gap-1 text-sm font-bold text-brand-700 transition-colors group-hover:text-accent-600"
+              className="flex shrink-0 items-center gap-1 text-sm font-bold text-accent-600 transition-colors group-hover:text-accent-700"
             >
               자세히
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

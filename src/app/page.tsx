@@ -1,6 +1,7 @@
 import {
   competition,
   formatKoreanDate,
+  formatKoreanDateRange,
   venueDisplayName,
 } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -100,11 +101,10 @@ export default function Home() {
                훑어볼 수 있게 합니다. config 의 milestones 를 그대로 씁니다. */}
         <HomeSection
           title="일정"
-          lead={`접수는 ${formatKoreanDate(
+          lead={`접수 기간은 ${formatKoreanDateRange(
             competition.registration.opensAt,
-          )}에 시작해 ${formatKoreanDate(
             competition.registration.closesAt,
-          )}에 마감합니다.`}
+          )}입니다.`}
           moreHref="/schedule"
           moreLabel="전체 일정 자세히 보기"
         >

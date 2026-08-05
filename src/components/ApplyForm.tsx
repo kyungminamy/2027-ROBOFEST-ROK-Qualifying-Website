@@ -2,7 +2,7 @@ import {
   applyFormDirectUrl,
   applyFormEmbedUrl,
   competition,
-  formatKoreanDate,
+  formatKoreanDateRange,
 } from "@/config/competition";
 import { ExternalLink } from "@/components/icons";
 
@@ -57,47 +57,26 @@ export function ApplyForm() {
 
   return (
     <div>
-      {/* ⚠️ 법적으로 필요한 안내입니다. 폼보다 먼저 보여야 합니다.
-             문구는 config/competition.ts 에서 바꾸세요.
-             폼 마지막의 동의 항목과 내용이 어긋나지 않게 같이 고치세요. */}
-      <div className="overflow-hidden rounded-2xl border-2 border-brand-200 bg-paper">
-        <h3 className="bg-brand-700 px-5 py-3 text-base font-bold text-white sm:px-6 sm:text-lg">
-          신청 전 안내
-        </h3>
+      {/* ★★★ 개인정보·초상권 안내는 여기에 없습니다 (2026-08-05) ★★★
+             src/app/apply/page.tsx 의 '신청 전 확인해 주세요' 상자로
+             옮겨서, 참가 대상·참가비·규정과 한 상자에 모았습니다.
+             이름이 비슷한 상자가 두 개라 아래쪽을 못 보고 지나치는 분이
+             있었기 때문입니다. (부산광역시교육청 요청)
 
-        <div className="p-5 sm:p-6">
-          <dl className="space-y-4">
-            {/* 제목 글자도 config 에서 가져옵니다.
-                '동의'는 따로 붙이는 표시가 아니라 제목의 일부입니다. */}
-            <div>
-              <dt className="text-sm font-bold text-brand-700 sm:text-base">
-                {registration.privacyNoticeTitle}
-              </dt>
-              <dd className="mt-1 text-sm text-ink sm:text-base">
-                {registration.privacyNotice}
-              </dd>
-            </div>
+             ⚠️ 여기에 안내 상자를 '다시' 만들지 마세요 ⚠️
+              같은 내용이 두 번 나오게 됩니다. 그리고 두 곳에 적어 두면
+              한쪽만 고쳐서 서로 다른 말을 하게 됩니다.
 
-            <div>
-              <dt className="text-sm font-bold text-brand-700 sm:text-base">
-                {registration.portraitRightsNoticeTitle}
-              </dt>
-              <dd className="mt-1 text-sm text-ink sm:text-base">
-                {registration.portraitRightsNotice}
-              </dd>
-            </div>
-          </dl>
-
-          <p className="mt-4 border-t border-brand-100 pt-4 text-sm text-ink-soft">
-            {registration.consentNoticeFooter}
-          </p>
-        </div>
-      </div>
+             ⚠️ 다만 그 안내는 **폼보다 위에 있어야 합니다.**
+              지금은 이 컴포넌트를 부르는 페이지가 그 역할을 합니다.
+              이 컴포넌트를 다른 페이지에서 쓰게 되면, 그 페이지에도
+              같은 안내를 폼 위에 반드시 넣어야 합니다.
+              (CLAUDE.md 의 개인정보 절 참고) */}
 
       {/* 접수 기간 안내 — 사실만 알려 줍니다. 폼을 막지는 않습니다. */}
-      <p className="tabular mt-8 text-base font-bold text-brand-900 sm:text-lg">
-        접수 기간: {formatKoreanDate(registration.opensAt)} ~{" "}
-        {formatKoreanDate(registration.closesAt)}
+      <p className="tabular text-base font-bold text-brand-900 sm:text-lg">
+        접수 기간:{" "}
+        {formatKoreanDateRange(registration.opensAt, registration.closesAt)}
       </p>
       <p className="mt-1 text-sm text-ink-soft">
         종목별 정원제로 조기 마감될 수 있습니다.

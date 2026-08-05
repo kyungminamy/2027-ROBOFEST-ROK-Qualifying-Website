@@ -1625,6 +1625,41 @@ export function formatKoreanDate(iso: string): string {
   return `${y}년 ${m}월 ${d}일(${weekday})`;
 }
 
+/** 'YYYY-MM-DD' → '2026. 11. 27.(금)' — 기간을 나타낼 때 쓰는 짧은 모양 */
+function formatKoreanDateShort(iso: string, withYear: boolean): string {
+  const [y, m, d] = iso.split('-').map(Number);
+  const weekday = ['일', '월', '화', '수', '목', '금', '토'][
+    new Date(Date.UTC(y, m - 1, d)).getUTCDay()
+  ];
+  const head = withYear ? `${y}. ${m}. ${d}.` : `${m}. ${d}.`;
+  return `${head}(${weekday})`;
+}
+
+/**
+ * 두 날짜를 하나의 기간으로 표시합니다.
+ *
+ *   formatKoreanDateRange('2026-11-27', '2026-11-28')
+ *     → '2026. 11. 27.(금)~11. 28.(토)'
+ *
+ * ★ 왜 이런 모양인가 (2026-08-05 부산광역시교육청 요청) ★
+ *   예전에는 '2026년 11월 27일(금) ~ 2026년 11월 28일(토)' 처럼 연도를 두 번
+ *   적었습니다. 길고, 공문에 쓰던 표기와도 달랐습니다.
+ *   같은 해라면 연도는 앞에서 한 번만 적습니다.
+ *
+ * ℹ️ 날짜가 하나뿐일 때는 이 함수가 아니라 formatKoreanDate 를 쓰세요.
+ *    (예: 일정 화면의 각 항목)
+ */
+export function formatKoreanDateRange(startIso: string, endIso: string): string {
+  const startYear = startIso.slice(0, 4);
+  const endYear = endIso.slice(0, 4);
+  // 해가 바뀌는 기간이면 뒤쪽에도 연도를 적어야 뜻이 통합니다
+  const sameYear = startYear === endYear;
+  return `${formatKoreanDateShort(startIso, true)}~${formatKoreanDateShort(
+    endIso,
+    !sameYear,
+  )}`;
+}
+
 /**
  * 구글폼 주소가 입력되어 있는지 여부.
  * 비어 있으면 신청 페이지가 '준비 중'을 표시합니다.

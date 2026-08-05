@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { competition, formatKoreanDate } from "@/config/competition";
-import { ArrowRight } from "@/components/icons";
+import { competition, formatKoreanDateRange } from "@/config/competition";
+import { ArrowRight, ChevronDown } from "@/components/icons";
 import { HeroSlides } from "@/components/HeroSlides";
 import { edgePadding } from "@/lib/layout";
 
@@ -49,19 +49,17 @@ export function Hero() {
         {competition.name}
       </h1>
 
-      {/* 대회 일자
-          ⚠️ 각 날짜를 whitespace-nowrap 으로 감쌌습니다.
-             이게 없으면 '2026년 11월 / 28일(토)'처럼 날짜 하나가
-             중간에서 잘려 두 줄로 나뉩니다. 지우지 마세요. */}
+      {/* 대회기간
+          ⚠️ '대회기간:' 라벨과 짧은 표기는 2026-08-05 부산광역시교육청
+             요청입니다. 예전에는 라벨 없이 '2026년 11월 27일(금) ~
+             2026년 11월 28일(토)' 처럼 연도를 두 번 적었습니다.
+
+          ⚠️ whitespace-nowrap 을 지우지 마세요. 없으면 '2026. 11. /
+             28.(토)' 처럼 날짜 하나가 중간에서 잘려 두 줄로 나뉩니다. */}
       <p className="rise rise-2 tabular mt-7 text-base font-bold sm:mt-8 sm:text-lg">
+        <span className="whitespace-nowrap">대회기간: </span>
         <span className="whitespace-nowrap">
-          {formatKoreanDate(dates.day1)}
-        </span>
-        <br className="sm:hidden" />
-        <span className="hidden sm:inline"> ~ </span>
-        <span className="sm:hidden">~ </span>
-        <span className="whitespace-nowrap">
-          {formatKoreanDate(dates.day2)}
+          {formatKoreanDateRange(dates.day1, dates.day2)}
         </span>
       </p>
 
@@ -116,6 +114,24 @@ export function Hero() {
           <div className="max-w-4xl py-14 sm:py-20 lg:py-24">{content}</div>
         </div>
       )}
+
+      {/* ★ '아래로 더 있습니다' 화살표 — 지우지 마세요 ★
+          첫 화면이 화면을 꽉 채우기 때문에, 여기서 끝인 줄 알고 그냥
+          나가는 분이 있었습니다. (2026-08-05 부산광역시교육청 의견)
+
+          ★ 자바스크립트가 없어도 동작합니다 ★
+            그냥 링크(<a href="#main">)입니다. 버튼처럼 보이지만 눌렀을 때
+            브라우저가 스스로 본문으로 이동합니다. 자바스크립트로 바꾸지
+            마세요 — 학교 인터넷에서 막히면 눌러도 아무 일이 없게 됩니다.
+
+          휴대폰에서도 누를 수 있도록 44px 이상으로 잡았습니다. */}
+      <a
+        href="#main"
+        aria-label="아래 내용 보기"
+        className="absolute inset-x-0 bottom-4 z-10 mx-auto flex h-11 w-11 items-center justify-center rounded-full text-white/80 transition-colors hover:text-white sm:bottom-6"
+      >
+        <ChevronDown className="scroll-cue-arrow h-7 w-7" />
+      </a>
     </section>
   );
 }
