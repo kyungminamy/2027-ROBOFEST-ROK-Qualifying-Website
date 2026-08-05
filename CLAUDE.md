@@ -182,7 +182,7 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 - [x] `docs/RUNBOOK.md` — how to change a date, check 신청 현황, re-measure `embedHeight` after editing the 폼's 설명글, flip `applyMode` to `'link'`, close 접수 (구글폼 응답 받기 — the config date does *not* close it), who to call. Plus `docs/RUNBOOK-CLAUDE-CODE.md` for the same job via Claude Code. **Written 2026-08-03/04.** Its remaining `확인 필요` rows are listed in the RUNBOOK itself and are the departing owner's to fill.
   - *(A 공지 feature was considered and dropped — announcements go in `config/competition.ts` directly. It used to be listed here; removed 2026-08-04 so this checklist stops asking for something that does not exist.)*
 - [ ] Successor has personally edited one file and seen it go live, while being watched
-- [ ] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does.
+- [x] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does. **Confirmed by the departing owner on 2026-08-05: the 폼 and its 응답 시트 are already on a shared account with colleagues, so 접수 data survives the handover.** Still to do: write *which* account into `docs/RUNBOOK.md` §6, where it is currently `확인 필요` — a successor cannot act on a fact that lives only in someone's memory.
 - [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
 - [ ] **`applyMode: 'link'` tested once**, then switched back to `'embed'`
 - [ ] **국외이전 동의 and 법정대리인 동의 questions present in the 구글폼**, reviewed by a 담당자
