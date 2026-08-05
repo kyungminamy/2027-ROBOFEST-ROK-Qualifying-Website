@@ -13,7 +13,11 @@
 |---|---|---|---|
 | `modi.jpg` | 5116×3410, 1.7MB | `public/header/modi.jpg`, `modi-sm.jpg` | 종목 안내 |
 | `나침반.jpg` | 3360×2004, 1.3MB | `public/header/compass-map.jpg`, `compass-map-sm.jpg` | 일정, 장소 |
+| `질문.jpg` | 7296×4225, 3.1MB | `public/header/question.jpg`, `question-sm.jpg` | 자주 묻는 질문 |
 | `로봇 손 사람 손.jpg` | 2160×2700, 0.9MB | `public/header/hands.jpg`, `hands-sm.jpg` | (지금은 안 씀) |
+
+`public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
+(`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
 
 ## 사진을 바꾸려면
 

@@ -39,7 +39,9 @@ export default function FaqPage() {
       <PageHeader
         title="자주 묻는 질문"
         description="접수와 규정에 대해 가장 많이 받는 질문을 모았습니다."
-        image={competition.headerImages.compass}
+        /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
+           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
+        image={competition.headerImages.question}
       />
 
       <main id="main" className="flex-1">
