@@ -80,12 +80,26 @@ export default function VenuePage() {
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">장소</h2>
 
-            {/* ℹ️ '장소명' 줄은 2026-08-05 담당자 요청으로 지웠습니다.
-                   바로 위 페이지 헤더가 이미 '○○○에서 열립니다.' 로
-                   장소 이름을 말하고 있어서 같은 이름이 두 번 나왔습니다.
-                   이름 자체는 config 의 venue.name 에 그대로 있고,
-                   홈 2곳과 이 페이지 헤더에는 계속 나옵니다. */}
             <dl className="mt-6">
+              <div className="border-b border-brand-100 py-3">
+                <dt className="text-sm font-bold text-brand-700">장소명</dt>
+                <dd className="mt-1 text-base text-ink sm:text-lg">
+                  {/* ℹ️ 2026-08-05 담당자 요청: '장소명' 제목은 그대로 두고
+                         장소 이름('부산보건대학교 체육관')만 뺐습니다.
+                         바로 위 페이지 헤더가 이미 '○○○에서 열립니다.' 로
+                         이름을 말하고 있어 한 화면에 두 번 나왔습니다.
+
+                         ★ 이름을 다시 보이게 하려면 아래 <span> 한 줄을
+                           {venueDisplayName()} 로 바꾸면 됩니다. ★
+
+                         이름 자체는 config 의 venue.name 에 그대로 있고,
+                         홈 2곳과 이 페이지 헤더에는 계속 나옵니다. */}
+                  <span className="text-ink-soft">
+                    장소명은 확정 후 공지 예정입니다.
+                  </span>
+                </dd>
+              </div>
+
               <div className="border-b border-brand-100 py-3">
                 <dt className="text-sm font-bold text-brand-700">주소</dt>
                 <dd className="mt-1 text-base text-ink sm:text-lg">
