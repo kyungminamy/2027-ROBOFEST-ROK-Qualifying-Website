@@ -18,7 +18,8 @@ import { ExternalLink } from "@/components/icons";
  *   2. venue.mapUrl 에 네이버·카카오 지도 링크를 입력합니다
  *      → '지도 보기' 버튼이 화면에 나타납니다 (비어 있으면 버튼이 없습니다)
  *   3. venue.isConfirmed 를 true 로 바꿉니다
- *      → 장소 이름 뒤의 '(예정)'이 사라지고, 맨 위 '예정' 안내문도 사라집니다
+ *      → 맨 위 '장소는 아직 확정 전입니다' 안내 박스가 사라집니다
+ *      (장소 이름은 이미 '(예정)' 없이 나옵니다 — 2026-08-04 담당자 요청)
  *   4. 오시는 길 사진이 있으면 public/venue/ 폴더에 올리고,
  *      venue.directions 의 image 에 '/venue/파일이름' 을 적습니다
  *   5. venue.directions 의 description 에 길 안내 글을 적습니다

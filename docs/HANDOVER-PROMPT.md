@@ -110,7 +110,8 @@ config 키 이름을 추측하지 말고 config/competition.ts 를 실제로 읽
 2. 자주 하는 수정 (각각 독립된 절차로)
    2-1 날짜 바꾸기 (dates, registration.opensAt / closesAt)
    2-2 장소 확정하기 (venue.isConfirmed 를 true 로, address·mapUrl 채우기,
-       그러면 '(예정)' 표시가 사라진다는 점)
+       그러면 '장소는 아직 확정 전입니다' 안내 박스가 사라진다는 점.
+       장소 이름 뒤의 '(예정)'은 2026-08-04에 이미 떼었습니다)
    2-3 Game 미션 공개일 확정 (milestones 의 isEstimated 를 false 로)
    2-4 문의처 바꾸기 (contact)
    2-5 종목 정원 숫자 바꾸기 (categories 의 capacity)

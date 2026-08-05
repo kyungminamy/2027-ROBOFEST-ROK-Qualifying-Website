@@ -124,7 +124,7 @@ Add a Korean comment above every field explaining what it is and what changes if
 |---|---|
 | 대회명 | 2027 ROBOFEST World Championship 국내예선대회 — **the site drops the "(가칭)" prefix** (removed 2026-07-30; it read as unfinished to parents). The name is still not formally confirmed on paper, so if it changes, edit `competition.name`. |
 | 대회 일자 | **2026. 11. 27.(금) ~ 11. 28.(토)** ✅ confirmed · 설치 11. 26.(목) |
-| 장소 | 부산보건대학교 체육관 (예정) |
+| 장소 | 부산보건대학교 체육관 — still 예정, not contracted. **The site shows the name without a "(예정)" suffix** (removed 2026-08-04 at the 담당자's request); the caveat is carried by the 안내 박스 on `/venue` instead. See the 예정 note below. |
 | 주최·주관 | 부산광역시교육청 |
 | 운영·공인 | (주)럭스로보 · ROBOFEST 본부 (Lawrence Technological University) |
 | 공식 예선 여부 | ✅ 공식 예선 (official qualifier) — confirmed |
@@ -136,7 +136,13 @@ Add a Korean comment above every field explaining what it is and what changes if
 
 **⚠️ Unconfirmed, do not present as settled:**
 - Korea's 2027 quota per 종목 is unknown. **Never state a number of teams that will advance.**
-- 부산보건대학교 is 예정, not contracted. Word it as such until confirmed.
+- 부산보건대학교 is 예정, not contracted. Say so until it is confirmed — but **one place says it, not two.**
+
+  **2026-08-04 decision, requested by the 담당자:** `venueDisplayName()` no longer appends "(예정)" to the venue name. The name renders plain in all four spots (홈 2곳, `/venue` 헤더·장소명). The "아직 예정" disclosure did *not* go away — it moved entirely to the **`장소는 아직 확정 전입니다` 안내 박스** at the top of `/venue`, which still renders while `venue.isConfirmed` is `false` and explicitly warns against booking travel on it.
+
+  Two consequences a successor must not get wrong:
+  - **Do not "fix" the missing "(예정)" back onto the name.** It was removed on purpose. The revert snippet is in the comment above `venueDisplayName()` if the 담당자 ever asks for it back.
+  - **`venue.isConfirmed` now controls the 안내 박스 only.** Flipping it to `true` is still the correct action when the contract is signed, but what it removes is the box — the name does not change. `docs/RUNBOOK.md` §2-2 is written to match.
 
 **Resolved since first writing:** 접수 마감 is **10/16, confirmed 2026-07-30** — the 10/30 alternative was dropped. It may now be stated as a fixed date.
 
