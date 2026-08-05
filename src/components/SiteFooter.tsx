@@ -62,16 +62,23 @@ export function SiteFooter() {
           <dl className="mt-3 space-y-3">
             <Row label="카카오톡">
               {kakaoUrl ? (
-                /* 채널 주소가 있을 때만 링크로 만듭니다 */
-                <a
-                  href={kakaoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
-                >
-                  {contact.kakao.searchName}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+                /* 채널 주소가 있을 때만 링크로 만듭니다.
+                   ★ 채널 이름만 덩그러니 두지 마세요 ★
+                     이름만 있으면 '무엇을 하라는 것인지'가 없습니다.
+                     '채널로 문의해 주세요'까지 있어야 문의 창구로 읽힙니다.
+                     아래 검색 안내 문구와 짝을 이루는 문장입니다. */
+                <>
+                  <a
+                    href={kakaoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 font-bold underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white"
+                  >
+                    {contact.kakao.searchName}
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                  {" 채널로 문의해 주세요."}
+                </>
               ) : (
                 /* 주소가 없으면 검색해서 찾도록 안내만 합니다.
                    눌러도 아무 일 없는 링크를 만들지 않기 위해서입니다.

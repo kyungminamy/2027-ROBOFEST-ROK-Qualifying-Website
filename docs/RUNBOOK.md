@@ -288,8 +288,8 @@ GitHub 에서 파일을 고치면 Vercel 이 자동으로 새 사이트를 만�
 | 이메일 | `email` | `'sia.kim@luxrobo.com'` |
 | 전화번호 | `phone` ⚠️ | `''` (비어 있음 = 표시 안 됨) |
 | 카카오톡 검색명 | `searchName` | `'럭스로보'` |
-| 카카오톡 채널 주소 | `channelUrl` | `''` (비어 있음 = 링크 없음) |
-| 운영 시간 | `hours` | `'평일 09:00 ~ 18:00'` |
+| 카카오톡 채널 주소 | `channelUrl` | `'https://pf.kakao.com/_BxixiUK'` |
+| 운영 시간 | `hours` | `'평일 10:00 ~ 17:00'` |
 
 > ⚠️⚠️ **`phone` 을 검색하면 두 곳이 나옵니다. 조심하세요.** ⚠️⚠️
 >
@@ -866,8 +866,8 @@ config 의 links.liveStream 에 주소를 넣으면 사이트에 생중계 링�
 | --- | --- | --- |
 | **이 사이트 문의 담당** | `sia.kim@luxrobo.com` | `config` 의 `contact.email`. **이 담당자는 계속 근무하므로 유효합니다.** |
 | 담당 부서 | (주)럭스로보 교육사업부 | |
-| 카카오톡 | 카카오톡에서 `럭스로보` 검색 | |
-| 운영 시간 | 평일 09:00 ~ 18:00 | |
+| 카카오톡 | `럭스로보` 채널 — https://pf.kakao.com/_BxixiUK | |
+| 운영 시간 | 평일 10:00 ~ 17:00 | |
 | **ROBOFEST 본부 (LTU)** | `https://www.robofest.net/` | 종목 규정·미션 공개·세계대회 진출 관련 창구. 영문. |
 | ROBOFEST 공통 규정집 | `https://www.robofest.net/images/2526/General2026_V1.pdf` | 영문 PDF |
 | **부산광역시교육청 담당자** | **확인 필요** | 주최 기관. 담당 부서·성명·연락처를 채워 주세요. |
