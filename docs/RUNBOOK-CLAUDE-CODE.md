@@ -741,12 +741,16 @@ README.md 를 이 프로젝트에 맞게 다시 써 줘.
 정식 공개 주소는 아래입니다. 이 주소를 교육청·학교에 보내면 됩니다.
 
 ```
-https://2027-robofest-rok-qualifying-websit.vercel.app
+https://robofestbusan2026.com
 ```
 
-> ⚠️ 주소 맨 끝 `websit` 은 오타가 아닙니다. Vercel 이 주소 길이를 제한해서
-> `website` 의 `e` 를 잘랐습니다. 공문에 쓰기엔 어색하니 짧은 도메인을
-> 붙이는 것을 권합니다. (`RUNBOOK.md` 9-3 참고)
+> ℹ️ **2026-08-05에 정식 도메인을 구입해 연결했습니다.**
+> 예전의 긴 주소(`https://2027-robofest-rok-qualifying-websit.vercel.app`)도
+> 계속 열립니다. 이미 배포한 안내문의 링크가 죽지 않습니다.
+>
+> ⚠️ 다만 **`www.` 를 붙인 주소는 아직 열리지 않습니다.**
+> Vercel → `Settings` → `Domains` 에서 `www.robofestbusan2026.com` 을
+> 추가해 두는 것을 권합니다. (`RUNBOOK.md` 9-3 참고)
 
 ---
 

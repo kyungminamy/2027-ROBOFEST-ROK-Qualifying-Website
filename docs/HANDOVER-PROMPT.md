@@ -82,7 +82,7 @@ setShown(t >= 1 ? value : format(n));
   → **절반만 맞았습니다 (2026-08-05 확인).** 로그인 화면이 뜨는 것은
   **배포마다 새로 생기는 임시 주소**(`...-fwq4g492q.vercel.app` 처럼 생긴
   것)뿐입니다. **공개 주소는 그냥 열립니다.**
-  공개 주소: `https://2027-robofest-rok-qualifying-websit.vercel.app`
+  공개 주소: `https://robofestbusan2026.com` (2026-08-05 정식 도메인 연결)
   (Vercel 의 Standard Protection 이 임시 주소만 막는 정상 설정입니다.
   끄지 마세요. 자세히는 `docs/SESSION-LOG.md` 2026-08-04 항목)
 
@@ -216,4 +216,7 @@ config 키 이름을 추측하지 말고 config/competition.ts 를 실제로 읽
    `embedHeightPx` 도 실제 키 이름인 `embedHeight` 로 고쳐졌습니다.
 2. **RUNBOOK을 직접 읽으면서 따라해 보세요.** 날짜 하나를 바꿔 보고, 응답 시트를 내려받아 보고, `applyMode` 를 `'link'` 로 바꿨다 되돌려 보세요. 막히는 곳이 있으면 문서를 고칩니다.
 3. **동료 한 명에게 문서만 주고 시켜 보세요.** 옆에서 보되 알려주지 마세요. 못 하면 사람이 아니라 문서 문제입니다.
-4. **production 배포 주소를 문서에 적으세요.** 현재 공유되는 preview 주소는 Vercel 로그인 화면이 먼저 떠서, 교육청·학교에서는 사이트를 볼 수 없습니다.
+4. ~~**production 배포 주소를 문서에 적으세요.**~~ → **처리됨 (2026-08-05).**
+   정식 도메인 `https://robofestbusan2026.com` 을 구입해 연결했고, 문서에도
+   적었습니다. (앞선 "preview 주소라 로그인 화면이 뜬다"는 지적은 3절 참고 —
+   절반만 맞았습니다)

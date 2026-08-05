@@ -3,7 +3,7 @@
 부산광역시교육청이 주최하는 **2027 ROBOFEST World Championship 대한민국 공식
 예선대회**의 안내 웹사이트입니다.
 
-**공개 주소:** https://2027-robofest-rok-qualifying-websit.vercel.app
+**공개 주소:** https://robofestbusan2026.com
 
 | | |
 | --- | --- |
