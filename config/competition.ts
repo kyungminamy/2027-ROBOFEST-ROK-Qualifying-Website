@@ -1335,7 +1335,10 @@ export const competition = {
     robofestGetStarted: 'https://www.robofest.net/index.php/current-competitions/overview',
     generalRulesPdf: 'https://www.robofest.net/images/2526/General2026_V1.pdf',
     busanEducationOffice: 'https://www.pen.go.kr/',
-    luxrobo: 'https://korea.luxrobo.com/',
+    /* ℹ️ 2026-08-05: `korea.luxrobo.com` 에서 `luxrobo.com` 으로 바꿨습니다.
+       (담당자 요청) 이 한 줄만 고치면 '럭스로보' 로 연결되는 곳이 모두
+       함께 바뀝니다 — 지금은 'ROBOFEST 소개' 화면의 운영 기관 줄 한 곳입니다. */
+    luxrobo: 'https://luxrobo.com/',
     /** 유튜브 생중계 주소 — 대회 직전에 입력 */
     liveStream: '',
   },
