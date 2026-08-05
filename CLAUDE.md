@@ -13,7 +13,7 @@ Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-K
 **The person who builds this site leaves the company on 2026-08-14. 접수 opens 2026-09-01 — 18 days later. The 대회 is 2026-11-27~28. No successor has been assigned.**
 
 So the site must:
-1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something. The Supabase Pro plan is bought specifically to satisfy this — see the Supabase section.
+1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something. This is why there is no database and no paid service in the critical path: the site is static files on Vercel, and 접수 lives in 구글폼. Nothing here has a bill to miss or a free tier to exhaust. *(An earlier draft of this line promised a Supabase Pro plan "see the Supabase section". Supabase was rejected on 2026-07-30 and there is no such plan and no such section — corrected 2026-08-05. Do not reintroduce a paid dependency without replacing this paragraph.)*
 2. **Be editable by a non-technical person through a web browser.** No terminal. No local setup.
 3. **Fail safe.** A bad edit must break the *build* (so Vercel refuses to deploy and the old site stays up), never deploy broken.
 

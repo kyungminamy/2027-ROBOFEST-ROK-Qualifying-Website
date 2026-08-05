@@ -1,6 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useIsClient } from "@/lib/useIsClient";
 import { edgePadding } from "@/lib/layout";
 import {
@@ -9,6 +14,41 @@ import {
   Pause,
   Play,
 } from "@/components/icons";
+
+/* ----------------------------------------------------------------------------
+ *  운영체제의 '동작 줄이기(prefers-reduced-motion)' 설정을 읽습니다.
+ *
+ *  ★ 왜 useEffect 로 하지 않나 (2026-08-05) ★
+ *   예전에는 useEffect 안에서 setPaused(true) 를 불렀습니다. 그러면 화면을
+ *   한 번 그린 뒤 곧바로 다시 그리게 되어(cascading render), React 검사
+ *   규칙(react-hooks/set-state-in-effect)에 걸렸습니다.
+ *
+ *   useSyncExternalStore 는 '그리는 도중에 값을 읽는' 방식이라 다시 그리지
+ *   않습니다. src/lib/useIsClient.ts 와 같은 방식입니다.
+ *
+ *   세 번째 인자(() => false)는 '배포할 때 미리 만드는 단계'의 값입니다.
+ *   그 단계에는 브라우저가 없어 설정을 알 수 없으므로 '안 켬'으로 봅니다.
+ * -------------------------------------------------------------------------- */
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return () => {};
+  }
+  const mq = window.matchMedia(REDUCED_MOTION);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    () =>
+      typeof window.matchMedia === "function" &&
+      window.matchMedia(REDUCED_MOTION).matches,
+    () => false,
+  );
+}
 
 /* ============================================================================
  *  첫 화면 배경 사진 슬라이드쇼
@@ -56,7 +96,12 @@ export function HeroSlides({
   const isClient = useIsClient();
 
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+
+  /* 멈춤 상태 = 사용자가 직접 누른 값이 있으면 그것, 없으면 OS 설정을 따릅니다.
+     null 은 '아직 아무도 버튼을 누르지 않았다'는 뜻입니다. */
+  const [pausedByUser, setPausedByUser] = useState<boolean | null>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const paused = pausedByUser ?? prefersReducedMotion;
 
   /* 이미 보여준 사진 번호. 여기에 든 것만 실제로 내려받습니다. */
   const [seen, setSeen] = useState<number[]>([0]);
@@ -72,17 +117,6 @@ export function HeroSlides({
     },
     [slides.length],
   );
-
-  /* '동작 줄이기'를 켠 분에게는 처음부터 멈춘 상태로 둡니다 */
-  const askedForLessMotion = useRef(false);
-  useEffect(() => {
-    if (typeof window.matchMedia !== "function") return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) {
-      askedForLessMotion.current = true;
-      setPaused(true);
-    }
-  }, []);
 
   /* 자동 넘김 — 멈춤 상태이거나 사진이 1장이면 돌지 않습니다.
      index 가 바뀔 때마다 타이머를 다시 겁니다. 그래서 버튼으로 직접
@@ -180,7 +214,11 @@ export function HeroSlides({
 
               <button
                 type="button"
-                onClick={() => setPaused((p) => !p)}
+                /* 지금 보이는 상태(paused)의 반대로 바꿉니다.
+                   pausedByUser 는 아직 null 일 수 있으므로 그 값을 뒤집으면
+                   안 됩니다 (!null 은 true 라서, 멈춘 상태에서 눌러도
+                   계속 멈춰 있게 됩니다). */
+                onClick={() => setPausedByUser(!paused)}
                 className={buttonBase}
                 aria-label={
                   paused ? "사진 자동 넘김 다시 시작" : "사진 자동 넘김 멈춤"
