@@ -748,9 +748,8 @@ https://robofestbusan2026.com
 > 예전의 긴 주소(`https://2027-robofest-rok-qualifying-websit.vercel.app`)도
 > 계속 열립니다. 이미 배포한 안내문의 링크가 죽지 않습니다.
 >
-> ⚠️ 다만 **`www.` 를 붙인 주소는 아직 열리지 않습니다.**
-> Vercel → `Settings` → `Domains` 에서 `www.robofestbusan2026.com` 을
-> 추가해 두는 것을 권합니다. (`RUNBOOK.md` 9-3 참고)
+> ✅ `www.robofestbusan2026.com` 으로 들어와도 위 주소로 자동으로 넘어갑니다.
+> (2026-08-05 설정 완료)
 
 ---
 
