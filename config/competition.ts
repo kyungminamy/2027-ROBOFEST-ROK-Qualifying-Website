@@ -965,7 +965,7 @@ export const competition = {
       small: '/about/hall-sm.jpg',
       /** 눈이 보이지 않는 분에게 읽어 주는 설명 — 비워 두지 마세요 */
       alt: '대회장에 늘어선 탁자마다 팀별로 모여 로봇을 준비하는 학생들',
-      caption: '지난 ROBOFEST 세계대회 현장입니다. 국내예선 장소가 아닙니다.',
+      caption: '지난 ROBOFEST 세계대회 현장',
     },
 
     /** 주최·운영 기관 설명 */

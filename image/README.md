@@ -19,7 +19,7 @@
 | `대회장.jpg` | 4897×3266, 3.1MB | `public/about/hall.jpg`, `hall-sm.jpg` | ROBOFEST 소개 **(머리띠 아님, 본문 사진)** |
 
 > ⚠️ **`대회장.jpg` 는 세계대회 현장 사진입니다. 부산 국내예선 사진이
-> 아닙니다.** 그래서 화면에 '지난 ROBOFEST 세계대회 현장입니다'라는 설명이
+> 아닙니다.** 그래서 화면에 '지난 ROBOFEST 세계대회 현장'이라는 설명이
 > 함께 나갑니다. 사진을 부산 사진으로 바꾸게 되면
 > `config/competition.ts` 의 `aboutPage.photo.caption` 도 같이 고치세요.
 
