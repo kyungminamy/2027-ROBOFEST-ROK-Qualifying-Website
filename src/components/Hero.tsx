@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { competition, formatKoreanDateRange } from "@/config/competition";
 import { ArrowRight, ChevronDown } from "@/components/icons";
+import { HeroDday } from "@/components/HeroDday";
 import { HeroSlides } from "@/components/HeroSlides";
 import { edgePadding } from "@/lib/layout";
 
@@ -73,6 +74,16 @@ export function Hero() {
           <ArrowRight className="h-5 w-5" />
         </Link>
       </div>
+
+      {/* 남은 날짜 한 줄 — '9월 1일(화) 접수 시작 · D-26'
+          문구는 config 의 heroDday, 날짜 계산은 src/lib/dday.ts 입니다.
+          대회가 끝난 뒤(11/29~)에는 이 줄이 스스로 사라집니다.
+
+          ℹ️ 2026-08-06 에 추가했습니다. 이 자리 한 곳에만 있습니다 —
+             상단 메뉴·/apply·첫 화면 아래쪽 접수 안내에는 넣지 않았습니다.
+             남은 날짜가 여러 곳에 있으면 한 곳이 틀렸을 때 알아채기
+             어렵고, 첫 화면에서만 의미가 있는 정보입니다. */}
+      <HeroDday />
     </>
   );
 
