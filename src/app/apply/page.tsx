@@ -42,7 +42,10 @@ export default function ApplyPage() {
           registration.opensAt,
           registration.closesAt,
         )}`}
-        image={competition.headerImages.robot}
+        /* ℹ️ 2026-08-06 담당자 요청으로 robot(흰 실험실의 로봇 팔)에서
+               apply(빛의 그물을 가리키는 로봇 손)로 바꿨습니다.
+               사진과 막 진하기는 config 의 headerImages.apply 에 있습니다. */
+        image={competition.headerImages.apply}
       />
 
       <main id="main" className="flex-1">

@@ -15,6 +15,7 @@
 | `modi.jpg` | 5116×3410, 1.7MB | `public/header/modi.jpg`, `modi-sm.jpg` | 종목 안내 |
 | `나침반.jpg` | 3360×2004, 1.3MB | `public/header/compass-map.jpg`, `compass-map-sm.jpg` | 일정, 장소 |
 | `질문.jpg` | 7296×4225, 3.1MB | `public/header/question.jpg`, `question-sm.jpg` | 자주 묻는 질문 |
+| `참가신청.jpg` | 5026×1910, 1.1MB | `public/header/apply.jpg`, `apply-sm.jpg` | 참가 신청 |
 | `로봇 손 사람 손.jpg` | 2160×2700, 0.9MB | `public/header/hands.jpg`, `hands-sm.jpg` | (지금은 안 씀) |
 | `대회장.jpg` | 4897×3266, 3.1MB | `public/about/hall.jpg`, `hall-sm.jpg` | ROBOFEST 소개 **(머리띠 아님, 본문 사진)** |
 
@@ -25,6 +26,27 @@
 
 `public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
 (`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
+
+> ℹ️ `robot` 은 2026-08-06 에 참가 신청 화면에서 빠졌지만 **ROBOFEST 소개
+> 화면이 아직 씁니다.** 지우지 마세요.
+
+## 막(overlay) 진하기를 정할 때
+
+사진마다 `config/competition.ts` 의 `headerImages` 에 `overlay` 값이 있습니다.
+**사진이 밝을수록 큰 값**입니다. 정할 때 두 가지를 꼭 같이 보세요.
+
+1. **평균 밝기가 아니라 '가장 밝은 점'을 보세요.** 어두운 사진에도 밝은
+   점(조명·흰 물체·빛나는 선)이 있으면 그 점 위에서 글씨가 사라집니다.
+2. **제목보다 그 아래 설명 줄이 더 까다롭습니다.** 제목은 흰색·큰 글씨라
+   3:1 만 넘으면 되지만, 설명 줄은 옅은 파랑(brand-100)에 작은 글씨라
+   **4.5:1** 이 필요합니다. 제목만 보고 정하면 설명 줄이 깨집니다.
+
+지금 값: `robot` 0.72 · `modi` 0.72 · `compassMap` 0.68 · `question` 0.76 ·
+`apply` 0.68.
+
+> ⚠️ **`compassMap`(일정·장소) 의 0.68 은 설명 줄이 4.30:1 로 기준에 조금
+> 미달합니다.** 2026-08-06 에 발견했고 아직 고치지 않았습니다. 0.72 로
+> 올리면 4.90:1 이 됩니다.
 
 ## 사진을 바꾸려면
 
