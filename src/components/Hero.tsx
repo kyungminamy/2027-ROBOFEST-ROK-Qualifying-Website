@@ -46,7 +46,11 @@ export function Hero() {
       {/* 대회 정식 명칭 — 첫 화면의 주인공입니다.
           ★ 크기를 줄이지 마세요 ★ 구분선 아래 글을 모두 뺀 뒤로
             이 제목이 첫 화면의 대부분을 차지하도록 키운 것입니다. */}
-      <h1 className="rise text-[2rem] leading-[1.1] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl">
+      {/* hero-title 은 글자 그림자만 담당합니다 (globals.css).
+          크기·굵기·색·줄바꿈은 아래 Tailwind 설정 그대로입니다.
+          ⚠️ 이 클래스를 아래 대회기간 줄이나 D-day 줄에 붙이지 마세요 —
+             작은 글씨에서는 획이 메워집니다. globals.css 설명 참고. */}
+      <h1 className="hero-title rise text-[2rem] leading-[1.1] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl">
         {competition.name}
       </h1>
 
