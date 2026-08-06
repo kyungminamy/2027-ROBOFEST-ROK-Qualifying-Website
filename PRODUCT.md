@@ -53,8 +53,13 @@ What makes Robofest itself distinct, and what the copy exists to convey:
 ## Operating Context
 
 **The governing constraint: the person who built this site leaves on
-2026-08-14.** 접수 opens 2026-09-01, 18 days later. The 대회 is 2026-11-27~28. No
-successor has been assigned.
+2026-08-14.** 접수 opens 2026-09-01, 18 days later. The 대회 is 2026-11-27~28.
+
+*Updated 2026-08-05: this used to end "No successor has been assigned."
+Handover is done — 2–3 colleagues can operate the site and one is the
+main contact (`docs/RUNBOOK.md` §12). The constraint softens but does not
+lift: none of them built it, none owns it full time, and the main contact
+is not a developer. `CLAUDE.md` holds the authoritative wording.*
 
 Everything downstream follows from that:
 

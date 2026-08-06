@@ -10,14 +10,20 @@ Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-K
 
 ## The one constraint that governs every decision
 
-**The person who builds this site leaves the company on 2026-08-14. 접수 opens 2026-09-01 — 18 days later. The 대회 is 2026-11-27~28. No successor has been assigned.**
+**The person who built this site leaves the company on 2026-08-14. 접수 opens 2026-09-01 — 18 days later. The 대회 is 2026-11-27~28. Handover is done: 2–3 colleagues have been walked through it, and one of them is the main contact (see `docs/RUNBOOK.md` §12).**
 
-So the site must:
+*Updated 2026-08-05 — this line used to read "No successor has been assigned." That is no longer true, and it was the most load-bearing sentence in the repo.*
+
+**What changed, and what did not.** There are now people who can act, so "nobody will notice" is no longer the worst case. But nobody owns this full time, none of them built it, and the main contact is not a developer. Between 접수 마감 (10/16) and the 대회 (11/27) there are six weeks where nobody has any reason to look at the site at all.
+
+So the three rules below still hold, for a slightly different reason: not "there is no one" but **"the people who are left have other jobs, and this must not need them."** Do not relax them on the grounds that someone is around now.
+
+The site must:
 1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something. This is why there is no database and no paid service in the critical path: the site is static files on Vercel, and 접수 lives in 구글폼. Nothing here has a bill to miss or a free tier to exhaust. *(An earlier draft of this line promised a Supabase Pro plan "see the Supabase section". Supabase was rejected on 2026-07-30 and there is no such plan and no such section — corrected 2026-08-05. Do not reintroduce a paid dependency without replacing this paragraph.)*
 2. **Be editable by a non-technical person through a web browser.** No terminal. No local setup.
 3. **Fail safe.** A bad edit must break the *build* (so Vercel refuses to deploy and the old site stays up), never deploy broken.
 
-When choosing between two approaches, pick the one a stranger can operate in November. Simplicity beats features. Every time.
+When choosing between two approaches, pick the one the main contact can operate in November without calling anyone. Simplicity beats features. Every time.
 
 ---
 
@@ -182,9 +188,9 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 - [x] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`. **Confirmed 2026-08-05 and written into `docs/RUNBOOK.md` §6:** Vercel, 구글폼 and 응답 시트 are all on `luxrobo.education@gmail.com`; GitHub accepts either that account or `lux_1@luxrobo.com`. No domain is registered yet — the site runs on its `vercel.app` address. *(Remaining nuance: GitHub still works from the personal account too. Prefer the shared one after handover, since the personal one may be deprovisioned.)*
 - [x] `docs/RUNBOOK.md` — how to change a date, check 신청 현황, re-measure `embedHeight` after editing the 폼's 설명글, flip `applyMode` to `'link'`, close 접수 (구글폼 응답 받기 — the config date does *not* close it), who to call. Plus `docs/RUNBOOK-CLAUDE-CODE.md` for the same job via Claude Code. **Written 2026-08-03/04.** Its remaining `확인 필요` rows are listed in the RUNBOOK itself and are the departing owner's to fill.
   - *(A 공지 feature was considered and dropped — announcements go in `config/competition.ts` directly. It used to be listed here; removed 2026-08-04 so this checklist stops asking for something that does not exist.)*
-- [ ] Successor has personally edited one file and seen it go live, while being watched
+- [x] **Handover walkthroughs done with 2–3 colleagues, one designated main contact (2026-08-05).** Still worth doing before 8/14 if it has not happened yet: have the main contact edit one file and watch it go live **unaided** — being walked through it and doing it alone are different tests, and only the second one proves the documentation works.
 - [x] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does. **Confirmed by the departing owner on 2026-08-05: the 폼 and its 응답 시트 are already on a shared account with colleagues, so 접수 data survives the handover.** Still to do: write *which* account into `docs/RUNBOOK.md` §6, where it is currently `확인 필요` — a successor cannot act on a fact that lives only in someone's memory.
 - [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
 - [ ] **`applyMode: 'link'` tested once**, then switched back to `'embed'`
 - [ ] **국외이전 동의 and 법정대리인 동의 questions present in the 구글폼**, reviewed by a 담당자
-- [ ] Someone owns **verifying** 접수 opened on 2026-09-01 and closed on 2026-10-17. The 구글폼 is scheduled to do both by itself (confirmed 2026-08-05), so this is a two-minute look in an incognito window, not an operation — but nobody else will notice if the schedule misfired.
+- [ ] **The main contact** owns verifying 접수 opened on 2026-09-01 and closed on 2026-10-17 — named in `docs/RUNBOOK.md` §12, with the dates on their own calendar. The 구글폼 is scheduled to do both by itself (confirmed 2026-08-05), so this is a two-minute look in an incognito window, not an operation — but nobody else will notice if the schedule misfired.
