@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { competition, venueDisplayName } from "@/config/competition";
+import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -49,9 +49,18 @@ export default function VenuePage() {
 
   return (
     <>
+      {/* ℹ️ 2026-08-06 담당자 요청: 이 머리말에서도 장소 이름
+             ('부산보건대학교 체육관')을 뺐습니다.
+             예전 문구: `${venueDisplayName()}에서 열립니다.`
+
+             ★ 되돌리려면 아래 description 을
+               {`${venueDisplayName()}에서 열립니다.`} 로 바꾸고,
+               맨 위 import 줄에 venueDisplayName 도 다시 넣으세요. ★
+
+             이름 자체는 config 의 venue.name 에 그대로 있습니다. */}
       <PageHeader
         title="장소"
-        description={`${venueDisplayName()}에서 열립니다.`}
+        description="장소명은 확정 후 공지 예정입니다."
         /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
            고를 수 있는 값은 config 의 headerImages 에 있습니다. */
         image={competition.headerImages.compassMap}
@@ -91,14 +100,14 @@ export default function VenuePage() {
                 <dd className="mt-1 text-base text-ink sm:text-lg">
                   {/* ℹ️ 2026-08-05 담당자 요청: '장소명' 제목은 그대로 두고
                          장소 이름('부산보건대학교 체육관')만 뺐습니다.
-                         바로 위 페이지 헤더가 이미 '○○○에서 열립니다.' 로
-                         이름을 말하고 있어 한 화면에 두 번 나왔습니다.
 
                          ★ 이름을 다시 보이게 하려면 아래 <span> 한 줄을
-                           {venueDisplayName()} 로 바꾸면 됩니다. ★
+                           {venueDisplayName()} 로 바꾸고, 맨 위 import 줄에
+                           venueDisplayName 을 다시 넣으면 됩니다. ★
 
-                         이름 자체는 config 의 venue.name 에 그대로 있고,
-                         홈 2곳과 이 페이지 헤더에는 계속 나옵니다. */}
+                         2026-08-06 기준, 장소 이름은 화면 어디에도 나오지
+                         않습니다 (홈 2곳·이 페이지 헤더·여기 모두 뺐습니다).
+                         이름 자체는 config 의 venue.name 에 그대로 있습니다. */}
                   <span className="text-ink-soft">
                     장소명은 확정 후 공지 예정입니다.
                   </span>
