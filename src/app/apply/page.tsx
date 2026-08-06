@@ -20,6 +20,9 @@ import { container } from "@/lib/layout";
 export const metadata: Metadata = {
   title: "참가 신청",
   description: `${competition.shortName} 참가 신청 안내입니다. 접수 기간, 참가 자격, 신청 방법을 확인하세요.`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/apply" },
 };
 
 export default function ApplyPage() {

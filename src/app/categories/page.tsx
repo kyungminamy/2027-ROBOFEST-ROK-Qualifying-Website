@@ -21,6 +21,9 @@ import { container } from "@/lib/layout";
 export const metadata: Metadata = {
   title: "종목 안내",
   description: `${competition.shortName}에서 운영하는 ${competition.categories.length}개 종목의 참가 부문, 인원, 키트 제한, 난이도를 한눈에 비교하고 종목별 상세 안내를 확인하세요.`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/categories" },
 };
 
 /** 비교표 한 칸 */

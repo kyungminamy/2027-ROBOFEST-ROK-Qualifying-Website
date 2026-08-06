@@ -6,6 +6,7 @@ import {
 } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FigureBand } from "@/components/FigureBand";
+import { EventJsonLd } from "@/components/EventJsonLd";
 import { Hero } from "@/components/Hero";
 import { HomeIntro } from "@/components/HomeIntro";
 import { HomeSection } from "@/components/HomeSection";
@@ -47,6 +48,10 @@ export default function Home() {
 
   return (
     <>
+      {/* 검색엔진용 행사 정보. 화면에는 보이지 않습니다.
+          자세한 설명은 src/components/EventJsonLd.tsx 를 보세요. */}
+      <EventJsonLd />
+
       {/* 1. 대표 영역 — 대회명, 일정, 신청 버튼 */}
       <Hero />
 

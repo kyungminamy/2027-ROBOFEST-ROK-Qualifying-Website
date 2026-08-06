@@ -60,11 +60,42 @@ export const metadata: Metadata = {
   },
   description: competition.seo.description,
   applicationName: competition.shortName,
+
+  /* 첫 화면의 대표 주소. 아래 화면들은 각자 page.tsx 에서 정합니다. */
+  alternates: { canonical: "/" },
+
+  /* ------------------------------------------------------------------------
+   *  카카오톡·밴드·문자로 링크를 보낼 때 보이는 미리보기
+   *
+   *  ★ og-image.png 를 지우지 마세요 ★
+   *   그림이 없으면 미리보기에 제목만 덩그러니 나오거나, 앱이 아무 그림도
+   *   못 찾아 링크가 밋밋하게 보입니다. 그림을 바꾸려면 같은 이름
+   *   (`public/og-image.png`)으로 덮어써 주세요. 크기는 1200x630 입니다.
+   * ---------------------------------------------------------------------- */
   openGraph: {
     title: competition.shortName,
     description: competition.seo.description,
+    url: competition.seo.siteUrl,
+    siteName: competition.shortName,
     locale: "ko_KR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: competition.shortName,
+      },
+    ],
+  },
+
+  /* 트위터(X)·일부 메신저는 이 값을 따로 봅니다.
+     summary_large_image = 그림을 크게 보여 주는 방식 */
+  twitter: {
+    card: "summary_large_image",
+    title: competition.shortName,
+    description: competition.seo.description,
+    images: ["/og-image.png"],
   },
   // 도메인 확정 전에는 siteUrl이 빈 문자열이므로 metadataBase를 생략합니다
   ...(competition.seo.siteUrl

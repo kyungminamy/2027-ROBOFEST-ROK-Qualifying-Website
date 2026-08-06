@@ -29,6 +29,9 @@ import { ArrowRight, ChevronDown } from "@/components/icons";
 export const metadata: Metadata = {
   title: "자주 묻는 질문",
   description: `${competition.shortName} 참가비, 접수 방법, 대회 규정, 세계대회 진출에 대해 자주 묻는 질문을 모았습니다.`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {

@@ -51,6 +51,8 @@ export async function generateMetadata({
   return {
     title: `${category.name} ${category.nameKo}`,
     description: `${category.name}(${category.nameKo}) 참가 자격과 준비물 안내. ${category.summary}`,
+    /* 이 종목 화면의 대표 주소 */
+    alternates: { canonical: `/categories/${category.slug}` },
   };
 }
 

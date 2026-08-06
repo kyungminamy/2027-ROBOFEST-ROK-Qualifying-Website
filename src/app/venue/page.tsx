@@ -33,6 +33,9 @@ import { ExternalLink } from "@/components/icons";
 export const metadata: Metadata = {
   title: "장소",
   description: `${competition.shortName}의 대회 장소와 오시는 길 안내입니다.`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/venue" },
 };
 
 export default function VenuePage() {

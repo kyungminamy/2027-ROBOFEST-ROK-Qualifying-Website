@@ -30,6 +30,9 @@ import { container } from "@/lib/layout";
 export const metadata: Metadata = {
   title: "일정",
   description: `${competition.shortName}의 접수·설명회·대회 일정 안내입니다.`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/schedule" },
 };
 
 export default function SchedulePage() {

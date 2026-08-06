@@ -33,6 +33,9 @@ import { ArrowRight, ExternalLink } from "@/components/icons";
 export const metadata: Metadata = {
   title: "ROBOFEST 소개",
   description: `ROBOFEST가 어떤 대회인지, 다른 로봇 대회와 무엇이 다른지 안내합니다. ${competition.aboutPage.summary}`,
+  /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
+     검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
