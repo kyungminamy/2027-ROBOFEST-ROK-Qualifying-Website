@@ -16,8 +16,34 @@
 
 기준으로 삼은 사이트: **FIRST Robotics · World Robot Olympiad · VEX**.
 
-전체 방향 계약은 `src/app/layout.tsx` 의 `DIRECTION_CONTRACT` 에 있고, 빌드된
-페이지 소스에도 HTML 주석으로 남습니다.
+### 방향 계약 (direction contract)
+
+> ℹ️ 2026-08-05까지 이 내용은 `src/app/layout.tsx` 안에 있었고, 모든 페이지의
+> HTML 소스에 숨은 주석으로 딸려 나갔습니다(페이지마다 약 1KB). 방문자에게
+> 보이지도 않고, 내부 작업 과정을 담은 영문 메모라 교육청 관계자가 소스를
+> 열어 보면 어색합니다. 그래서 **기록은 이 문서로 옮기고 페이지에서는
+> 뺐습니다.** 디자인 기록의 제자리는 여기입니다.
+
+```
+THESIS: Owns instant recognition as an official robotics qualifier. Refuses an
+invented visual world: offered a rolled direction twice, the user took the
+category standard both times, so convention is the commitment, played straight.
+
+OWN-WORLD: Competition navy (brand-900 ground, brand-700 structure) with a
+single signal orange (accent-600) reserved for the primary action and the open
+state. White cards, 1px navy-tinted rules, drawn SVG icons, Pretendard 400/700,
+tabular numerals. Photography is used — LTU world-championship images, labelled
+as such wherever a reader could mistake them for 부산 (see 사진에 대하여).
+
+STORY: A teacher who has never heard of Robofest learns what it is, believes it
+is official and free, and reaches the 구글폼 on /apply.
+
+FIRST VIEWPORT: 대회명 large over a photographed hall under a navy scrim, then
+대회기간, then the orange 참가 신청 button. 주최·주관 sits in the footer as a
+credential strip, never as an eyebrow.
+
+FORM: category canon (standing exit), outside the grounded list; seed c2a062bf.
+```
 
 ## Color
 
@@ -111,9 +137,38 @@
 
 ## 사진에 대하여
 
+> ### ⚠️ 2026-08-05: 이 원칙은 뒤집혔습니다 ⚠️
+>
+> 원래 규칙은 **"사진을 쓰지 않는다"** 였습니다. 아래에 그대로 남겨 둡니다.
+> 지금 사이트는 그 규칙을 따르지 않으므로, **아래 글만 읽고 '사진이 잘못
+> 들어갔다'고 판단하지 마세요.**
+
+**지금은 사진을 씁니다.** 첫 화면(3장), 각 화면 머리띠(4장),
+'ROBOFEST 소개' 본문(1장) — 모두 **미국 LTU에서 열린 ROBOFEST 세계대회**
+사진입니다. 사용 허락은 받았습니다.
+
+**원래 걱정했던 문제는 그대로 남아 있습니다.** 다른 대회 사진은 이 대회
+사진처럼 보일 수 있습니다. 그래서 사진을 쓰되 **오해할 수 있는 자리에는
+반드시 설명을 붙입니다.**
+
+- 'ROBOFEST 소개' 본문 사진 아래: **'지난 ROBOFEST 세계대회 현장'**
+  → 이 문구를 지우지 마세요. 사진을 쓰기로 한 조건입니다.
+- 부산 대회장 사진인 것처럼 쓰지 마세요. 장소는 아직 확정 전입니다.
+
+**`.hero-field`(옅은 격자무늬)는 그대로 남아 있습니다.** `config` 의
+`heroSlides` 가 비면 그 격자무늬가 나옵니다. 사진 경로가 잘못돼도 화면이
+깨지지 않게 하는 대비책입니다. 지우지 마세요.
+
+---
+
+<details>
+<summary>2026-08-05 이전의 원칙 (기록용)</summary>
+
 **이 대회 사진은 한 장도 없습니다.** 아직 열린 적이 없는 대회입니다.
 다른 대회 사진을 가져다 쓰면 이 대회 사진인 것처럼 오해를 줍니다. 그래서
 히어로는 사진 대신 옅은 격자무늬(`.hero-field`)를 씁니다.
 
 실제 대회 사진이 생기면 그때 격자무늬 자리에 넣으면 됩니다. 그전까지는
 **없는 사진을 만들어 넣지 마세요.**
+
+</details>
