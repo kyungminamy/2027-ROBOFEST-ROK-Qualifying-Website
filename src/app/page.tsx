@@ -2,7 +2,6 @@ import {
   competition,
   formatKoreanDate,
   formatKoreanDateRange,
-  venueDisplayName,
 } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FigureBand } from "@/components/FigureBand";
@@ -150,10 +149,22 @@ export default function Home() {
         {/* 6. 장소 — 옅은 파랑 배경.
                ⚠️ 장소가 확정 전이면 그 사실을 반드시 함께 보여 줍니다.
                   숙소·교통편을 미리 예약하는 분이 있기 때문입니다. */}
+        {/* ℹ️ 2026-08-06 담당자 요청: 이 구역에서 장소 이름
+               ('부산보건대학교 체육관')을 두 곳에서 뺐습니다.
+                 ① 제목 아래 한 줄 설명 `○○○에서 열립니다.` → 아예 없앰
+                 ② 아래 '장소' 상자의 값 → 옅은 회색 안내 문구로 바꿈
+               (`/venue` 의 '장소명' 줄에 2026-08-05 에 한 것과 같은 처리입니다.)
+
+               ★ 되돌리려면
+                 ① 아래 <HomeSection> 에 lead={`${venueDisplayName()}에서 열립니다.`} 를 다시 넣고
+                 ② '장소' 상자의 <span> 한 줄을 {venueDisplayName()} 로 바꾸면 됩니다.
+                 그러면 import 줄에 venueDisplayName 도 다시 넣어야 합니다. ★
+
+               이름 자체는 config 의 venue.name 에 그대로 있고,
+               `/venue` 페이지 헤더에는 계속 나옵니다. */}
         <HomeSection
           tone="soft"
           title="장소"
-          lead={`${venueDisplayName()}에서 열립니다.`}
           moreHref="/venue"
           moreLabel="오시는 길 자세히 보기"
         >
@@ -164,8 +175,10 @@ export default function Home() {
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                 장소
               </dt>
-              <dd className="mt-2 text-lg font-bold text-brand-900">
-                {venueDisplayName()}
+              <dd className="mt-2 text-lg">
+                <span className="font-normal text-ink-soft">
+                  장소명은 확정 후 공지 예정입니다.
+                </span>
               </dd>
             </Reveal>
 
