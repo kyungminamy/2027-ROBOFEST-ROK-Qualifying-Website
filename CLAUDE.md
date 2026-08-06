@@ -14,12 +14,14 @@ Read this before doing anything. Full domain reference lives in `docs/ROBOFEST-K
 
 *Updated 2026-08-05 — this line used to read "No successor has been assigned." That is no longer true, and it was the most load-bearing sentence in the repo.*
 
-**What changed, and what did not.** There are now people who can act, so "nobody will notice" is no longer the worst case. But nobody owns this full time, none of them built it, and the main contact is not a developer. Between 접수 마감 (10/16) and the 대회 (11/27) there are six weeks where nobody has any reason to look at the site at all.
+**The site is retired once 접수 closes on 2026-10-16.** It exists to explain the competition and collect 신청; when the 신청 데이터 is in hand its job is done. Decided 2026-08-05.
 
-So the three rules below still hold, for a slightly different reason: not "there is no one" but **"the people who are left have other jobs, and this must not need them."** Do not relax them on the grounds that someone is around now.
+So the working horizon is **now until 2026-10-16 — about ten weeks**, not "indefinitely". Do not plan for 2027, for long-term maintenance, or for a reader arriving months from now. The domain expires in 2027 and that is irrelevant; the site goes first.
+
+**What still holds.** Handover is done and people can act, but nobody owns this full time, none of them built it, and the main contact is not a developer. So the three rules below stand — not because "there is no one", but because **the people who are left have other jobs, and this must not need them** for the ten weeks that matter.
 
 The site must:
-1. **Run unattended for months.** No component may expire, pause, throttle, or require a human to notice something. This is why there is no database and no paid service in the critical path: the site is static files on Vercel, and 접수 lives in 구글폼. Nothing here has a bill to miss or a free tier to exhaust. *(An earlier draft of this line promised a Supabase Pro plan "see the Supabase section". Supabase was rejected on 2026-07-30 and there is no such plan and no such section — corrected 2026-08-05. Do not reintroduce a paid dependency without replacing this paragraph.)*
+1. **Run unattended until 접수 closes.** No component may expire, pause, throttle, or require a human to notice something. This is why there is no database and no paid service in the critical path: the site is static files on Vercel, and 접수 lives in 구글폼. Nothing here has a bill to miss or a free tier to exhaust. *(An earlier draft of this line promised a Supabase Pro plan "see the Supabase section". Supabase was rejected on 2026-07-30 and there is no such plan and no such section — corrected 2026-08-05. Do not reintroduce a paid dependency without replacing this paragraph.)*
 2. **Be editable by a non-technical person through a web browser.** No terminal. No local setup.
 3. **Fail safe.** A bad edit must break the *build* (so Vercel refuses to deploy and the old site stays up), never deploy broken.
 
