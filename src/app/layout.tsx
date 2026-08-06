@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { competition } from "@/config/competition";
 import { SiteNav } from "@/components/SiteNav";
 import { BackToTop } from "@/components/BackToTop";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 /* ============================================================================
@@ -146,6 +147,23 @@ export default function RootLayout({
             자바스크립트가 없으면 나오지 않습니다 — 자세한 이유는
             src/components/BackToTop.tsx 의 설명을 보세요. */}
         <BackToTop />
+
+        {/* 화면이 얼마나 빨리 뜨는지 재는 도구 (Vercel Speed Insights).
+            2026-08-05 추가.
+
+            · 화면에는 아무것도 보이지 않습니다. 방문자는 알 수 없습니다.
+            · 결과는 Vercel → 프로젝트 → `Speed Insights` 에서 봅니다.
+            · **Vercel 화면에서 켜 주어야 실제로 기록됩니다.**
+              (Speed Insights 탭 → `Enable`)
+
+            ℹ️ 무엇을 모으나: 화면이 뜨는 데 걸린 시간, 어느 주소인지,
+               기기 종류·나라 정도입니다. **쿠키를 쓰지 않고, 이름이나
+               연락처 같은 개인정보는 모으지 않습니다.**
+               신청자 정보는 여전히 구글폼에만 있습니다.
+
+            빼고 싶으면: 이 두 줄(import 와 <SpeedInsights />)을 지우고
+            `npm uninstall @vercel/speed-insights` 하면 끝입니다. */}
+        <SpeedInsights />
       </body>
     </html>
   );
