@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { competition, formatKoreanDateRange } from "@/config/competition";
 import { ArrowRight, ChevronDown } from "@/components/icons";
-import { HeroDday } from "@/components/HeroDday";
 import { HeroSlides } from "@/components/HeroSlides";
 import { edgePadding } from "@/lib/layout";
 
@@ -48,7 +47,7 @@ export function Hero() {
             이 제목이 첫 화면의 대부분을 차지하도록 키운 것입니다. */}
       {/* hero-title 은 글자 그림자만 담당합니다 (globals.css).
           크기·굵기·색·줄바꿈은 아래 Tailwind 설정 그대로입니다.
-          ⚠️ 이 클래스를 아래 대회기간 줄이나 D-day 줄에 붙이지 마세요 —
+          ⚠️ 이 클래스를 아래 대회기간 줄에 붙이지 마세요 —
              작은 글씨에서는 획이 메워집니다. globals.css 설명 참고. */}
       <h1 className="hero-title rise text-[2rem] leading-[1.1] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl">
         {competition.name}
@@ -79,15 +78,11 @@ export function Hero() {
         </Link>
       </div>
 
-      {/* 남은 날짜 한 줄 — '9월 1일(화) 접수 시작 · D-26'
-          문구는 config 의 heroDday, 날짜 계산은 src/lib/dday.ts 입니다.
-          대회가 끝난 뒤(11/29~)에는 이 줄이 스스로 사라집니다.
-
-          ℹ️ 2026-08-06 에 추가했습니다. 이 자리 한 곳에만 있습니다 —
-             상단 메뉴·/apply·첫 화면 아래쪽 접수 안내에는 넣지 않았습니다.
-             남은 날짜가 여러 곳에 있으면 한 곳이 틀렸을 때 알아채기
-             어렵고, 첫 화면에서만 의미가 있는 정보입니다. */}
-      <HeroDday />
+      {/* ℹ️ 2026-08-06: 이 아래에 남은 날짜 한 줄
+             ('9월 1일(화) 접수 시작 · D-26')이 있었으나 같은 날 담당자
+             요청으로 없앴습니다. 관련 파일(HeroDday.tsx, lib/dday.ts,
+             config 의 heroDday)도 함께 지웠습니다.
+             되살리려면 git 기록에서 커밋 7353dc8 을 참고하세요. */}
     </>
   );
 
