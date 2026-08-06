@@ -64,6 +64,13 @@ export const metadata: Metadata = {
   /* 첫 화면의 대표 주소. 아래 화면들은 각자 page.tsx 에서 정합니다. */
   alternates: { canonical: "/" },
 
+  /* 네이버 서치어드바이저 소유확인.
+     값은 config/competition.ts 의 seo.naverSiteVerification 에 있습니다.
+     ⚠️ 이 줄을 지우면 네이버 검색 등록이 풀릴 수 있습니다. */
+  other: {
+    "naver-site-verification": competition.seo.naverSiteVerification,
+  },
+
   /* ------------------------------------------------------------------------
    *  카카오톡·밴드·문자로 링크를 보낼 때 보이는 미리보기
    *
