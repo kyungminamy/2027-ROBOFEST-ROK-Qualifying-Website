@@ -4,6 +4,7 @@ import { competition } from "@/config/competition";
 import { SiteNav } from "@/components/SiteNav";
 import { BackToTop } from "@/components/BackToTop";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 /* ============================================================================
@@ -153,8 +154,8 @@ export default function RootLayout({
 
             · 화면에는 아무것도 보이지 않습니다. 방문자는 알 수 없습니다.
             · 결과는 Vercel → 프로젝트 → `Speed Insights` 에서 봅니다.
-            · **Vercel 화면에서 켜 주어야 실제로 기록됩니다.**
-              (Speed Insights 탭 → `Enable`)
+            · **따로 켤 것은 없습니다.** 배포만 하면 알아서 기록됩니다.
+              (2026-08-05 확인. 처음에 '켜야 한다'고 적었으나 사실이 아니었습니다)
 
             ℹ️ 무엇을 모으나: 화면이 뜨는 데 걸린 시간, 어느 주소인지,
                기기 종류·나라 정도입니다. **쿠키를 쓰지 않고, 이름이나
@@ -164,6 +165,24 @@ export default function RootLayout({
             빼고 싶으면: 이 두 줄(import 와 <SpeedInsights />)을 지우고
             `npm uninstall @vercel/speed-insights` 하면 끝입니다. */}
         <SpeedInsights />
+
+        {/* 방문자 통계 (Vercel Web Analytics). 2026-08-05 추가.
+
+            · 몇 명이 어느 화면을 봤는지, 어디를 통해 들어왔는지 셉니다.
+            · 결과는 Vercel → 프로젝트 → `Analytics` 에서 봅니다.
+            · 화면에는 아무것도 보이지 않습니다.
+
+            ⚠️ 위의 Speed Insights 와 성격이 다릅니다 ⚠️
+             Speed Insights 는 '화면이 얼마나 빨리 뜨는가'를 재고,
+             이것은 '누가 얼마나 들어왔는가'를 셉니다.
+             쿠키는 쓰지 않지만, **방문자를 세기 위한 식별값**을 만듭니다.
+
+            ℹ️ 신청자 정보와는 무관합니다. 이름·연락처·학교 같은 것은
+               여전히 구글폼에만 있고, 여기로 오지 않습니다.
+
+            빼고 싶으면: 이 두 줄(import 와 <Analytics />)을 지우고
+            `npm uninstall @vercel/analytics` 하면 끝입니다. */}
+        <Analytics />
       </body>
     </html>
   );
