@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { competition } from "@/config/competition";
+import { DdayBar } from "@/components/DdayBar";
 import { SiteNav } from "@/components/SiteNav";
 import { BackToTop } from "@/components/BackToTop";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -157,6 +158,12 @@ export default function RootLayout({
         >
           본문으로 바로 가기
         </a>
+
+        {/* 맨 위 남은 날짜 띠 — ★ 상단 메뉴보다 위에 있어야 합니다 ★
+            붙어 있지 않아서(sticky 아님) 화면을 내리면 그냥 사라지고,
+            그다음부터는 메뉴 안의 작은 표가 같은 내용을 이어받습니다.
+            높이는 globals.css 의 --dday-h 에서 정합니다. */}
+        <DdayBar />
 
         <SiteNav />
 

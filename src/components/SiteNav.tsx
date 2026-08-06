@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { DdayChip } from "@/components/DdayBar";
 import { competition, visibleNavItems } from "@/config/competition";
 import { edgePadding } from "@/lib/layout";
 import { ChevronDown } from "@/components/icons";
@@ -172,6 +173,14 @@ export function SiteNav() {
             >
               {navCta.label}
             </Link>
+
+            {/* 남은 날짜 작은 표 — 화면을 내렸을 때만 나타납니다.
+                맨 위에서는 폭이 0 이라 아무 자리도 차지하지 않습니다.
+                (맨 위에서는 이 띠 위쪽의 DdayBar 가 같은 내용을 보여 줍니다)
+
+                ℹ️ 2026-08-06 담당자 요청으로 '참가 신청' 단추 오른쪽으로
+                   옮겼습니다. 그전에는 왼쪽이었습니다. */}
+            <DdayChip />
 
             {/* ------------------------------------- 휴대폰: 접히는 메뉴 (JS 불필요) */}
             {items.length > 0 && (

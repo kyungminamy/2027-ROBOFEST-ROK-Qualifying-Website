@@ -89,13 +89,16 @@ export function Hero() {
   return (
     /* ★ 첫 화면이 화면 전체를 채웁니다 (휴대폰 포함) ★
      *
-     *  빼는 --nav-h 는 상단 메뉴의 높이입니다. globals.css 에서 화면
-     *  크기별로 정해 둔 값을 그대로 가져다 씁니다(52/64/80px).
-     *  이걸 빼지 않으면 메뉴 높이만큼 넘쳐서, 첫 화면 아래쪽을 보려고
-     *  조금 스크롤해야 합니다.
-     *  ★ 메뉴 높이를 바꿀 때는 globals.css 의 --nav-h 만 고치면 됩니다 ★
+     *  빼는 값이 두 개입니다.
+     *    --nav-h  상단 메뉴의 높이 (52/64/80px)
+     *    --dday-h 맨 위 남은 날짜 띠의 높이 (32/36px)
+     *  맨 위에 있을 때 화면에는 [띠] + [메뉴] + [첫 화면] 이 함께 보이므로,
+     *  둘 다 빼야 첫 화면이 남는 자리에 딱 맞습니다. 빼지 않으면 아래쪽이
+     *  잘려서 '아래로 더 있습니다' 화살표가 화면 밖으로 나갑니다.
+     *  ★ 높이를 바꿀 때는 globals.css 의 --nav-h / --dday-h 만 고치세요 ★
      *    여기 숫자를 따로 적지 마세요. 예전에 두 곳에 적어 두었다가
      *    한쪽만 고쳐서 어긋난 적이 있습니다.
+     *  ℹ️ 띠를 없애면 --dday-h 를 0px 로 두면 됩니다.
      *
      *  svh = 휴대폰 주소창이 보일 때를 기준으로 한 화면 높이입니다.
      *  (vh 를 쓰면 주소창 때문에 아래쪽이 잘리는 기기가 있습니다)
@@ -106,7 +109,7 @@ export function Hero() {
      *
      *  isolate + overflow-hidden: 배경 사진이 이 칸 밖으로 삐져나오지
      *  않게 하고, 사진과 글의 앞뒤 순서를 이 칸 안에서만 따지게 합니다. */
-    <section className="relative isolate flex min-h-[calc(100svh-var(--nav-h))] items-center overflow-hidden bg-brand-900 text-white">
+    <section className="relative isolate flex min-h-[calc(100svh-var(--nav-h)-var(--dday-h))] items-center overflow-hidden bg-brand-900 text-white">
       {hasPhoto ? (
         <HeroSlides
           slides={slides}
