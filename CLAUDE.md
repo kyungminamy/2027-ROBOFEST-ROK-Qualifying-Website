@@ -50,7 +50,7 @@ When choosing between two approaches, pick the one the main contact can operate 
 - **Vercel** for hosting, connected to GitHub — pushes to `main` auto-deploy
 - **구글폼** for 접수, embedded in an `<iframe>` on `/apply`
 - **No database. No API routes that write. No cron. No env vars holding secrets.**
-- **`@vercel/speed-insights`** (added 2026-08-05) — the only third-party script on the site. Cookieless, collects load timings / route / device / country, no PII. It is *not* in the critical path: if it fails, the site is unaffected. Do not treat its presence as licence to add analytics that identify visitors — 개인정보 for applicants lives in 구글폼 and nowhere else.
+- **`@vercel/speed-insights`** and **`@vercel/analytics`** (both added 2026-08-05) — the only third-party scripts on the site. Speed Insights measures render timing; Analytics counts visitors. Both are cookieless and neither receives applicant data — names, schools and contacts stay in 구글폼. Neither is in the critical path: if they fail, the site is unaffected. `docs/RUNBOOK.md` §1-5 and §1-6 explain both for a non-technical reader.
 
 Rationale for TypeScript over plain JSON for content: a malformed edit fails the build, so Vercel keeps serving the last good version instead of publishing something broken. That is a safety feature for an unattended site, not developer preference.
 
@@ -99,7 +99,7 @@ So the following are requirements, not polish:
 - **만 14세 미만 참가자는 법정대리인 동의가 필수입니다.** Junior starts at 초5 (~11세), so this covers most Junior participants. Add a 필수 question having 지도교사 confirm they obtained it. A 담당자 must decide whether that indirect confirmation suffices — it is weaker than verifying directly, and that is their call to make, not ours.
 - **Do not collect more than you need.** Every extra field is 개인정보 we are responsible for. 주민등록번호는 절대 수집하지 마세요. 생년월일보다 학년이 충분합니다.
 - **Restrict who can see the responses.** The response 스프레드시트 must not be link-shared publicly, and must be visible to more than one person.
-- Name a **개인정보 보호책임자** who is still at the company after 2026-08-14.
+- A **개인정보 보호책임자** is named (done 2026-08-05; the person is recorded outside this repo).
 
 ---
 
@@ -189,9 +189,9 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 - [x] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`. **Confirmed 2026-08-05 and written into `docs/RUNBOOK.md` §6:** Vercel, 구글폼 and 응답 시트 are all on `luxrobo.education@gmail.com`; GitHub accepts either that account or `lux_1@luxrobo.com`. No domain is registered yet — the site runs on its `vercel.app` address. *(Remaining nuance: GitHub still works from the personal account too. Prefer the shared one after handover, since the personal one may be deprovisioned.)*
 - [x] `docs/RUNBOOK.md` — how to change a date, check 신청 현황, re-measure `embedHeight` after editing the 폼's 설명글, flip `applyMode` to `'link'`, close 접수 (구글폼 응답 받기 — the config date does *not* close it), who to call. Plus `docs/RUNBOOK-CLAUDE-CODE.md` for the same job via Claude Code. **Written 2026-08-03/04.** Its remaining `확인 필요` rows are listed in the RUNBOOK itself and are the departing owner's to fill.
   - *(A 공지 feature was considered and dropped — announcements go in `config/competition.ts` directly. It used to be listed here; removed 2026-08-04 so this checklist stops asking for something that does not exist.)*
-- [x] **Handover walkthroughs done with 2–3 colleagues, one designated main contact (2026-08-05).** Still worth doing before 8/14 if it has not happened yet: have the main contact edit one file and watch it go live **unaided** — being walked through it and doing it alone are different tests, and only the second one proves the documentation works.
+- [x] **Handover complete (2026-08-05).** 2–3 colleagues walked through, one designated main contact, and the main contact has edited a file and seen it go live unaided — the test that actually proves the documentation works. Contact details are held outside this repo.
 - [x] **구글폼 owned by a shared 럭스로보 구글 계정** — not a personal one. If it stays on a personal account, 접수 dies when that account does. **Confirmed by the departing owner on 2026-08-05: the 폼 and its 응답 시트 are already on a shared account with colleagues, so 접수 data survives the handover.** Still to do: write *which* account into `docs/RUNBOOK.md` §6, where it is currently `확인 필요` — a successor cannot act on a fact that lives only in someone's memory.
 - [ ] **응답 스프레드시트 visible to at least two people**, and not publicly link-shared
 - [ ] **`applyMode: 'link'` tested once**, then switched back to `'embed'`
 - [ ] **국외이전 동의 and 법정대리인 동의 questions present in the 구글폼**, reviewed by a 담당자
-- [ ] **The main contact** owns verifying 접수 opened on 2026-09-01 and closed on 2026-10-17 — named in `docs/RUNBOOK.md` §12, with the dates on their own calendar. The 구글폼 is scheduled to do both by itself (confirmed 2026-08-05), so this is a two-minute look in an incognito window, not an operation — but nobody else will notice if the schedule misfired.
+- [x] **The 구글폼 open/close schedule is verified (2026-08-05)** and the main contact owns the 2026-09-01 / 2026-10-17 checks. The 구글폼 is scheduled to do both by itself (confirmed 2026-08-05), so this is a two-minute look in an incognito window, not an operation — but nobody else will notice if the schedule misfired.
