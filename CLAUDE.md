@@ -50,6 +50,7 @@ When choosing between two approaches, pick the one the main contact can operate 
 - **Vercel** for hosting, connected to GitHub — pushes to `main` auto-deploy
 - **구글폼** for 접수, embedded in an `<iframe>` on `/apply`
 - **No database. No API routes that write. No cron. No env vars holding secrets.**
+- **`@vercel/speed-insights`** (added 2026-08-05) — the only third-party script on the site. Cookieless, collects load timings / route / device / country, no PII. It is *not* in the critical path: if it fails, the site is unaffected. Do not treat its presence as licence to add analytics that identify visitors — 개인정보 for applicants lives in 구글폼 and nowhere else.
 
 Rationale for TypeScript over plain JSON for content: a malformed edit fails the build, so Vercel keeps serving the last good version instead of publishing something broken. That is a safety feature for an unattended site, not developer preference.
 
