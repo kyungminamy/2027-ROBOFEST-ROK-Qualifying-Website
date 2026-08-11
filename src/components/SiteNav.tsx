@@ -169,7 +169,16 @@ export function SiteNav() {
               aria-current={
                 isCurrent(pathname, navCta.href) ? "page" : undefined
               }
-              className="ml-1.5 flex min-h-[44px] items-center rounded-lg bg-accent-600 px-4 text-sm font-bold text-white transition-colors hover:bg-accent-700 sm:text-base"
+              /* ★ justify-center 와 text-center 를 지우지 마세요 ★
+                   아주 좁은 화면(320px 안팎, 구형 아이폰SE 등)에서는
+                   '참가 신청'이 '참가' / '신청' 두 줄로 나뉩니다.
+                   items-center 는 '위아래' 가운데만 맞춥니다. 이 둘이
+                   없으면 두 줄이 단추 안에서 왼쪽으로 몰려 삐뚤어 보입니다.
+                   (2026-08-11 담당자가 발견)
+
+                 leading-tight: 두 줄이 됐을 때 기본 줄간격(1.75)이면
+                   44px 단추 밖으로 넘칩니다. */
+              className="ml-1.5 flex min-h-[44px] items-center justify-center rounded-lg bg-accent-600 px-4 text-center text-sm font-bold leading-tight text-white transition-colors hover:bg-accent-700 sm:text-base"
             >
               {navCta.label}
             </Link>
