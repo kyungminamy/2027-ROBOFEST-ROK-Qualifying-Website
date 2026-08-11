@@ -64,30 +64,54 @@ export default function CategoriesPage() {
       />
 
       <main id="main" className="flex-1">
-        {/* ------------------------------------------------- 종목 고르기 도움말 */}
+        {/* ------------------------------------------------- 종목 고르기 도움말
+             ℹ️ 2026-08-11: 예전에는 옅은 파란 상자(테두리 있는 카드)였습니다.
+                담당자 요청으로 아래 '종목 목록'·'한눈에 비교하기'와 같은
+                '한 구역'으로 바꿨습니다.
+
+             ★ 상자로 되돌리지 마세요 ★
+               테두리와 배경색을 가진 상자를 흰 구역 위에 띄우면, 본문과
+               다른 종류의 글처럼 보입니다. 이 글은 곁다리 안내가 아니라
+               '어느 종목을 고를까'라는 이 페이지의 첫 질문에 대한 답입니다.
+               그래서 다른 구역과 같은 무게로 둡니다.
+
+             ★ 배경이 흰색인 이유 (2026-08-11 담당자 요청) ★
+               이 사이트의 하위 페이지는 머리띠(사진) 바로 아래 첫 구역이
+               항상 흰색이고, 그다음부터 옅은 파랑과 번갈아 나옵니다.
+               /about · /schedule · /venue · /faq 모두 그렇습니다.
+               그래서 이 페이지도 흰색 → 옅은 파랑 → 흰색 입니다.
+               ⚠️ 여기에 bg-paper-soft 를 붙이면 이 페이지만 다른 페이지와
+                  다르게 시작합니다. 붙이려면 아래 두 구역도 같이 뒤집으세요.
+               (번갈아 놓는 규칙 자체는 src/components/HomeSection.tsx 참고) */}
         {beginnerFriendly.length > 0 && (
-          <section className="pt-12 pb-2 sm:pt-14 sm:pb-4">
+          <section className="py-14 sm:py-20">
             <div className={container}>
-              <div className="rounded-2xl border-2 border-brand-200 bg-brand-50 p-6 sm:p-7">
-                <p className="text-lg font-bold text-brand-900">
-                  처음 참가하신다면
-                </p>
-                <p className="mt-2 text-base text-ink">
-                  {beginnerFriendly.map((c) => `${c.name}(${c.nameKo})`).join(", ")}
-                  {" "}
-                  종목이 규칙이 단순해 시작하기 좋습니다.
-                </p>
-                <p className="mt-2 text-sm text-ink-soft">
-                  모든 종목은 경기 중 사람이 로봇을 조종할 수 없습니다. 로봇이
-                  스스로 판단하고 움직여야 합니다. 이것을 자율주행이라고 합니다.
-                </p>
-              </div>
+              <h2 className="text-2xl text-brand-900 sm:text-3xl">
+                처음 참가하신다면
+              </h2>
+              <p className="mt-3 text-base text-ink">
+                {beginnerFriendly.map((c) => `${c.name}(${c.nameKo})`).join(", ")}
+                {" "}
+                종목이 규칙이 단순해 시작하기 좋습니다.
+              </p>
+              <p className="mt-3 text-base text-ink-soft">
+                모든 종목은 경기 중 사람이 로봇을 조종할 수 없습니다. 로봇이
+                스스로 판단하고 움직여야 합니다. 이것을 자율주행이라고 합니다.
+              </p>
             </div>
           </section>
         )}
 
-        {/* ------------------------------------------------------- 종목 카드 */}
-        <section className="pb-14 sm:pb-20">
+        {/* ------------------------------------------------------- 종목 카드
+             ⚠️ py- 입니다 (pb- 만 두지 마세요). 예전에는 위쪽 여백을 바로 위
+                '처음 참가하신다면' 상자가 대신 만들어 줘서 pb- 만 있었습니다.
+                그 상자가 자기 여백을 가진 구역이 되면서, 이 구역도 자기
+                위쪽 여백을 직접 가져야 합니다. pb- 로 되돌리면 두 구역이
+                서로 붙습니다. (2026-08-11)
+
+             배경은 옅은 파랑입니다 — 위아래 구역이 둘 다 흰색이라
+             가운데인 이 구역이 색을 맡습니다. */}
+        <section className="bg-paper-soft py-14 sm:py-20">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">종목 목록</h2>
             <p className="mt-3 text-base text-ink-soft">
@@ -111,8 +135,10 @@ export default function CategoriesPage() {
           </div>
         </section>
 
-        {/* --------------------------------------------------------- 비교표 */}
-        <section className="bg-paper-soft py-14 sm:py-20">
+        {/* --------------------------------------------------------- 비교표
+             배경은 흰색입니다 — 바로 위 '종목 목록'이 옅은 파랑이므로
+             번갈아 나오도록 흰색을 씁니다. (2026-08-11 뒤집었습니다) */}
+        <section className="py-14 sm:py-20">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               한눈에 비교하기
