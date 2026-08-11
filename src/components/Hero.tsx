@@ -29,7 +29,7 @@ import { edgePadding } from "@/lib/layout";
  * ========================================================================== */
 
 export function Hero() {
-  const { dates } = competition;
+  const { dates, registration } = competition;
 
   /* 배경 사진 — config 의 heroSlides 에 사진이 있을 때만 씁니다.
      목록이 비어 있으면 남색 격자무늬(.hero-field)가 나옵니다.
@@ -60,15 +60,57 @@ export function Hero() {
 
           ⚠️ whitespace-nowrap 을 지우지 마세요. 없으면 '2026. 11. /
              28.(토)' 처럼 날짜 하나가 중간에서 잘려 두 줄로 나뉩니다. */}
-      <p className="rise rise-2 tabular mt-7 text-base font-bold sm:mt-8 sm:text-lg">
+      {/* ★★★ 아래 세 여백은 합이 정해져 있습니다 (지우거나 늘리지 마세요) ★★★
+             2026-08-11 담당자 요청: 제목과 버튼은 예전 자리에 그대로 두고,
+             접수기간 줄만 새로 끼워 넣기로 했습니다. 그러려면 제목 아래부터
+             버튼 위까지의 높이가 예전과 똑같아야 합니다.
+
+             글줄 한 줄의 높이는 28px 입니다(줄간격 1.75 포함).
+
+               예전 (한 줄) 기본: 28 + 28 + 32           = 88
+                            sm  : 32 + 28 + 32           = 92
+               지금 (두 줄) 기본: 8 + 28 + 4 + 28 + 20    = 88
+                            sm  : 8 + 28 + 4 + 28 + 24    = 92
+                                  ↑   ↑   ↑   ↑   ↑
+                                  mt-2 글 mt-1 글 mt-5/sm:mt-6
+
+             ⚠️ 셋 중 하나만 키우면 버튼이 아래로 밀리고, 그만큼 '더
+                있습니다' 화살표가 화면 밖으로 나갑니다. 실제로 12px 만
+                커져도 그렇게 됩니다(확인함). 하나를 늘리려면 다른 하나를
+                같은 만큼 줄이세요. */}
+      <p className="rise rise-2 tabular mt-2 text-base font-bold sm:text-lg">
         <span className="whitespace-nowrap">대회기간: </span>
         <span className="whitespace-nowrap">
           {formatKoreanDateRange(dates.day1, dates.day2)}
         </span>
       </p>
 
-      {/* 신청 버튼 — 첫 화면의 유일한 버튼입니다. */}
-      <div className="rise rise-3 mt-8">
+      {/* 접수기간 — 바로 위 대회기간과 한 쌍으로 읽히도록 같은 모양입니다.
+          ⚠️ 크기·굵기를 대회기간과 다르게 하지 마세요. 둘은 같은 무게의
+             사실이고, 한쪽만 작으면 덜 중요한 정보처럼 보입니다.
+
+          ⚠️ mt-1 은 아주 좁습니다. 일부러 그렇습니다 — 두 줄이 '한 덩어리'로
+             읽혀야 하고, 버튼을 원래 자리에 두려면 여백을 아낄 곳이
+             여기뿐입니다.
+
+          ⚠️ whitespace-nowrap 을 지우지 마세요. 없으면 '2026. 9. /
+             1.(화)' 처럼 날짜 하나가 중간에서 잘려 두 줄로 나뉩니다.
+
+          날짜는 config 의 registration.opensAt / closesAt 에서 옵니다.
+          대회기간과 똑같은 formatKoreanDateRange 를 쓰므로, 표기 방식을
+          바꾸면 두 줄이 함께 바뀝니다. */}
+      <p className="rise rise-3 tabular mt-1 text-base font-bold sm:text-lg">
+        <span className="whitespace-nowrap">접수기간: </span>
+        <span className="whitespace-nowrap">
+          {formatKoreanDateRange(registration.opensAt, registration.closesAt)}
+        </span>
+      </p>
+
+      {/* 신청 버튼 — 첫 화면의 유일한 버튼입니다.
+          ⚠️ mt-8 이 아니라 mt-5/sm:mt-6 입니다. 위 대회기간 설명의
+             '합이 정해져 있다'를 먼저 읽으세요. 버튼의 화면상 위치는
+             예전과 똑같습니다 — 위 여백만 재분배했습니다. */}
+      <div className="rise rise-4 mt-5 sm:mt-6">
         <Link
           href={competition.navCta.href}
           className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-black/20 transition-colors hover:bg-accent-700 sm:w-auto sm:text-lg"
