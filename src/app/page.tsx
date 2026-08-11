@@ -180,11 +180,12 @@ export default function Home() {
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                 장소
               </dt>
-              <dd className="mt-2 text-lg">
-                <span className="font-normal text-ink-soft">
-                  장소명은 확정 후 공지 예정입니다.
-                </span>
-              </dd>
+              {/* ℹ️ 2026-08-11: 장소가 확정되어 이름이 다시 나옵니다.
+                     08-06 ~ 08-11 사이에는 '장소명은 확정 후 공지
+                     예정입니다'가 나왔습니다.
+                     ⚠️ 이름을 여기에 직접 적지 마세요 — config 의
+                        venue.name 에서 옵니다. */}
+              <dd className="mt-2 text-lg">{venue.name}</dd>
             </Reveal>
 
             <Reveal

@@ -49,18 +49,15 @@ export default function VenuePage() {
 
   return (
     <>
-      {/* ℹ️ 2026-08-06 담당자 요청: 이 머리말에서도 장소 이름
-             ('부산보건대학교 체육관')을 뺐습니다.
-             예전 문구: `${venueDisplayName()}에서 열립니다.`
+      {/* ℹ️ 2026-08-11: 장소가 확정되어 머리말에 이름이 다시 나옵니다.
+             08-06 ~ 08-11 사이에는 '장소명은 확정 후 공지 예정입니다'
+             였습니다 (그때는 장소가 미정이었습니다).
 
-             ★ 되돌리려면 아래 description 을
-               {`${venueDisplayName()}에서 열립니다.`} 로 바꾸고,
-               맨 위 import 줄에 venueDisplayName 도 다시 넣으세요. ★
-
-             이름 자체는 config 의 venue.name 에 그대로 있습니다. */}
+             ⚠️ 이름을 여기에 직접 적지 마세요. config 의 venue.name 에서
+                옵니다. 두 곳에 적으면 한쪽만 고쳐집니다. */}
       <PageHeader
         title="장소"
-        description="장소명은 확정 후 공지 예정입니다."
+        description={`${venue.name}에서 열립니다.`}
         /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
            고를 수 있는 값은 config 의 headerImages 에 있습니다. */
         image={competition.headerImages.compassMap}
@@ -86,23 +83,50 @@ export default function VenuePage() {
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">장소</h2>
 
-            <dl className="mt-6">
+            {/* 장소 사진 (2026-08-11 장소 확정과 함께 추가)
+                ★ 제목 바로 아래, 이름·주소보다 위입니다 (담당자 지정) ★
+
+                원본은 image/부산과학기술대학교.jpg, 화면에 나가는 줄인
+                파일은 public/venue/ 에 있습니다. 사진을 바꾸려면 config 의
+                venue.photo 만 고치면 됩니다.
+
+                ⚠️ 원본이 960×640 이라 그보다 크게 뽑지 않았습니다. 없는
+                   화소를 늘리면 오히려 뭉개집니다.
+
+                ⚠️ next/image 를 쓰지 않는 이유는 다른 화면과 같습니다 —
+                   설정이 필요해 비개발자가 유지하기 어렵습니다. 대신 화면
+                   크기에 따라 두 장 중 하나만 내려받도록 srcSet 을 씁니다. */}
+            <figure className="mt-6">
+              {/* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */}
+              <img
+                src={venue.photo.wide}
+                srcSet={`${venue.photo.small} 640w, ${venue.photo.wide} 960w`}
+                sizes="(min-width: 640px) 42rem, 100vw"
+                alt={venue.photo.alt}
+                width={960}
+                height={640}
+                loading="lazy"
+                decoding="async"
+                className="block h-auto w-full rounded-2xl border border-brand-100"
+              />
+              {/* ℹ️ 2026-08-11: 사진 아래 설명(figcaption)을 담당자 요청으로
+                     없앴습니다. '부산과학기술대학교'라고만 적혀 있었는데,
+                     바로 아래 '장소명' 줄이 같은 말을 하고 있었습니다.
+
+                     ⚠️ /about 의 사진에는 설명이 그대로 있습니다. 그쪽은
+                        세계대회 사진이라 '부산 대회장이 아니다'라는 것을
+                        설명이 알려 줍니다. 여기와 사정이 다릅니다. */}
+            </figure>
+
+            <dl className="mt-8">
               <div className="border-b border-brand-100 py-3">
                 <dt className="text-sm font-bold text-brand-700">장소명</dt>
                 <dd className="mt-1 text-base text-ink sm:text-lg">
-                  {/* ℹ️ 2026-08-05 담당자 요청: '장소명' 제목은 그대로 두고
-                         장소 이름('부산보건대학교 체육관')만 뺐습니다.
-
-                         ★ 이름을 다시 보이게 하려면 아래 <span> 한 줄을
-                           {venueDisplayName()} 로 바꾸고, 맨 위 import 줄에
-                           venueDisplayName 을 다시 넣으면 됩니다. ★
-
-                         2026-08-06 기준, 장소 이름은 화면 어디에도 나오지
-                         않습니다 (홈 2곳·이 페이지 헤더·여기 모두 뺐습니다).
-                         이름 자체는 config 의 venue.name 에 그대로 있습니다. */}
-                  <span className="text-ink-soft">
-                    장소명은 확정 후 공지 예정입니다.
-                  </span>
+                  {/* ℹ️ 2026-08-11: 장소가 확정되어 이름이 다시 나옵니다.
+                         2026-08-05 ~ 08-11 사이에는 미확정이라 이 자리에
+                         '장소명은 확정 후 공지 예정입니다'가 나왔습니다.
+                         이름은 config 의 venue.name 에서 옵니다. */}
+                  {venue.name}
                 </dd>
               </div>
 
