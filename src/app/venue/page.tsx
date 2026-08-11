@@ -67,27 +67,19 @@ export default function VenuePage() {
       />
 
       <main id="main" className="flex-1">
-        {/* ------------------------------------------- 장소 확정 전 안내 (조건부) */}
-        {!venue.isConfirmed && (
-          <section className="pt-12 pb-2 sm:pt-14 sm:pb-4">
-            <div className={container}>
-              <div className="rounded-2xl border-2 border-brand-200 bg-brand-50 p-6 sm:p-7">
-                <p className="text-lg font-bold text-brand-900 sm:text-xl">
-                  장소는 아직 확정 전입니다
-                </p>
-                <p className="mt-2 text-base text-ink">
-                  대회는 부산 지역에서 열릴 예정입니다. 다만 정확한 장소는
-                  협의가 진행 중이어서 바뀔 수 있습니다.
-                </p>
-                <p className="mt-2 text-base text-ink">
-                  정확한 위치와 오시는 길은 확정되는 대로 이 페이지에서
-                  안내하겠습니다. 숙소나 교통편을 미리 예약하실 때에는 이 점을
-                  고려해 주세요.
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
+        {/* ℹ️ 2026-08-11: 여기 있던 '장소는 아직 확정 전입니다' 안내 상자를
+               담당자 요청으로 통째로 없앴습니다 (옅은 파란 상자였습니다).
+
+               ⚠️ 없어진 말 중에 다른 곳에 없는 것이 두 가지 있습니다.
+                 ① '대회는 부산 지역에서 열릴 예정입니다' — 이 페이지에서
+                    지역을 말하던 유일한 문장이었습니다.
+                 ② '숙소나 교통편을 미리 예약하실 때에는 이 점을 고려해
+                    주세요' — 미리 예약하지 말라는 유일한 경고였습니다.
+               다시 넣고 싶으면 git 기록에서 이 커밋 직전을 보세요.
+
+               ℹ️ '아직 확정 전'이라는 사실 자체는 아래 세 곳에 그대로
+                  남아 있습니다 — 머리말, '장소명' 줄, '주소' 줄.
+                  venue.isConfirmed 값은 이제 화면 어디에도 쓰이지 않습니다. */}
 
         {/* ------------------------------------------------------------- 장소 */}
         <section className="py-12 sm:py-16">

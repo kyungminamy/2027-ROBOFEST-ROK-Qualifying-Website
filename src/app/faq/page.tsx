@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { competition, formatKoreanDateRange } from "@/config/competition";
+import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
@@ -22,8 +22,10 @@ import { ArrowRight, ChevronDown } from "@/components/icons";
  *   자바스크립트 없이도 브라우저가 알아서 여닫습니다.
  *   ⚠️ 이것을 자바스크립트 방식으로 바꾸지 마세요.
  *
- *  ℹ️ 날짜는 config 의 registration 에서 가져옵니다. 이 파일이나 faqPage 에
- *     날짜를 직접 적지 마세요. 두 곳에 적으면 한쪽만 고쳐집니다.
+ *  ℹ️ 이 화면에는 이제 날짜가 직접 나오지 않습니다. 맨 위에 있던
+ *     '접수 기간' 상자를 2026-08-11 에 없앴기 때문입니다.
+ *     답변 글 안에 날짜를 적지 마세요 — config 의 registration 이
+ *     바뀌어도 여기는 따라가지 않습니다.
  * ========================================================================== */
 
 export const metadata: Metadata = {
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export default function FaqPage() {
-  const { faqPage, registration } = competition;
+  const { faqPage } = competition;
 
   return (
     <>
@@ -50,18 +52,16 @@ export default function FaqPage() {
       <main id="main" className="flex-1">
         <section className="py-12 sm:py-16">
           <div className={container}>
-            {/* 접수 기간은 자주 묻는 첫 번째 질문이라 맨 위에 못박아 둡니다.
-                날짜는 config 에서 가져오므로 여기서 고치지 마세요. */}
-            <p className="tabular rounded-2xl border-2 border-brand-200 bg-brand-50 p-5 text-base font-bold text-brand-900 sm:p-6 sm:text-lg">
-              접수 기간:{" "}
-              {formatKoreanDateRange(
-                registration.opensAt,
-                registration.closesAt,
-              )}
-            </p>
+            {/* ℹ️ 2026-08-11: 여기 있던 '접수 기간' 옅은 파란 상자를 담당자
+                   요청으로 없앴습니다. 같은 날짜가 첫 화면·/schedule·
+                   /apply 에도 있어서 이 페이지에만 있던 정보가 아닙니다.
 
+                   ⚠️ first:mt-0 을 지우지 마세요. 상자가 있던 시절에는 아래
+                      첫 묶음의 mt-12 가 '상자와의 간격'이었습니다. 상자가
+                      없어진 지금 그대로 두면 구역 위쪽 여백(py-12)에 48px
+                      이 더 붙어 첫 제목이 아래로 툭 떨어져 보입니다. */}
             {faqPage.map((section) => (
-              <div key={section.group} className="mt-12">
+              <div key={section.group} className="mt-12 first:mt-0">
                 <h2 className="text-2xl text-brand-900 sm:text-3xl">
                   {section.group}
                 </h2>
