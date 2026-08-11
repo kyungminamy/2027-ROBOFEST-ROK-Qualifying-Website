@@ -216,6 +216,23 @@ export function DdayChip() {
   const value = view?.primary?.display ?? null;
   const show = scrolled && value !== null;
 
+  /* 숫자 앞에 붙는 두 글자. 무엇을 세고 있느냐에 따라 셋 중 하나입니다.
+       접수 시작 전  → '접수'  (9월 1일까지)
+       접수 기간 중  → '마감'  (10월 16일까지)
+       접수가 끝난 뒤 → '대회'  (11월 27일까지)
+     대회 당일·종료 뒤에는 셀 숫자가 없어 표 자체가 나오지 않으므로
+     그 두 시기의 값은 화면에 쓰이지 않습니다.
+
+     ⚠️ view.primary.label 을 잘라 쓰지 마세요. 그 말('접수 마감까지')이
+        바뀌면 엉뚱한 글자가 잘려 나옵니다. config 에서 따로 받습니다. */
+  const chip = competition.countdown;
+  const prefixByPhase: Record<string, string> = {
+    beforeOpen: chip.chipOpen,
+    open: chip.chipClose,
+    closed: chip.chipEvent,
+  };
+  const prefix = view ? (prefixByPhase[view.phase] ?? chip.chipEvent) : "";
+
   return (
     /* ★ 왜 숨기지 않고 폭을 0 으로 만드나 ★
        display:none 으로 껐다 켜면 나타나는 순간 옆의 '참가 신청' 단추가
@@ -230,13 +247,36 @@ export function DdayChip() {
         show ? "max-w-[7rem] opacity-100" : "max-w-0 opacity-0"
       }`}
     >
-      {/* ★ 주황(accent-600) — 흰 바탕 대비 5.1:1 로 기준을 넘습니다 ★
-             ℹ️ 2026-08-06 담당자 요청. 그전에는 접수가 열리기 전까지
-                남색(brand-700)이었다가 9월 1일에 주황으로 바뀌었습니다.
-                이제는 늘 주황이라, 이 표의 색은 더 이상 '접수가 열렸다'는
-                신호가 아닙니다. (그 신호는 맨 위 띠에 그대로 있습니다) */}
-      <span className="tabular pl-2 text-[13px] font-bold text-accent-600 sm:text-[14px]">
-        {value ?? competition.countdown.untilEvent}
+      <span className="inline-flex items-baseline gap-1 pl-2">
+        {/* 앞의 두 글자 — 숫자와 크기·색·굵기가 모두 같습니다.
+            그래서 '접수 D-21' 이 하나의 덩어리로 읽힙니다.
+
+            ★ hidden sm:inline — 640px 미만에서는 나오지 않습니다 ★
+              휴대폰(390px) 상단 메뉴에는 로고·참가 신청·메뉴가 이미
+              들어 있어서 남는 자리가 67px 뿐입니다. 이 두 글자를 넣으면
+              63px 를 더 써서 로고와 단추 사이가 4px 로 붙습니다.
+              넓은 화면에는 자리가 넉넉해서 그대로 보여 줍니다.
+              ⚠️ 이 hidden 을 지우려면 390px 에서 먼저 확인하세요.
+
+            ⚠️ 굵기는 400 과 700 만 씁니다. 이 사이트는 Pretendard 를 그
+               두 가지만 싣기 때문에 font-medium(500)을 쓰면 브라우저가
+               없는 굵기를 흉내 내어 뭉개져 보입니다. */}
+        {/* text-[13px] 는 지금 화면에 안 나옵니다(640px 미만은 hidden).
+            그래도 적어 둔 이유: 위 hidden 을 지우는 사람이 생기면 이 값이
+            바로 쓰이는데, 없으면 브라우저 기본 16px 이 되어 숫자보다
+            커집니다. 숫자와 같은 값으로 맞춰 둡니다. */}
+        <span className="hidden text-[13px] font-bold text-accent-600 sm:inline sm:text-[14px]">
+          {prefix}
+        </span>
+
+        {/* ★ 주황(accent-600) — 흰 바탕 대비 5.1:1 로 기준을 넘습니다 ★
+               ℹ️ 2026-08-06 담당자 요청. 그전에는 접수가 열리기 전까지
+                  남색(brand-700)이었다가 9월 1일에 주황으로 바뀌었습니다.
+                  이제는 늘 주황이라, 이 표의 색은 더 이상 '접수가 열렸다'는
+                  신호가 아닙니다. (그 신호는 맨 위 띠에 그대로 있습니다) */}
+        <span className="tabular text-[13px] font-bold text-accent-600 sm:text-[14px]">
+          {value ?? competition.countdown.untilEvent}
+        </span>
       </span>
     </span>
   );
