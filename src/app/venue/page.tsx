@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
@@ -206,6 +207,151 @@ export default function VenuePage() {
                       </p>
                     ) : (
                       <p className="mt-2 text-base text-ink-soft">추후 공지</p>
+                    )}
+
+                    {/* 표 (버스 노선, 출발지별 소요시간).
+                        config 의 rows 가 비어 있으면 아무것도 그리지 않습니다.
+
+                        ★ 왜 문장이 아니라 표인가 (2026-08-11 담당자 요청) ★
+                          버스 번호가 한 줄에 13개입니다. 문장에 섞어 놓으면
+                          자기가 타는 번호가 있는지 눈으로 찾기 어렵습니다.
+                          대학 누리집도 같은 내용을 표로 보여 줍니다.
+
+                        모양은 종목 비교표(/categories)를 따랐습니다 — 테두리,
+                        머리 칸 배경, 둥근 모서리가 같습니다.
+
+                        ⚠️ 다만 두 가지는 다릅니다 (2026-08-11 담당자 요청).
+                          ① 머리 칸 글씨가 15px 입니다 (비교표는 12px).
+                             본문 글씨(14px)보다 1px 큽니다.
+                          ② 칸 사이에 세로줄이 있고 글자가 가운데 정렬입니다.
+                             (비교표는 세로줄 없이 왼쪽 정렬)
+                          비교표도 같은 모양으로 맞추려면 그쪽 Th/Td 를
+                          고치세요. 지금은 이 화면만 이렇습니다. */}
+                    {way.rows.length > 0 && (
+                      <div className="mt-4 overflow-x-auto rounded-2xl border border-brand-200 bg-paper">
+                        {/* ★ table-fixed 인 이유 (2026-08-11) ★
+                            자동 폭에 맡기면 칸 너비가 글자 길이를 따라갑니다.
+                            그래서 '사상 시외버스터미널'이 있는 첫째 쌍만
+                            넓어지고 '구포역'이 있는 셋째 쌍은 좁아져,
+                            출발지끼리의 간격이 278·262·178px 처럼 제각각이
+                            됐습니다. table-fixed + 아래 폭 지정으로 쌍마다
+                            정확히 같은 너비를 갖게 합니다.
+                            ⚠️ table-fixed 를 빼면 다시 어긋납니다.
+
+                            ★ min-w 를 지우지 마세요 (쌍이 둘 이상일 때) ★
+                              table-fixed 는 좁은 화면에서 표를 화면 폭에
+                              억지로 욱여넣습니다. 휴대폰(390px)에서 실제로
+                              해 보니 값 칸이 37px 이 되어 '20분'이
+                              '2/0/분' 세 줄로 쪼개졌습니다. 최소 폭을 정해
+                              두면 대신 표가 좌우로 밀립니다 — 종목
+                              비교표(/categories)와 같은 방식입니다. */}
+                        <table
+                          className={`w-full table-fixed border-collapse ${
+                            way.rowsColumns > 1 ? "min-w-[38rem]" : ""
+                          }`}
+                        >
+                          <caption className="sr-only">
+                            {way.label} — {way.rowsHeading.label}별{" "}
+                            {way.rowsHeading.value}
+                          </caption>
+                          <thead>
+                            <tr>
+                              {/* 한 줄에 여러 쌍이 들어가면 열 제목도 그만큼
+                                  되풀이됩니다 (대학 누리집과 같은 모양). */}
+                              {Array.from({ length: way.rowsColumns }).map(
+                                (_, i) => (
+                                  <Fragment key={i}>
+                                    {/* 폭은 여기 머리 칸에서 정합니다
+                                        (table-fixed 는 첫 줄의 폭을 따릅니다).
+                                        한 쌍 = 전체의 1/쌍수. 그 안에서
+                                        이름 55 : 값 45 로 나눕니다.
+
+                                        ⚠️ 값 칸을 더 좁히지 마세요. 2:1 로
+                                           두었더니 머리글 '소요시간'이
+                                           '소요시/간' 두 줄로 쪼개졌습니다
+                                           (15px 로 키운 뒤). 대신 이름 칸이
+                                           좁아져 '사상 시외버스터미널'이 두
+                                           줄이 되는데, 띄어쓰기에서 나뉘어
+                                           읽는 데 지장이 없습니다.
+
+                                        쌍이 하나뿐이면(버스 번호) 값 쪽이
+                                        훨씬 길어지므로 반대로 잡습니다. */}
+                                    <th
+                                      scope="col"
+                                      style={{
+                                        width:
+                                          way.rowsColumns === 1
+                                            ? "20%"
+                                            : `${(100 / way.rowsColumns) * 0.55}%`,
+                                      }}
+                                      className="border-b-2 border-r border-brand-200 bg-brand-50 px-3.5 py-3 text-center text-[15px] font-bold text-brand-800 last:border-r-0"
+                                    >
+                                      {way.rowsHeading.label}
+                                    </th>
+                                    <th
+                                      scope="col"
+                                      style={{
+                                        width:
+                                          way.rowsColumns === 1
+                                            ? "80%"
+                                            : `${(100 / way.rowsColumns) * 0.45}%`,
+                                      }}
+                                      className="border-b-2 border-r border-brand-200 bg-brand-50 px-3.5 py-3 text-center text-[15px] font-bold text-brand-800 last:border-r-0"
+                                    >
+                                      {way.rowsHeading.value}
+                                    </th>
+                                  </Fragment>
+                                ),
+                              )}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {/* config 의 rows 를 rowsColumns 개씩 잘라 한 줄로
+                                만듭니다. 3 이면 세 쌍이 한 줄에 들어갑니다. */}
+                            {Array.from(
+                              {
+                                length: Math.ceil(
+                                  way.rows.length / way.rowsColumns,
+                                ),
+                              },
+                              (_, line) =>
+                                way.rows.slice(
+                                  line * way.rowsColumns,
+                                  line * way.rowsColumns + way.rowsColumns,
+                                ),
+                            ).map((line) => (
+                              <tr key={line[0].label}>
+                                {line.map((row) => (
+                                  <Fragment key={row.label}>
+                                    {/* scope="row": 화면 낭독기가 '김해 — 20분'
+                                        처럼 짝지어 읽어 줍니다. 지우지 마세요. */}
+                                    {/* ⚠️ whitespace-nowrap 을 붙이지 마세요.
+                                           칸 너비가 고정이라, 긴 이름
+                                           ('사상 시외버스터미널')이 칸 밖으로
+                                           삐져나갑니다. 지금은 띄어쓰기에서
+                                           두 줄로 나뉩니다. */}
+                                    <th
+                                      scope="row"
+                                      className="border-b border-r border-brand-100 px-3.5 py-3 text-center align-middle text-sm font-bold text-brand-800 last:border-r-0"
+                                    >
+                                      {row.label}
+                                    </th>
+                                    {/* tabular: 숫자라 폭을 고르게 맞춥니다.
+                                        ⚠️ 여기에 w-full 을 붙이지 마세요.
+                                           한 줄에 쌍이 셋일 때, 맨 앞 칸
+                                           하나가 남는 폭을 전부 가져가서
+                                           첫째 쌍과 둘째 쌍 사이만 크게
+                                           벌어집니다. (2026-08-11 확인) */}
+                                    <td className="tabular border-b border-r border-brand-100 px-3.5 py-3 text-center align-middle text-sm text-ink last:border-r-0">
+                                      {row.value}
+                                    </td>
+                                  </Fragment>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     )}
                   </Reveal>
                 );
