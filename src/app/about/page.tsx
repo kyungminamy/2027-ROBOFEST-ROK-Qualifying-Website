@@ -185,8 +185,18 @@ export default function AboutPage() {
               열립니다. 국내예선 장소인 부산과는 다른 곳입니다.
             </p>
 
-            {/* 세계대회에 나가게 된 팀이 받는 도움 — 계획서 Ⅳ-11 */}
-            <div className="mt-4 rounded-2xl border-2 border-brand-200 bg-brand-50 p-5 sm:p-6">
+            {/* 세계대회에 나가게 된 팀이 받는 도움 — 계획서 Ⅳ-11
+
+                ℹ️ 2026-08-11: 옅은 파란 상자(테두리 있는 bg-brand-50)에서
+                   바로 위 상자와 같은 모양으로 바꿨습니다. 담당자 요청입니다.
+                   글은 그대로이고 상자만 바뀌었습니다.
+
+                ★ 위 상자와 같은 값을 쓰세요 ★
+                  rounded-2xl · bg-paper-soft · p-5 sm:p-6 · 테두리 없음.
+                  두 상자가 나란히 붙어 있어서, 한쪽만 테두리가 있으면
+                  같은 종류의 글인데 다른 무게로 보입니다.
+                  ⚠️ border-2 나 bg-brand-50 을 다시 붙이지 마세요. */}
+            <div className="mt-4 rounded-2xl bg-paper-soft p-5 sm:p-6">
               <p className="text-base font-bold text-brand-900 sm:text-lg">
                 {aboutPage.worldSupport.heading}
               </p>
