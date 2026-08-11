@@ -114,8 +114,16 @@ export default function ApplyPage() {
                   </dd>
                 </div>
 
-                {/* ⚠️ 아래 두 항목은 법적으로 필요한 안내입니다. 지우지 마세요. */}
-                <div className="border-t border-brand-100 py-5">
+                {/* ⚠️ 아래 두 항목은 법적으로 필요한 안내입니다. 지우지 마세요.
+
+                       ★ 이 두 항목만 아래쪽/위쪽 여백이 절반입니다 ★
+                         다른 항목은 py-5 (위아래 20px)인데, '개인정보 처리
+                         동의'의 아래와 '촬영·초상권 동의'의 위만 10px 입니다.
+                         둘 사이 간격이 40px → 20px 이 됩니다 (2026-08-11
+                         담당자 요청). 사이의 줄도 없어서, 두 동의가 한
+                         덩어리로 붙어 보이게 하려는 것입니다.
+                         ⚠️ py-5 로 되돌리면 다시 벌어집니다. */}
+                <div className="border-t border-brand-100 pb-2.5 pt-5">
                   <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                     {registration.privacyNoticeTitle}
                   </dt>
@@ -124,7 +132,11 @@ export default function ApplyPage() {
                   </dd>
                 </div>
 
-                <div className="border-t border-brand-100 py-5">
+                {/* ⚠️ 이 항목에는 border-t 가 없습니다 (2026-08-11 담당자 요청).
+                       바로 위 '개인정보 처리 동의'와 이 '촬영 초상권 동의'는
+                       한 묶음으로 읽혀야 해서 사이의 줄을 뺐습니다.
+                       ⚠️ 다른 항목처럼 border-t 를 붙이지 마세요. */}
+                <div className="pb-5 pt-2.5">
                   <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                     {registration.portraitRightsNoticeTitle}
                   </dt>
@@ -134,7 +146,16 @@ export default function ApplyPage() {
                 </div>
               </dl>
 
-              <p className="border-t border-brand-100 px-5 py-4 text-sm text-ink-soft sm:px-6">
+              {/* ⚠️ 이 줄은 border-t 가 없습니다 (2026-08-11 담당자 요청).
+                     각주처럼 떨어져 보이지 않게, 위 두 동의 항목과 한 덩어리로
+                     읽히도록 한 것입니다.
+
+                     글씨는 바로 위 설명글과 완전히 같습니다 —
+                     크기 text-base · 색 text-ink · 굵기 보통(400).
+                     ⚠️ 다시 작게(text-sm) 하거나 흐리게(text-ink-soft)
+                        만들지 마세요. 담당자가 위 글과 같은 무게로 두기로
+                        했습니다. */}
+              <p className="px-5 pb-5 text-base text-ink sm:px-6">
                 {registration.consentNoticeFooter}
               </p>
             </div>
