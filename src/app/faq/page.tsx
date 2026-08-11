@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
-import { ArrowRight, ChevronDown } from "@/components/icons";
+import { ChevronDown } from "@/components/icons";
 
 /* ============================================================================
  *  자주 묻는 질문 (/faq)
@@ -94,36 +93,17 @@ export default function FaqPage() {
           </div>
         </section>
 
-        {/* --------------------------------------------------- 남은 궁금증 */}
-        <section className="bg-paper-soft py-12 sm:py-16">
-          <div className={container}>
-            <h2 className="text-2xl text-brand-900 sm:text-3xl">
-              찾는 답이 없다면
-            </h2>
-            <p className="mt-3 text-base text-ink sm:text-lg">
-              아래 문의처로 연락해 주세요. 종목별 규정은 종목 안내에서 더
-              자세히 확인하실 수 있습니다.
-            </p>
+        {/* ℹ️ 2026-08-11: 여기 있던 '찾는 답이 없다면' 구역을 담당자 요청으로
+               없앴습니다. 제목 한 줄, 안내 문장 한 줄, 그리고 '종목 안내'·
+               '참가 신청' 단추 두 개가 있었습니다.
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/categories"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg border-2 border-brand-200 bg-paper px-7 text-base font-bold text-brand-700 transition-colors hover:border-brand-400 sm:text-lg"
-              >
-                종목 안내
-                <ArrowRight className="h-5 w-5" />
-              </Link>
+               ★ 없어져도 길이 막히지 않는 이유 ★
+                 두 단추가 가리키던 곳은 모든 화면 맨 위 메뉴에 늘 있습니다
+                 (메뉴는 화면에 붙어 있어 어디서든 눌립니다).
+                 '문의처로 연락해 주세요'가 가리키던 연락처도 바로 아래
+                 꼬리말에 그대로 있습니다.
+               다시 넣고 싶으면 git 기록에서 이 커밋 직전을 보세요. */}
 
-              <Link
-                href="/apply"
-                className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-accent-600/20 transition-colors hover:bg-accent-700 sm:text-lg"
-              >
-                참가 신청
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
-          </div>
-        </section>
       </main>
 
       <SiteFooter />
