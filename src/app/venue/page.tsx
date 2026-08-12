@@ -88,67 +88,102 @@ export default function VenuePage() {
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">장소</h2>
 
-            {/* 장소 사진 (2026-08-11 장소 확정과 함께 추가)
-                ★ 제목 바로 아래, 이름·주소보다 위입니다 (담당자 지정) ★
+            {/* ------------------------------ 장소명·주소 + 사진 (나란히)
 
-                원본은 image/부산과학기술대학교.jpg, 화면에 나가는 줄인
-                파일은 public/venue/ 에 있습니다. 사진을 바꾸려면 config 의
+                ★★★ 사진이 글 '옆'이지 '위'가 아닙니다 (2026-08-12 담당자 요청) ★★★
+
+                  전에는 사진이 제목 바로 아래 화면 전체 폭으로 깔려 있었고,
+                  이름과 주소는 그 아래에 있었습니다. 들어오자마자 큰 사진부터
+                  보여서, 정작 어디인지 말하기도 전에 사진이 너무 앞선다는
+                  지적이 있었습니다. 그래서
+                    · 글(장소명·주소)을 왼쪽에 먼저 두고
+                    · 사진을 오른쪽으로 옮겨 작게 줄였습니다.
+
+                  ⚠️ 순서를 바꾸지 마세요. 아래 코드에서 <dl>(글)이 <figure>
+                     (사진)보다 먼저 나오는 것은 일부러입니다. 휴대폰에서는
+                     두 칸이 위아래로 쌓이는데, 그때도 '이름·주소 먼저,
+                     사진 나중'이 되어야 합니다. 화면 낭독기가 읽는 순서도
+                     같습니다.
+
+                ★ 두 칸 폭 ★
+                  글 칸은 남는 만큼(1fr), 사진 칸은 18rem(288px) 고정입니다.
+                  본문 폭이 720px 이므로 글 칸은 400px 쯤 됩니다.
+                  ⚠️ 사진 칸을 넓히면 주소 '부산광역시 북구 시랑로132번길 88'
+                     이 두 줄로 접힙니다.
+
+                ★ 작게 만든 것이 오히려 선명합니다 ★
+                  사진 원본이 400px 인데 전에는 730px 로 늘려 보여 줘서
+                  흐릿했습니다. 이제 288px 로 줄여서 보여 주므로 원본보다
+                  작습니다. 늘리지 않으니 또렷합니다.
+                  ⚠️ 사진 칸을 400px 보다 넓히면 다시 흐려집니다.
+
+                원본은 image/과기대 사진.jpg, 화면에 나가는 파일은
+                public/venue/campus.jpg 입니다. 사진을 바꾸려면 config 의
                 venue.photo 만 고치면 됩니다.
 
-                ⚠️ 원본이 960×640 이라 그보다 크게 뽑지 않았습니다. 없는
-                   화소를 늘리면 오히려 뭉개집니다.
+                ⚠️ srcSet 이 없습니다. 사진이 400×238 로 작아서 큰 것·작은
+                   것으로 나눌 이유가 없기 때문입니다.
 
                 ⚠️ next/image 를 쓰지 않는 이유는 다른 화면과 같습니다 —
-                   설정이 필요해 비개발자가 유지하기 어렵습니다. 대신 화면
-                   크기에 따라 두 장 중 하나만 내려받도록 srcSet 을 씁니다. */}
-            <figure className="mt-6">
-              {/* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */}
-              <img
-                src={venue.photo.wide}
-                srcSet={`${venue.photo.small} 640w, ${venue.photo.wide} 960w`}
-                sizes="(min-width: 640px) 42rem, 100vw"
-                alt={venue.photo.alt}
-                width={960}
-                height={640}
-                loading="lazy"
-                decoding="async"
-                className="block h-auto w-full rounded-2xl border border-brand-100"
-              />
-              {/* ℹ️ 2026-08-11: 사진 아래 설명(figcaption)을 담당자 요청으로
-                     없앴습니다. '부산과학기술대학교'라고만 적혀 있었는데,
-                     바로 아래 '장소명' 줄이 같은 말을 하고 있었습니다.
+                   설정이 필요해 비개발자가 유지하기 어렵습니다. */}
+            <div className="mt-6 grid items-start gap-6 sm:grid-cols-[1fr_18rem] sm:gap-8">
+              <dl>
+                <div className="border-b border-brand-100 py-3">
+                  <dt className="text-sm font-bold text-brand-700">장소명</dt>
+                  <dd className="mt-1 text-base text-ink sm:text-lg">
+                    {/* ℹ️ 2026-08-11: 장소가 확정되어 이름이 다시 나옵니다.
+                           2026-08-05 ~ 08-11 사이에는 미확정이라 이 자리에
+                           '장소명은 확정 후 공지 예정입니다'가 나왔습니다.
+                           이름은 config 의 venue.name 에서 옵니다. */}
+                    {venue.name}
+                  </dd>
+                </div>
 
-                     ⚠️ /about 의 사진에는 설명이 그대로 있습니다. 그쪽은
-                        세계대회 사진이라 '부산 대회장이 아니다'라는 것을
-                        설명이 알려 줍니다. 여기와 사정이 다릅니다. */}
-            </figure>
+                <div className="border-b border-brand-100 py-3">
+                  <dt className="text-sm font-bold text-brand-700">주소</dt>
+                  <dd className="mt-1 text-base text-ink sm:text-lg">
+                    {/* 주소가 있을 때만 실제 주소를 보여 줍니다 */}
+                    {address ? (
+                      address
+                    ) : (
+                      <span className="text-ink-soft">
+                        주소는 장소 확정 후 공지 예정입니다.
+                      </span>
+                    )}
+                  </dd>
+                </div>
+              </dl>
 
-            <dl className="mt-8">
-              <div className="border-b border-brand-100 py-3">
-                <dt className="text-sm font-bold text-brand-700">장소명</dt>
-                <dd className="mt-1 text-base text-ink sm:text-lg">
-                  {/* ℹ️ 2026-08-11: 장소가 확정되어 이름이 다시 나옵니다.
-                         2026-08-05 ~ 08-11 사이에는 미확정이라 이 자리에
-                         '장소명은 확정 후 공지 예정입니다'가 나왔습니다.
-                         이름은 config 의 venue.name 에서 옵니다. */}
-                  {venue.name}
-                </dd>
-              </div>
+              {/* ⚠️ 이 <figure> 는 위 <dl> 보다 **뒤에** 있어야 합니다.
+                     휴대폰에서 위아래로 쌓일 때 '이름·주소 먼저, 사진
+                     나중'이 되도록 한 것입니다. 위 설명을 보세요.
 
-              <div className="border-b border-brand-100 py-3">
-                <dt className="text-sm font-bold text-brand-700">주소</dt>
-                <dd className="mt-1 text-base text-ink sm:text-lg">
-                  {/* 주소가 있을 때만 실제 주소를 보여 줍니다 */}
-                  {address ? (
-                    address
-                  ) : (
-                    <span className="text-ink-soft">
-                      주소는 장소 확정 후 공지 예정입니다.
-                    </span>
-                  )}
-                </dd>
-              </div>
-            </dl>
+                  ★ max-w-[25rem] 은 사진 원본 크기(400px)입니다 ★
+                    넓은 화면에서는 오른쪽 칸이 288px 이라 이 값이 쓰이지
+                    않습니다. 두 칸이 위아래로 쌓이는 좁은 화면(640px 미만)
+                    에서만 쓰입니다. 이게 없으면 화면 폭이 500~640px 일 때
+                    사진이 원본보다 커지면서 흐려집니다.
+                    ⚠️ 사진을 바꾸면 이 값도 새 사진의 가로 크기로 고치세요. */}
+              <figure className="max-w-[25rem]">
+                {/* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */}
+                <img
+                  src={venue.photo.src}
+                  alt={venue.photo.alt}
+                  width={venue.photo.width}
+                  height={venue.photo.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-auto w-full rounded-2xl border border-brand-100"
+                />
+                {/* ℹ️ 2026-08-11: 사진 아래 설명(figcaption)을 담당자 요청으로
+                       없앴습니다. '부산과학기술대학교'라고만 적혀 있었는데,
+                       바로 옆 '장소명' 줄이 같은 말을 하고 있었습니다.
+
+                       ⚠️ /about 의 사진에는 설명이 그대로 있습니다. 그쪽은
+                          세계대회 사진이라 '부산 대회장이 아니다'라는 것을
+                          설명이 알려 줍니다. 여기와 사정이 다릅니다. */}
+              </figure>
+            </div>
 
             {/* ------------------------------------------------------- 지도
                 ℹ️ 2026-08-12: 이 자리는 하루 사이에 세 번 바뀌었습니다.
