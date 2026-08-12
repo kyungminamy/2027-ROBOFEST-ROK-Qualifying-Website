@@ -210,10 +210,18 @@ export default function VenuePage() {
                    자리를 미리 비워 두는 값입니다. 없으면 그림이 뜨는 순간
                    아래 글이 덜컥 밀려 내려갑니다.
 
+                ★ 폭은 본문 폭에 꽉 채웁니다 (2026-08-12 담당자 요청) ★
+                  전에는 max-w-[42rem](672px) 로 묶여 있어서, 바로 위 사진의
+                  오른쪽 끝(720px)보다 48px 짧았습니다. 두 오른쪽 끝이
+                  어긋나 보여서 없앴습니다.
+                  ⚠️ 다시 max-w 를 붙이면 그 어긋남이 돌아옵니다.
+                  (원본이 1010px 이라 720px 로 줄여 보여 주는 것입니다.
+                   늘리는 것이 아니라 줄이는 것이라 흐려지지 않습니다)
+
                 ⚠️ next/image 를 쓰지 않는 이유는 위 장소 사진과 같습니다 —
                    설정이 필요해 비개발자가 유지하기 어렵습니다. */}
             {mapImage.src && (
-              <div className="mt-6 w-full max-w-[42rem]">
+              <div className="mt-6 w-full">
                 {/* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */}
                 <img
                   src={mapImage.src}
