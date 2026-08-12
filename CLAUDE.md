@@ -42,7 +42,10 @@ When choosing between two approaches, pick the one the main contact can operate 
 - 2026-07-30, morning: switched to a **native form on Supabase**.
 - **2026-07-30, current: switched to an embedded 구글폼.** Decided with the 지도교수/advisor. This supersedes both plans above.
 
-**Consequently these files are stale and must not be followed:** `docs/BUILD-GUIDE.md` and `docs/BUILD-GUIDE.ko.md` Days 6–10 (Supabase, RLS, native form), and `docs/schema.sql` (the rejected data model). They are kept only as a record of what was considered. **This file wins.**
+**Consequently `docs/schema.sql` (the rejected data model) is stale and must not be followed.** It is kept only as a record of what was considered. **This file wins.**
+
+> ℹ️ 2026-08-12: `docs/BUILD-GUIDE.md` and `docs/BUILD-GUIDE.ko.md` — the 16-day build plan whose Days 6–10 described that same rejected Supabase / native-form design — were **deleted from the repository** at the owner's request. They are still in git history if anyone needs them:
+> `git log --diff-filter=D --oneline -- docs/BUILD-GUIDE.md`
 
 ---
 

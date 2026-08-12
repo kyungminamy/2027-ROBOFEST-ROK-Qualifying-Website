@@ -24,9 +24,14 @@
 | 코드를 고친다 / AI 에게 시킨다 | [`CLAUDE.md`](CLAUDE.md) ← **규칙은 이 파일 하나뿐입니다** |
 | 대회 자체를 알고 싶다 | [`docs/ROBOFEST-KR-CONTEXT.md`](docs/ROBOFEST-KR-CONTEXT.md) |
 
-> ⚠️ `docs/BUILD-GUIDE.md` · `docs/BUILD-GUIDE.ko.md` · `docs/schema.sql` 은
-> **채택하지 않은 옛 계획**입니다. 따라 하지 마세요. 기록으로만 남겨 둡니다.
+> ⚠️ `docs/schema.sql` 은 **채택하지 않은 옛 계획**입니다. 따라 하지 마세요.
+> 기록으로만 남겨 둡니다.
 > (자세한 문서 지도는 `docs/RUNBOOK-CLAUDE-CODE.md` 4절)
+>
+> ℹ️ 2026-08-12: 같은 옛 계획을 담고 있던 `docs/BUILD-GUIDE.md` ·
+> `docs/BUILD-GUIDE.ko.md` 는 담당자 요청으로 **저장소에서 지웠습니다.**
+> 필요하면 git 기록에 그대로 있습니다 —
+> `git log --diff-filter=D --oneline -- docs/BUILD-GUIDE.md`
 
 ---
 
