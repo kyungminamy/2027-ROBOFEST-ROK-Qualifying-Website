@@ -199,6 +199,21 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 3. If a task would require a database, login, file uploads, email sending, cron, or an admin UI, stop and say so — out of scope by design; explain the unattended-failure reason.
 4. Anything touching `/apply`: confirm the 국외이전 안내 still renders above the form, the direct link still renders above the iframe (moved there 2026-07-31 — see the 구글폼 section), and the `applyMode` fallback still works.
 
+## Two people push to this repo — `git fetch` before **every** push
+
+**Added 2026-08-12 at the owner's instruction.** Two people are working on this repository at the same time. A fetch at the start of a session is not enough: `origin/main` moves *during* a session.
+
+On 2026-08-12 it moved three separate times in one working session — 3 commits landed mid-task, then 5 more (including a `docs/SESSION-LOG.md` entry the other person wrote) in the two hours before the push. A session-start fetch would have caught none of them.
+
+So, immediately before pushing:
+
+1. `git fetch` and check `git rev-list --left-right --count origin/main...HEAD`.
+2. **Commit your work first**, then `git pull --rebase`. Rebasing after committing keeps the work in git rather than in a stash that can conflict when popped.
+3. **Re-run `npm run build` after the rebase**, not only before it. What gets pushed is the rebased tree, and nothing has verified that tree yet.
+4. Push.
+
+⚠️ **`docs/SESSION-LOG.md` is what collides**, because both people add a dated entry at the top. **Keep both entries** and re-order them newest-first. Never resolve that conflict by dropping one — a lost entry is the one thing this file exists to prevent.
+
 ## Definition of done for handover (target 2026-08-14)
 
 - [x] All accounts (GitHub, Vercel, **구글 계정 owning the 폼**, 도메인) under a shared 럭스로보 address, not `lux_1@luxrobo.com`. **Confirmed 2026-08-05 and written into `docs/RUNBOOK.md` §6:** Vercel, 구글폼 and 응답 시트 are all on `luxrobo.education@gmail.com`; GitHub accepts either that account or `lux_1@luxrobo.com`. **Domain `robofestbusan2026.com` was purchased and connected on 2026-08-05** (through Vercel, one year, deliberately not set to auto-renew); `www.` redirects to the apex with a 308. Details in `docs/RUNBOOK.md` §6. *(Remaining nuance: GitHub still works from the personal account too. Prefer the shared one after handover, since the personal one may be deprovisioned.)*
