@@ -42,10 +42,21 @@ export default function ApplyPage() {
           registration.opensAt,
           registration.closesAt,
         )}`}
-        /* ℹ️ 2026-08-06 담당자 요청으로 robot(흰 실험실의 로봇 팔)에서
-               apply(빛의 그물을 가리키는 로봇 손)로 바꿨습니다.
-               사진과 막 진하기는 config 의 headerImages.apply 에 있습니다. */
-        image={competition.headerImages.apply}
+        /* ℹ️ 세 번 갈렸습니다 (모두 담당자 요청).
+               2026-08-06 robot(흰 실험실의 로봇 팔) → apply(빛의 그물을
+               가리키는 로봇 손), 2026-08-12 → trophies(트로피 근접)
+               → awards(체육관 시상식 전경).
+               사진과 막 진하기는 config 의 headerImages.awards 에 있습니다.
+
+               ⚠️ 이름이 `apply` 인 사진은 이제 이 화면이 쓰지 않습니다.
+                  `trophies` 도 아닙니다. 헷갈리기 쉬우니 되돌릴 때 주의하세요.
+               ⚠️⚠️ awards 사진은 **2025년 세계대회(LTU) 시상식**입니다.
+                  우리 국내예선의 시상이 아니고, 벽에 LTU 현수막이 있습니다.
+                  그래서 이 화면 본문에서 시상 이야기를 새로 만들지 마세요.
+                  출전권은 '기회'로만 씁니다 (CLAUDE.md 의 문구 규칙).
+               ⚠️ awards 사진은 **836px 밖에 안 되어 넓은 화면에서 흐립니다.**
+                  더 큰 원본이 생기면 바꿔 주세요 — config 주석 참고. */
+        image={competition.headerImages.awards}
       />
 
       <main id="main" className="flex-1">
