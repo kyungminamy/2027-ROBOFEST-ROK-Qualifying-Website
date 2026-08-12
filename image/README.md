@@ -16,16 +16,28 @@
 | `나침반.jpg` | 3360×2004, 1.3MB | `public/header/compass-map.jpg`, `compass-map-sm.jpg` | 일정, 장소 |
 | `질문.jpg` | 7296×4225, 3.1MB | `public/header/question.jpg`, `question-sm.jpg` | 자주 묻는 질문 |
 | `참가신청.jpg` | 5026×1910, 1.1MB | `public/header/apply.jpg`, `apply-sm.jpg` | 참가 신청 |
+| `ROBOFEST about image.png` | 1371×915, 1.7MB | `public/header/robot-table.jpg`, `robot-table-sm.jpg` | ROBOFEST 소개 |
 | `로봇 손 사람 손.jpg` | 2160×2700, 0.9MB | `public/header/hands.jpg`, `hands-sm.jpg` | (지금은 안 씀) |
 | `대회장.jpg` | 4897×3266, 3.1MB | `public/about/hall.jpg`, `hall-sm.jpg` | ROBOFEST 소개 **(머리띠 아님, 본문 사진)** |
 | `과기대 사진.jpg` | 400×238, 0.11MB | `public/venue/campus.jpg` | 장소 **(머리띠 아님, 본문 사진)** |
 | `부산과학기술대학교.jpg` | 960×640, 0.3MB | (지금은 안 씀) | 장소 — **2026-08-12 이전** 사진 |
 | `과기대 체육관 지도.png` | 1010×648, 0.45MB | `public/venue/map.png` | 장소 — 지도 **(사진 아님, 네이버 지도 캡처)** |
 
+> ℹ️ **`ROBOFEST about image.png` 는 잘라서 넣었습니다 (2026-08-12).**
+> 원본 1371×915 에서 위 70px(바닥·사람 다리가 찍힌 어두운 띠)과 아래
+> 115px(빈 파란 탁자보)을 잘라 **1371×730** 으로 만들었습니다. 담당자
+> 요청이 '탁자 위 로봇에 초점'이라 로봇이 있는 가로 띠만 남긴 것입니다.
+> 머리띠가 아주 납작해서(3.86:1) 세로로 절반쯤만 보이므로,
+> `config` 의 `headerImages.robotTable` 에서 `position: center 42%` 로
+> 로봇 몸통이 한가운데 오도록 맞춰 두었습니다.
+> 다른 머리띠 사진과 달리 원본이 1371px 뿐이라 `wide` 도 1600 이 아니라
+> **1371** 입니다. 없는 화소를 늘려 봐야 뿌옇기만 합니다.
+
 > ⚠️⚠️ **`과기대 사진.jpg` 는 400×238 로 아주 작습니다 (2026-08-12).**
-> 화면에서는 최대 **730px** 폭으로 늘려 보여 주므로 원본보다 1.8배
-> 커집니다. 그만큼 흐릿하게 보입니다. 없는 화소를 만들어 낼 수는 없어서,
-> **더 큰 사진을 구하는 것 말고는 고칠 방법이 없습니다.**
+> 이 크기가 화면에 나오는 크기의 한계를 정합니다. 지금은 **360px** 폭으로
+> 줄여서 보여 주고 있어 또렷합니다 — 원본보다 크게만 안 하면 됩니다.
+> **⚠️ 400px 보다 크게 보여 주지 마세요. 늘리는 순간 흐릿해집니다.**
+> (처음에는 730px 로 깔았다가 흐려서 줄였습니다)
 > 큰 사진이 생기면 `public/venue/campus.jpg` 를 바꾸고
 > `config/competition.ts` 의 `venue.photo` 에서 `width`·`height` 도
 > **실제 크기로** 고치세요.
@@ -63,8 +75,13 @@
 `public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
 (`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
 
-> ℹ️ `robot` 은 2026-08-06 에 참가 신청 화면에서 빠졌지만 **ROBOFEST 소개
-> 화면이 아직 씁니다.** 지우지 마세요.
+> ⚠️ `robot` 은 **2026-08-12 부터 쓰는 곳이 없습니다.**
+> 2026-08-06 에 참가 신청 화면에서 빠졌고, 08-12 에 ROBOFEST 소개
+> 화면마저 `robot-table`(위 표의 `ROBOFEST about image.png`)로 바뀌었습니다.
+> 파일은 지우지 않고 남겨 두었습니다 — 되돌리려면 `config` 의
+> `headerImages.robotTable` 자리를 쓰는 `about/page.tsx` 에서
+> `headerImages.robot` 으로 바꾸면 됩니다.
+> ⚠️ 이름이 비슷한 `robot` 과 `robot-table` 은 **서로 다른 사진**입니다.
 
 ## 막(overlay) 진하기를 정할 때
 

@@ -46,7 +46,11 @@ export default function AboutPage() {
       <PageHeader
         title="ROBOFEST 소개"
         description={aboutPage.summary}
-        image={competition.headerImages.robot}
+        /* ℹ️ 2026-08-12: 담당자 요청으로 robot(흰 실험실의 로봇 팔)에서
+               robotTable(파란 탁자에 전시된 학생 로봇들)로 바꿨습니다.
+               어디를 잘랐는지, position·overlay 를 왜 그 값으로 정했는지는
+               config 의 headerImages.robotTable 위에 적어 두었습니다. */
+        image={competition.headerImages.robotTable}
       />
 
       <main id="main" className="flex-1">
