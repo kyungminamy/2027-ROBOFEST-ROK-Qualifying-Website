@@ -238,12 +238,50 @@ export function DdayChip() {
        display:none 으로 껐다 켜면 나타나는 순간 옆의 '참가 신청' 단추가
        옆으로 튑니다. 폭을 0에서 늘리면 밀려나는 것이 아니라 자리가
        생기면서 열립니다.
+       (이것은 '스크롤에 따라 열리고 닫히는' 움직임 이야기입니다. 아래
+        380px 규칙과는 다른 문제입니다 — 그쪽은 아예 안 그리는 것이라
+        튈 일이 없습니다.)
 
        motion-reduce: 움직임을 싫어하는 설정에서는 폭이 늘어나는 움직임
-       없이 흐림만으로 바뀝니다. */
+       없이 흐림만으로 바뀝니다.
+
+       ★★★ shrink-0 을 지우지 마세요 — 숫자가 잘립니다 ★★★
+
+        이 표는 overflow-hidden 상자 안에 들어 있습니다. 상단 메뉴에
+        자리가 모자라면 flex 가 이 상자를 **먼저 줄여 버리고**, 줄어든
+        만큼 글자가 잘려 나갑니다. 실제로 'D-20' 이 **'D-2'** 로 보이는
+        일이 있었습니다 (2026-08-12 담당자 발견). 하루를 잘못 알려 주는
+        것이라 그냥 보기 나쁜 정도의 문제가 아닙니다.
+
+        shrink-0 을 주면 이 상자는 절대 줄지 않습니다. 자리가 모자라면
+        대신 **로고가 조금 눌립니다**. 담당자가 그렇게 하기로 했습니다 —
+        로고가 살짝 눌리는 것은 괜찮지만, 날짜가 틀리게 보이는 것은
+        안 됩니다.
+        ⚠️ whitespace-nowrap 도 같은 이유로 필요합니다. 없으면 두 줄로
+           접히면서 상자 높이를 넘어 잘립니다.
+
+       ★★★ 340px 미만에서는 아예 나오지 않습니다 ★★★
+
+        【 화면에서 재어 본 숫자입니다 】
+         · 이 표가 없어도 **340px** 아래부터는 로고가 눌리기 시작합니다.
+           320px 에서는 표와 상관없이 로고가 5% 눌립니다. 로고·참가 신청·
+           메뉴 세 개만으로도 자리가 모자라기 때문입니다.
+         · 그보다 좁아지면 눌림이 빠르게 심해져서, 표까지 얹으면 로고가
+           알아볼 수 없게 됩니다. 그래서 340px 을 바닥으로 잡았습니다.
+
+        ℹ️ 2026-08-12: 처음에는 380px 으로 잡았습니다(= 로고가 전혀 안
+           눌리는 선). 그런데 360px·375px 같은 흔한 휴대폰이 표를 못 보게
+           되어, 담당자가 '조금 눌려도 표를 보여 달라'고 해서 340px 으로
+           내렸습니다.
+
+        ⚠️ hidden(=display:none) 이라 자리를 아예 차지하지 않습니다.
+           max-w-0 은 자리가 0이어도 요소는 남아 있어 여기서는 부족합니다.
+
+        ℹ️ 맨 위 남색 띠(DdayBar)는 그대로 나옵니다. 340px 보다 좁은
+           화면에서도 남은 날짜를 볼 곳이 사라지는 것은 아닙니다. */
     <span
       aria-hidden={!show}
-      className={`overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-300 ease-out motion-reduce:transition-[opacity] ${
+      className={`hidden shrink-0 overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-300 ease-out motion-reduce:transition-[opacity] min-[340px]:inline ${
         show ? "max-w-[7rem] opacity-100" : "max-w-0 opacity-0"
       }`}
     >
