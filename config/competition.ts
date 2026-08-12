@@ -1748,7 +1748,11 @@ export const competition = {
     { label: 'ROBOFEST 소개', href: '/about', enabled: true },
     { label: '종목 안내', href: '/categories', enabled: true },
     { label: '일정', href: '/schedule', enabled: true },
-    { label: '장소', href: '/venue', enabled: true },
+    /* ℹ️ 2026-08-12: '장소' → '오시는길' (담당자 요청).
+           ⚠️ 여기는 붙여 쓴 '오시는길', /venue 화면의 머리말 제목은
+              띄어 쓴 '오시는 길' 입니다. 오타가 아니라 담당자가 그렇게
+              정한 것입니다. 한쪽에 맞춰 고치지 마세요. */
+    { label: '오시는길', href: '/venue', enabled: true },
     { label: '자주 묻는 질문', href: '/faq', enabled: true },
   ],
 
