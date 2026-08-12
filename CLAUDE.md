@@ -42,10 +42,10 @@ When choosing between two approaches, pick the one the main contact can operate 
 - 2026-07-30, morning: switched to a **native form on Supabase**.
 - **2026-07-30, current: switched to an embedded 구글폼.** Decided with the 지도교수/advisor. This supersedes both plans above.
 
-**Consequently `docs/schema.sql` (the rejected data model) is stale and must not be followed.** It is kept only as a record of what was considered. **This file wins.**
+**This file wins.**
 
-> ℹ️ 2026-08-12: `docs/BUILD-GUIDE.md` and `docs/BUILD-GUIDE.ko.md` — the 16-day build plan whose Days 6–10 described that same rejected Supabase / native-form design — were **deleted from the repository** at the owner's request. They are still in git history if anyone needs them:
-> `git log --diff-filter=D --oneline -- docs/BUILD-GUIDE.md`
+> ℹ️ 2026-08-12: every document describing that rejected Supabase / native-form design was **deleted from the repository** at the owner's request — `docs/BUILD-GUIDE.md`, `docs/BUILD-GUIDE.ko.md` (the 16-day build plan, Days 6–10), `docs/schema.sql` (the data model), and `docs/HANDOVER-PROMPT.md`. **There is no longer any stale design doc in this repo to be misled by.** They are all still in git history if ever needed:
+> `git log --diff-filter=D --oneline -- docs/schema.sql`
 
 ---
 
