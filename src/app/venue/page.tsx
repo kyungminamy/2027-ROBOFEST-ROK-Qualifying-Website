@@ -47,6 +47,7 @@ export default function VenuePage() {
      (config 의 feeKrw 를 다루는 방식과 같습니다) */
   const address: string = venue.address;
   const mapUrl: string = venue.mapUrl;
+  const mapEmbedUrl: string = venue.mapEmbedUrl;
 
   return (
     <>
@@ -146,22 +147,56 @@ export default function VenuePage() {
               </div>
             </dl>
 
-            {/* ★ 지도 링크가 없으면 버튼을 아예 만들지 않습니다 ★
-                눌러도 아무 일 없는 버튼을 두지 않기 위한 규칙입니다. */}
-            {mapUrl && (
-              <div className="mt-6">
-                <a
-                  href={mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 rounded-lg bg-accent-600 px-7 text-base font-bold text-white shadow-lg shadow-accent-600/20 transition-colors hover:bg-accent-700 sm:w-auto sm:text-lg"
-                >
-                  지도 보기
-                  <ExternalLink className="h-5 w-5" />
-                </a>
-                <p className="mt-2 text-sm text-ink-soft">
-                  새 창에서 열립니다.
-                </p>
+            {/* ------------------------------------------------------- 지도
+                ℹ️ 2026-08-12: 움직이지 않는 그림에서 **움직이는 지도**로
+                   바꿨습니다 (담당자 요청). 자리는 그대로(주소 아래)입니다.
+
+                ★ 지도는 구글, 길찾기 링크는 카카오입니다 ★
+                  왜 둘을 섞었는지는 config 의 venue.mapEmbedUrl 위에 적어
+                  두었습니다. 한 줄로 줄이면: 구글은 계정 없이 넣을 수
+                  있지만 한국에서 길찾기가 안 되고, 카카오는 길찾기가 되지만
+                  넣으려면 개발자 계정과 키가 필요합니다.
+                  ⚠️ 아래 카카오 링크를 지우지 마세요. 지우면 실제로 찾아오는
+                     방법이 사라집니다.
+
+                ★ 자바스크립트가 없어도 나옵니다 ★
+                  <iframe> 은 브라우저가 그냥 읽어 들이는 것이라, 학교
+                  인터넷에서 자바스크립트가 막혀도 지도는 보입니다.
+                  (구글 자체가 막혀 있으면 빈 칸이 됩니다 — 그때를 위해
+                   주소와 '오시는 길'을 글자로 남겨 두었습니다)
+
+                ⚠️ aspect-[8/5] 로 높이를 잡습니다. 고정 높이(px)를 쓰면
+                   휴대폰에서 지도가 너무 납작해집니다. */}
+            {mapEmbedUrl && (
+              <div className="mt-6 w-full max-w-[42rem]">
+                <div className="aspect-[8/5] w-full overflow-hidden rounded-lg border border-brand-200 bg-paper-soft">
+                  <iframe
+                    src={mapEmbedUrl}
+                    title={venue.mapEmbedTitle}
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="h-full w-full border-0"
+                  />
+                </div>
+
+                {mapUrl && (
+                  <p className="mt-3 text-sm text-ink-soft">
+                    {/* ★ 이 링크가 '길찾기' 담당입니다 ★
+                        위 구글 지도는 한국에서 길찾기가 되지 않습니다. */}
+                    길찾기는{" "}
+                    <a
+                      href={mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 font-bold text-brand-700 underline hover:text-accent-600"
+                    >
+                      카카오맵
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                    에서 확인하실 수 있습니다. 새 창에서 열립니다.
+                  </p>
+                )}
               </div>
             )}
           </div>
