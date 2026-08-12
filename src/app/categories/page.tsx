@@ -102,6 +102,76 @@ export default function CategoriesPage() {
           </section>
         )}
 
+        {/* --------------------------------------------------- 참가 부문 안내
+             ℹ️ 2026-08-12 담당자 요청으로 새로 만든 구역입니다.
+
+             ★ 왜 필요한가 ★
+               종목 카드마다 '참가 부문'에 Junior · Senior 라고만 적혀
+               있는데, 그것이 몇 학년인지는 종목 상세 페이지에 들어가야만
+               알 수 있었습니다. 목록만 훑는 학부모·지도교사가 가장 먼저
+               궁금해하는 것이라 앞쪽에서 한 번 설명합니다.
+
+             ⚠️⚠️ 학년과 키트 설명을 여기에 직접 적지 마세요 ⚠️⚠️
+               모두 config 에서 그대로 가져옵니다.
+                 · 학년       → eligibility.junior / eligibility.senior
+                                (참가 신청 화면도 같은 값을 씁니다)
+                 · 키트·무게  → categoryDetails.bottlesumo.prepare.robotKit
+                                (BottleSumo 상세 페이지의 '무엇을 준비하나'
+                                 와 완전히 같은 문장입니다)
+               여기에 숫자를 옮겨 적으면 나중에 한쪽만 고쳐져 서로 다른
+               말을 하게 됩니다.
+
+             ★ 배경이 옅은 파랑인 이유 ★
+               이 페이지는 흰색과 옅은 파랑이 번갈아 나옵니다.
+                 처음 참가하신다면(흰) → 여기(파랑) → 종목 목록(흰) → 비교표(파랑)
+               이 구역이 끼어들면서 아래 두 구역의 배경도 함께 뒤집었습니다.
+               ⚠️ 이 구역을 지우거나 옮기면 아래 두 구역의 배경도 되돌려야
+                  합니다. 안 그러면 같은 색이 두 번 이어집니다. */}
+        <section className="bg-paper-soft py-14 sm:py-20">
+          <div className={container}>
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">참가 부문 안내</h2>
+            <p className="mt-3 text-base text-ink">
+              종목마다 참가할 수 있는 학년이 정해져 있습니다. 아래 종목
+              목록의 &lsquo;참가 부문&rsquo;에서 종목별로 확인하실 수 있습니다.
+            </p>
+
+            {/* 학년 구분 — 참가 신청 화면과 같은 모양으로 맞췄습니다 */}
+            <ul className="mt-4 ml-5 list-disc space-y-1 text-base text-ink marker:text-brand-300">
+              <li>
+                <span className="font-bold">Junior 부문</span> —{" "}
+                {competition.eligibility.junior}
+              </li>
+              <li>
+                <span className="font-bold">Senior 부문</span> —{" "}
+                {competition.eligibility.senior}
+              </li>
+            </ul>
+
+            {/* ★ BottleSumo 만 부문 이름이 네 개입니다 ★
+                  Junior Classic · Junior Unlimited · Senior Classic ·
+                  Senior Unlimited 를 보고 '나이가 네 단계로 나뉘나?' 하고
+                  오해하기 쉽습니다. Classic·Unlimited 는 나이가 아니라
+                  로봇 규격 구분이라는 것만 여기서 짚어 줍니다.
+                  (2026-08-12 담당자 확인)
+
+                ⚠️ 키트·무게 제한을 여기에 다시 넣지 마세요 (2026-08-12).
+                   한때 categoryDetails.bottlesumo.prepare.robotKit 문장
+                   ('Classic 부문은 레고와 VEX IQ만 쓸 수 있고 …
+                    Junior Classic 1.2kg, Senior Classic 1.5kg …')을
+                   여기에 함께 보여 줬는데, 짧게 훑는 구역에 담기에는
+                   너무 자세하다는 담당자 판단으로 뺐습니다.
+                   그 내용은 BottleSumo 상세 페이지의 '무엇을 준비하나'에
+                   그대로 있습니다. 없어진 정보가 아닙니다. */}
+            <p className="mt-5 text-base text-ink">
+              <span className="font-bold">BottleSumo</span> 는 부문 이름이
+              Junior Classic · Junior Unlimited · Senior Classic · Senior
+              Unlimited 로 네 개입니다. 뒤에 붙는 Classic·Unlimited 는 학년이
+              아니라 <span className="font-bold">로봇 규격 구분</span>입니다.
+              학년은 앞의 Junior·Senior 로 정해집니다.
+            </p>
+          </div>
+        </section>
+
         {/* ------------------------------------------------------- 종목 카드
              ⚠️ py- 입니다 (pb- 만 두지 마세요). 예전에는 위쪽 여백을 바로 위
                 '처음 참가하신다면' 상자가 대신 만들어 줘서 pb- 만 있었습니다.
@@ -109,9 +179,11 @@ export default function CategoriesPage() {
                 위쪽 여백을 직접 가져야 합니다. pb- 로 되돌리면 두 구역이
                 서로 붙습니다. (2026-08-11)
 
-             배경은 옅은 파랑입니다 — 위아래 구역이 둘 다 흰색이라
-             가운데인 이 구역이 색을 맡습니다. */}
-        <section className="bg-paper-soft py-14 sm:py-20">
+             ℹ️ 2026-08-12: 배경을 옅은 파랑에서 **흰색으로 뒤집었습니다.**
+                바로 위에 '참가 부문 안내'(옅은 파랑) 구역이 새로 들어와서,
+                번갈아 나오게 하려면 이 구역이 흰색이어야 합니다.
+                ⚠️ 위 구역을 지우면 여기를 다시 bg-paper-soft 로 되돌리세요. */}
+        <section className="py-14 sm:py-20">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">종목 목록</h2>
             <p className="mt-3 text-base text-ink-soft">
@@ -136,9 +208,14 @@ export default function CategoriesPage() {
         </section>
 
         {/* --------------------------------------------------------- 비교표
-             배경은 흰색입니다 — 바로 위 '종목 목록'이 옅은 파랑이므로
-             번갈아 나오도록 흰색을 씁니다. (2026-08-11 뒤집었습니다) */}
-        <section className="py-14 sm:py-20">
+             ℹ️ 2026-08-12: 배경을 흰색에서 **옅은 파랑으로 뒤집었습니다.**
+                위에 '참가 부문 안내' 구역이 새로 생기면서 이 페이지의
+                번갈아 나오는 순서가 한 칸씩 밀렸습니다.
+                  처음 참가하신다면(흰) → 참가 부문 안내(파랑)
+                  → 종목 목록(흰) → 비교표(파랑)
+                ⚠️ '참가 부문 안내' 구역을 지우면 여기를 다시 흰색으로
+                   되돌리세요. (2026-08-11 에도 같은 이유로 한 번 뒤집었습니다) */}
+        <section className="bg-paper-soft py-14 sm:py-20">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               한눈에 비교하기
