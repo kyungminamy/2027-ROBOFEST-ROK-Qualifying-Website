@@ -69,9 +69,20 @@ export default function VenuePage() {
               (붙여 씀) 입니다. 서로 다른 것이 맞습니다 — 2026-08-12
               담당자가 그렇게 정했습니다. 한쪽에 맞춰 고치지 마세요. */
         title="오시는 길"
+        /* ℹ️ 2026-08-12: 이 제목을 머리띠 가운데로 옮겼다가 같은 날
+              담당자 요청으로 **원래대로(왼쪽) 되돌렸습니다.**
+              다른 화면과 같은 왼쪽 정렬이 맞습니다. 가운데로 두려고
+              `PageHeader` 에 만들었던 `align` 값도 함께 걷어냈습니다 —
+              쓰는 곳 없는 값을 남겨 두지 않으려고 그렇게 했습니다.
+              다시 가운데로 해야 하면 git 기록에서 이 커밋 직전을 보세요. */
         /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
-           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
-        image={competition.headerImages.compassMap}
+           고를 수 있는 값은 config 의 headerImages 에 있습니다.
+
+           ℹ️ 2026-08-12: compassMap(지도 위 나침반) → entrance(대회장
+              입구로 이어지는 길) 로 바꿨습니다 (담당자 요청).
+              ⚠️ entrance 는 세계대회(LTU) 현장 사진입니다. 부산 대회장
+                 사진이 아닙니다 — config 의 그 항목 설명을 보세요. */
+        image={competition.headerImages.entrance}
       />
 
       <main id="main" className="flex-1">

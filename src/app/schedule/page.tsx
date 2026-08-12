@@ -47,8 +47,17 @@ export default function SchedulePage() {
           dates.day2,
         )} 이틀간 열립니다.`}
         /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
-           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
-        image={competition.headerImages.compassMap}
+           고를 수 있는 값은 config 의 headerImages 에 있습니다.
+
+           ℹ️ 2026-08-12: 하루에 두 번 갈렸습니다 (둘 다 담당자 요청).
+              compassMap(지도 위 나침반) → frontDesk(운영진 책상)
+              → build(로봇을 조립하는 학생들).
+              ⚠️⚠️ build 사진에는 **학생(미성년자)의 얼굴이 알아볼 수 있게**
+                 나옵니다. 초상권 확인이 필요합니다 — config 의 그 항목
+                 주석을 꼭 읽어 보세요.
+              ⚠️ build 의 막(overlay)은 0.76 입니다. 흰 종이와 물병이
+                 description 줄 밑에 깔려서 그렇습니다. 내리지 마세요. */
+        image={competition.headerImages.build}
       />
 
       <main id="main" className="flex-1">

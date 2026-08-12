@@ -44,8 +44,16 @@ export default function FaqPage() {
         title="자주 묻는 질문"
         description="접수와 규정에 대해 가장 많이 받는 질문을 모았습니다."
         /* 배경 사진을 바꾸려면 이 한 단어만 바꾸면 됩니다.
-           고를 수 있는 값은 config 의 headerImages 에 있습니다. */
-        image={competition.headerImages.question}
+           고를 수 있는 값은 config 의 headerImages 에 있습니다.
+
+           ℹ️ 2026-08-12: question(책상 위 작은 로봇) → frontDesk(명단과
+              일정표를 확인하는 운영진 책상) 로 바꿨습니다 (담당자 요청).
+              '초록색 가방의 ROBOFEST 글자가 보이게' 해 달라는 요청이라,
+              그 가방을 띠 밑변에 붙이는 값(`center 100%`)이 함께 옵니다.
+              ⚠️ frontDesk 의 position·overlay 는 이미 그 목적에 맞춰져
+                 있습니다. 건드리기 전에 config 의 그 항목 주석을 읽으세요.
+              ℹ️ 이 사진은 같은 날 '일정' 화면에서 잠깐 썼던 것입니다. */
+        image={competition.headerImages.frontDesk}
       />
 
       <main id="main" className="flex-1">
