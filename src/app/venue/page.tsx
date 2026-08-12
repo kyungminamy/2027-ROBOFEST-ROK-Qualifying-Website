@@ -16,8 +16,9 @@ import { ExternalLink } from "@/components/icons";
  *  【 장소가 확정된 뒤에 할 일 — 순서대로 】
  *   1. venue.address 에 도로명 주소를 입력합니다
  *      → 주소 칸이 화면에 나타납니다
- *   2. venue.mapUrl 에 네이버·카카오 지도 링크를 입력합니다
- *      → '지도 보기' 버튼이 화면에 나타납니다 (비어 있으면 버튼이 없습니다)
+ *   2. venue.mapImage 에 지도 그림을, venue.mapUrl 에 길찾기 링크를
+ *      입력합니다 → 주소 아래에 지도와 '길찾기' 줄이 나타납니다
+ *      (mapImage.src 가 비어 있으면 지도 자리가 통째로 없습니다)
  *   3. venue.isConfirmed 를 true 로 바꿉니다
  *      → 맨 위 '장소는 아직 확정 전입니다' 안내 박스가 사라집니다
  *      (장소 이름은 이미 '(예정)' 없이 나옵니다 — 2026-08-04 담당자 요청)
@@ -47,7 +48,9 @@ export default function VenuePage() {
      (config 의 feeKrw 를 다루는 방식과 같습니다) */
   const address: string = venue.address;
   const mapUrl: string = venue.mapUrl;
-  const mapEmbedUrl: string = venue.mapEmbedUrl;
+  /* 지도 그림. src 가 비어 있으면 지도 자리를 통째로 그리지 않습니다. */
+  const mapImage: { src: string; alt: string; width: number; height: number } =
+    venue.mapImage;
 
   return (
     <>
@@ -148,42 +151,49 @@ export default function VenuePage() {
             </dl>
 
             {/* ------------------------------------------------------- 지도
-                ℹ️ 2026-08-12: 움직이지 않는 그림에서 **움직이는 지도**로
-                   바꿨습니다 (담당자 요청). 자리는 그대로(주소 아래)입니다.
+                ℹ️ 2026-08-12: 이 자리는 하루 사이에 세 번 바뀌었습니다.
+                   그림 → 구글 <iframe>(움직이는 지도) → **다시 그림**.
+                   마지막이 담당자가 고른 형태입니다. 자리는 계속
+                   그대로(주소 아래)입니다.
 
-                ★ 지도는 구글, 길찾기 링크는 카카오입니다 ★
-                  왜 둘을 섞었는지는 config 의 venue.mapEmbedUrl 위에 적어
-                  두었습니다. 한 줄로 줄이면: 구글은 계정 없이 넣을 수
-                  있지만 한국에서 길찾기가 안 되고, 카카오는 길찾기가 되지만
-                  넣으려면 개발자 계정과 키가 필요합니다.
-                  ⚠️ 아래 카카오 링크를 지우지 마세요. 지우면 실제로 찾아오는
+                ★ 지도도 길찾기도 이제 네이버입니다 ★
+                  왜 '움직이는 지도'를 쓰지 않는지는 config 의 venue.mapImage
+                  위에 길게 적어 두었습니다. 한 줄로 줄이면: 구글은 계정
+                  없이 넣을 수 있지만 한국에서 길찾기가 안 되고, 네이버·
+                  카카오는 길찾기가 되지만 넣으려면 개발자 계정과 키가
+                  필요합니다. 그래서 보여 주기는 그림으로, 길찾기는 링크로
+                  나눴습니다.
+                  ⚠️ 아래 네이버 링크를 지우지 마세요. 지우면 실제로 찾아오는
                      방법이 사라집니다.
 
-                ★ 자바스크립트가 없어도 나옵니다 ★
-                  <iframe> 은 브라우저가 그냥 읽어 들이는 것이라, 학교
-                  인터넷에서 자바스크립트가 막혀도 지도는 보입니다.
-                  (구글 자체가 막혀 있으면 빈 칸이 됩니다 — 그때를 위해
-                   주소와 '오시는 길'을 글자로 남겨 두었습니다)
+                ★ 그림이라서 항상 보입니다 ★
+                  우리 파일(public/venue/map.png)이라 남의 서버가 막혀도,
+                  자바스크립트가 꺼져 있어도 똑같이 보입니다. 학교
+                  인터넷에서 특히 중요합니다.
 
-                ⚠️ aspect-[8/5] 로 높이를 잡습니다. 고정 높이(px)를 쓰면
-                   휴대폰에서 지도가 너무 납작해집니다. */}
-            {mapEmbedUrl && (
+                ⚠️ width·height 를 지우지 마세요. 그림이 늦게 뜰 때 그만큼
+                   자리를 미리 비워 두는 값입니다. 없으면 그림이 뜨는 순간
+                   아래 글이 덜컥 밀려 내려갑니다.
+
+                ⚠️ next/image 를 쓰지 않는 이유는 위 장소 사진과 같습니다 —
+                   설정이 필요해 비개발자가 유지하기 어렵습니다. */}
+            {mapImage.src && (
               <div className="mt-6 w-full max-w-[42rem]">
-                <div className="aspect-[8/5] w-full overflow-hidden rounded-lg border border-brand-200 bg-paper-soft">
-                  <iframe
-                    src={mapEmbedUrl}
-                    title={venue.mapEmbedTitle}
-                    loading="lazy"
-                    allowFullScreen
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="h-full w-full border-0"
-                  />
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */}
+                <img
+                  src={mapImage.src}
+                  alt={mapImage.alt}
+                  width={mapImage.width}
+                  height={mapImage.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-auto w-full rounded-lg border border-brand-200"
+                />
 
                 {mapUrl && (
                   <p className="mt-3 text-sm text-ink-soft">
                     {/* ★ 이 링크가 '길찾기' 담당입니다 ★
-                        위 구글 지도는 한국에서 길찾기가 되지 않습니다. */}
+                        위 지도는 그림이라 누를 수 없습니다. */}
                     길찾기는{" "}
                     <a
                       href={mapUrl}
@@ -191,7 +201,7 @@ export default function VenuePage() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 font-bold text-brand-700 underline hover:text-accent-600"
                     >
-                      카카오맵
+                      네이버 지도
                       <ExternalLink className="h-4 w-4" />
                     </a>
                     에서 확인하실 수 있습니다. 새 창에서 열립니다.
