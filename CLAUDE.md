@@ -121,6 +121,8 @@ Checklist when adding anything:
 - Is this a phone number, email, 장소? → `config/competition.ts`
 - Is this the 구글폼 주소, its embed height, or the 국외이전 안내 문구? → `config/competition.ts` `registration`
 
+**Bolding part of a config sentence: wrap it in `**`.** Added 2026-08-12, when the 담당자 asked for the 세계대회 phrase in `about.journey[3]` to be bold. React renders config strings as plain text, so the alternative was to move that sentence into a component — which would break the rule above. `src/lib/emphasis.tsx` (`withBold`) turns `**…**` into `<strong>`; its header comment is the how-to. Two rules: **`**` must come in pairs** (an odd count deliberately renders the asterisks visibly rather than bolding to the end of the line), and **a field passed through `withBold` on one screen must use it on every screen that renders the same field** — `about.journey` appears on both 홈 and `/about`, so a one-sided change would show raw `**` on the other. Do not grow this into a markdown renderer; if real markdown is ever needed, that is a separate decision.
+
 **The form must degrade to a plain link.** Keep the `registration.applyMode` switch (`'embed'` / `'link'`). If the iframe misbehaves — blocked on a school network, unusable on some phone, Google changes something — a non-technical person changes one word and applicants get a big button to the form instead. Test it once before 09-01. This is the most important safety valve in the project, because it needs no developer.
 
 **Never let a broken link be the failure mode.** If `formUrl` is empty the page must say 준비 중, never render a dead button. And the `/apply` page always shows a direct "새 창에서 열기" link *above* the iframe, so an applicant whose network blocks the frame can still reach the form.

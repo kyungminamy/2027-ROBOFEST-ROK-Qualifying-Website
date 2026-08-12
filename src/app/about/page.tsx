@@ -6,6 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { withBold } from "@/lib/emphasis";
 import { ArrowRight, ExternalLink } from "@/components/icons";
 
 /* ============================================================================
@@ -177,7 +178,12 @@ export default function AboutPage() {
                     </span>
                     {stage.step}
                   </dt>
-                  <dd className="text-base text-ink">{stage.body}</dd>
+                  {/* ℹ️ withBold 는 config 의 `**…**` 부분만 굵게 만듭니다
+                         (2026-08-12, 4번 항목의 세계대회 문구 때문에 넣었습니다).
+                         ⚠️ 홈 화면도 같은 글을 쓰므로 그쪽에도 같이 넣었습니다 —
+                            한쪽만 넣으면 다른 쪽에 `**` 가 그대로 보입니다.
+                         자세한 설명은 src/lib/emphasis.tsx 맨 위에 있습니다. */}
+                  <dd className="text-base text-ink">{withBold(stage.body)}</dd>
                 </div>
               ))}
             </dl>

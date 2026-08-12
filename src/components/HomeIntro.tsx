@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { competition } from "@/config/competition";
 import { homeSection, proseWidth } from "@/lib/layout";
+import { withBold } from "@/lib/emphasis";
 import { ArrowRight } from "@/components/icons";
 import { Reveal } from "@/components/Reveal";
 
@@ -117,7 +118,13 @@ export function HomeIntro() {
                   <span className="tabular text-brand-500">{index + 1}. </span>
                   {stage.step}
                 </h3>
-                <p className="mt-1 text-base text-ink">{stage.body}</p>
+                {/* ℹ️ withBold 는 config 의 `**…**` 부분만 굵게 만듭니다
+                       (2026-08-12). ⚠️ /about 도 같은 글을 쓰므로 그쪽에도
+                       같이 넣었습니다 — 한쪽만 넣으면 다른 쪽에 `**` 가
+                       그대로 보입니다. 설명은 src/lib/emphasis.tsx 참고. */}
+                <p className="mt-1 text-base text-ink">
+                  {withBold(stage.body)}
+                </p>
               </Reveal>
             </li>
           ))}
