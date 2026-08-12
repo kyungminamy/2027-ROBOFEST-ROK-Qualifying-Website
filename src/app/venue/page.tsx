@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Fragment } from "react";
 import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
-import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 import { ExternalLink } from "@/components/icons";
@@ -304,9 +303,21 @@ export default function VenuePage() {
                 const description: string = way.description;
 
                 return (
-                  /* Reveal 은 <div> 를 그대로 그리므로 예전 <div> 자리에
-                     그대로 끼워 넣었습니다. 화면 구조가 바뀌지 않습니다. */
-                  <Reveal key={way.key}>
+                  /* ℹ️ 2026-08-12 담당자 요청: 이 '교통안내' 목록에 있던
+                        '아래에서 떠오르며 나타나는 효과'(Reveal)를 뺐습니다.
+                        이제 스크롤과 상관없이 처음부터 그대로 보입니다.
+
+                        ★ 되돌리려면 아래 <div> 를 <Reveal> 로 바꾸고
+                          (닫는 </div> 도 </Reveal> 로), 맨 위 import 줄에
+                          import { Reveal } from "@/components/Reveal";
+                          를 다시 넣으세요. ★
+
+                        Reveal 은 <div> 를 그대로 그리는 부품이라, 바꿔도
+                        바깥 space-y-9 간격을 비롯해 화면 구조는 그대로입니다.
+
+                        ⚠️ 이 화면만 뺐습니다. 홈·종목·일정·소개의 같은
+                           효과는 그대로 두었습니다. */
+                  <div key={way.key}>
                     <h3 className="text-lg font-bold text-brand-900">
                       {way.label}
                     </h3>
@@ -474,7 +485,7 @@ export default function VenuePage() {
                         </table>
                       </div>
                     )}
-                  </Reveal>
+                  </div>
                 );
               })}
             </div>
