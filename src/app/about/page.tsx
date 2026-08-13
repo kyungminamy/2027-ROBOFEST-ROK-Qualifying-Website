@@ -7,7 +7,14 @@ import { Reveal } from "@/components/Reveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 import { withBold } from "@/lib/emphasis";
-import { ArrowRight, ExternalLink } from "@/components/icons";
+import {
+  ArrowRight,
+  ExternalLink,
+  MailOpen,
+  Puzzle,
+  Robot,
+  Wrench,
+} from "@/components/icons";
 
 /* ============================================================================
  *  ROBOFEST 소개 (/about)
@@ -82,6 +89,21 @@ function sectionTone(name: (typeof SECTION_ORDER)[number]): string {
   return SECTION_ORDER.indexOf(name) % 2 === 0 ? "bg-paper" : "bg-paper-soft";
 }
 
+/* 'ROBOFEST의 네 가지 원칙' 카드에 붙는 아이콘 (2026-08-13).
+ *
+ * ★ 순서가 config 의 about.pillars 와 1:1로 맞아야 합니다 ★
+ *     1 100% 자율주행        → 로봇
+ *     2 학생이 직접 만듭니다   → 렌치
+ *     3 당일 공개되는 미션     → 열린 봉투
+ *     4 어떤 키트든, 어떤 언어든 → 퍼즐 조각
+ *   ⚠️ config 에서 pillars 순서를 바꾸면 여기도 같이 바꿔야 합니다.
+ *      (순서가 어긋나도 화면은 멀쩡히 나오므로 빌드가 잡아 주지 못합니다)
+ *
+ * ℹ️ 아이콘 자체는 src/components/icons.tsx 에 있습니다. 이 프로젝트에는
+ *    아이콘 라이브러리가 없어서 같은 규격으로 직접 그렸습니다.
+ */
+const PILLAR_ICONS = [Robot, Wrench, MailOpen, Puzzle];
+
 export default function AboutPage() {
   const { aboutPage, about, links, worldChampionship } = competition;
 
@@ -124,7 +146,7 @@ export default function AboutPage() {
         {/* ------------------------------------------------- 네 가지 원칙
              ⚠️ 홈과 같은 about.pillars 를 씁니다. 내용을 여기에 다시 적지
                 마세요. 대신 모양을 다르게 했습니다 (홈: 2단 얇은 선 /
-                여기: 번호가 붙은 세로 목록). */}
+                여기: 아이콘이 붙은 2×2 카드). */}
         <section className={`${sectionTone("principles")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
@@ -134,36 +156,53 @@ export default function AboutPage() {
               어느 종목에 나가든 아래 네 가지는 똑같이 적용됩니다.
             </p>
 
-            <ol className="mt-8 space-y-4">
-              {about.pillars.map((pillar, index) => (
-                /* ★ 상자 모양(테두리·여백·flex)을 li 에서 Reveal 로 옮겼습니다 ★
-                     떠오르는 것이 '상자 전체'라서 테두리도 같이 움직여야
-                     합니다. li 에 테두리를 남겨 두면 글자만 움직이고
-                     테두리는 가만히 있어 어긋나 보입니다.
-                   시간차는 위에서 아래로 차례차례 (네 개니까 최대 0.24초). */
-                <li key={pillar.title}>
-                  <Reveal
-                    delayMs={index * 80}
-                    className="flex gap-4 rounded-2xl border border-brand-100 bg-paper p-5 sm:gap-5 sm:p-6"
-                  >
-                    {/* 번호는 '네 가지 중 몇 번째'라는 정보를 담고 있어
-                        화면에 드러냅니다. 낭독기에는 목록 번호가 이미
-                        전달되므로 중복해서 읽지 않도록 숨깁니다. */}
-                    <span
-                      aria-hidden="true"
-                      className="tabular shrink-0 text-2xl font-bold text-brand-200 sm:text-3xl"
+            {/* ★ 2×2 격자 (2026-08-13) ★
+                  auto-fit + minmax(240px,1fr) 이라 칸이 240px 밑으로 좁아지면
+                  브라우저가 알아서 1열로 접습니다. 화면 크기를 sm: 처럼
+                  일일이 지정하지 않아도 됩니다.
+                  · 휴대폰 375px → 본문 폭 335px → 240×2+12=492 가 안 되므로 1열
+                  · 640px 이상   → 2열
+
+                ⚠️ minmax 의 240px 을 키우면 2열이 되는 시점이 늦어지고,
+                   줄이면 좁은 화면에서 글자가 눌립니다.
+
+                items-stretch 는 격자의 기본값이지만, '같은 줄 카드 높이를
+                맞추는 것이 의도'라는 뜻으로 남겨 둡니다. */}
+            <ol className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-stretch gap-3">
+              {about.pillars.map((pillar, index) => {
+                /* 카드마다 아이콘이 다릅니다. config 의 pillars 순서와
+                   1:1로 맞춰 둔 목록이라, ⚠️ config 에서 순서를 바꾸면
+                   여기 순서도 같이 바꿔야 합니다.
+                   항목이 4개보다 많아지면 아이콘 없이 그립니다(빈 화면이
+                   되는 것보다 낫습니다). */
+                const Icon = PILLAR_ICONS[index];
+
+                return (
+                  <li key={pillar.title} className="h-full">
+                    {/* ★ 상자 모양(테두리·여백)을 li 가 아니라 Reveal 에 둡니다 ★
+                          떠오르는 것이 '상자 전체'라서 테두리도 같이 움직여야
+                          합니다. li 에 테두리를 남겨 두면 글자만 움직이고
+                          테두리는 가만히 있어 어긋나 보입니다.
+
+                        ⚠️ h-full 이 필요합니다. Reveal 이 카드를 한 겹 감싸므로,
+                           이 겹이 칸 높이를 꽉 채우지 않으면 같은 줄 카드의
+                           높이가 서로 어긋납니다. (홈 종목 카드와 같은 처리) */}
+                    <Reveal
+                      delayMs={index * 80}
+                      className="h-full rounded-2xl border border-brand-100 bg-paper p-5 sm:p-6"
                     >
-                      {index + 1}
-                    </span>
-                    <div>
-                      <h3 className="text-base font-bold text-brand-900 sm:text-lg">
+                      {/* 장식입니다. 뜻은 아래 제목 글자가 전부 전달하므로
+                          화면 낭독기에는 읽히지 않습니다(aria-hidden 은
+                          icons.tsx 에서 이미 붙습니다). */}
+                      {Icon && <Icon className="h-6 w-6 text-brand-600" />}
+                      <h3 className="mt-2.5 text-base font-bold text-brand-900 sm:text-lg">
                         {pillar.title}
                       </h3>
                       <p className="mt-1.5 text-base text-ink">{pillar.body}</p>
-                    </div>
-                  </Reveal>
-                </li>
-              ))}
+                    </Reveal>
+                  </li>
+                );
+              })}
             </ol>
           </div>
         </section>

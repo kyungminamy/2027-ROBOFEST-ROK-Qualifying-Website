@@ -97,3 +97,62 @@ export function Play({ className }: IconProps) {
     </svg>
   );
 }
+
+/* ============================================================================
+ *  'ROBOFEST의 네 가지 원칙' 카드의 아이콘 (2026-08-13)
+ *
+ *  ★ 이 프로젝트에는 아이콘 라이브러리가 없습니다 ★
+ *   lucide-react·heroicons·react-icons 중 무엇도 설치되어 있지 않고,
+ *   package.json 의 의존성은 next / react / react-dom / vercel 두 개뿐입니다.
+ *   담당자가 "새 아이콘 패키지를 설치하지 말 것" 이라고 했으므로, 위 아이콘들과
+ *   같은 규격(viewBox 24 · 선 굵기 1.75 · currentColor)으로 여기에 그렸습니다.
+ *
+ *  ℹ️ 모양은 lucide 의 Bot · Wrench · MailOpen · Puzzle 을 따랐습니다
+ *     (lucide 는 ISC 라이선스). 패키지를 받은 것이 아니라 같은 형태로
+ *     그린 것이라, 설치할 것도 업데이트할 것도 없습니다.
+ *
+ *  ⚠️ 색을 이 파일에서 정하지 마세요. 위 설명대로 currentColor 를 쓰므로
+ *     쓰는 쪽에서 text-brand-600 처럼 글자색으로 지정합니다.
+ * ========================================================================== */
+
+/** 로봇 — '100% 자율주행' */
+export function Robot({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M12 8V4H8" />
+      <rect x="4" y="8" width="16" height="12" rx="2" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M9 13v2" />
+      <path d="M15 13v2" />
+    </svg>
+  );
+}
+
+/** 렌치 — '학생이 직접 만듭니다' */
+export function Wrench({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+    </svg>
+  );
+}
+
+/** 열린 봉투 — '당일 공개되는 미션' */
+export function MailOpen({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z" />
+      <path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10" />
+    </svg>
+  );
+}
+
+/** 퍼즐 조각 — '어떤 키트든, 어떤 언어든' */
+export function Puzzle({ className }: IconProps) {
+  return (
+    <svg {...base} className={className}>
+      <path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z" />
+    </svg>
+  );
+}
