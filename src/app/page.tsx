@@ -177,8 +177,14 @@ export default function Home() {
               끼워 넣었습니다. 상자 두 개가 살짝 엇갈려 떠오릅니다. */}
           <dl className="grid gap-5 sm:grid-cols-2">
             <Reveal className="rounded-2xl border border-brand-100 bg-paper p-6">
+              {/* ℹ️ 2026-08-13: 이 작은 딱지를 '장소' → '장소명' 으로
+                     바꿨습니다 (담당자 요청). '오시는 길'(/venue) 화면의
+                     같은 줄이 '장소명' 이라, 두 화면의 말을 맞춘 것입니다.
+                     ⚠️ 바로 위 구역 제목은 그대로 '장소' 입니다. 그것까지
+                        바꾸지 마세요 — 상단 메뉴·구역 제목은 '장소',
+                        상자 안의 딱지만 '장소명' 입니다. */}
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
-                장소
+                장소명
               </dt>
               {/* ℹ️ 2026-08-11: 장소가 확정되어 이름이 다시 나옵니다.
                      08-06 ~ 08-11 사이에는 '장소명은 확정 후 공지
