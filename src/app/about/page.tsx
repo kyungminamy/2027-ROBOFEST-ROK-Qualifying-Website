@@ -9,6 +9,7 @@ import { container } from "@/lib/layout";
 import { withBold } from "@/lib/emphasis";
 import {
   ArrowRight,
+  ChevronDown,
   ExternalLink,
   MailOpen,
   Puzzle,
@@ -320,26 +321,64 @@ export default function AboutPage() {
               참가 전에 궁금한 것들
             </h2>
 
-            {/* Reveal 은 <div> 를 그대로 그리므로, 예전 <div> 자리에
-                그대로 끼워 넣었습니다. DOM 모양이 바뀌지 않아
-                first:border-t-0(첫 항목의 윗줄 없애기)이 그대로 동작합니다.
-                ⚠️ Reveal 을 <dl> 바로 안이 아닌 다른 겹으로 옮기지 마세요.
-                   그러면 '첫 번째'를 못 찾아 첫 항목에 윗줄이 생깁니다. */}
-            <dl className="mt-8">
-              {aboutPage.faq.map((item) => (
-                <Reveal
-                  key={item.q}
-                  className="border-t border-brand-100 py-6 first:border-t-0 first:pt-0"
-                >
-                  <dt className="text-lg font-bold text-brand-900 sm:text-xl">
-                    {item.q}
-                  </dt>
-                  <dd className="mt-2 text-base text-ink sm:text-lg">
-                    {item.a}
-                  </dd>
-                </Reveal>
+            {/* ★★★ 접었다 펴는 문답 — <details> 를 씁니다 (2026-08-13) ★★★
+                  자바스크립트를 한 줄도 쓰지 않았습니다. 여닫기·키보드
+                  조작·화면 낭독기 안내가 전부 브라우저 기본 기능입니다.
+                  ⚠️ 리액트 상태(useState)로 바꾸지 마세요. 학교 인터넷에서
+                     자바스크립트가 막히면 답이 영영 안 열리게 됩니다.
+                     상단 메뉴(SiteNav)도 같은 이유로 <details> 입니다.
+
+                ℹ️ 여러 개를 동시에 열 수 있습니다. <details> 에 name 을
+                   주면 라디오처럼 하나만 열리는데, 담당자가 여러 개를 동시에
+                   열 수 있게 해 달라고 해서 name 을 일부러 넣지 않았습니다.
+                   ⚠️ name 을 추가하지 마세요.
+
+                ℹ️ 첫 문항만 open 으로 시작합니다. 열려 있는 것이 하나 있어야
+                   '눌러서 펴는 것' 이라는 걸 바로 알아봅니다.
+
+                ⚠️ <dl>/<dt>/<dd> 에서 <ul>/<li> 로 바꿨습니다. <dt> 안에는
+                   <details> 를 넣을 수 없기 때문입니다(HTML 규칙 위반).
+                   질문·답 텍스트는 config 에서 그대로 오므로 글은 그대로입니다. */}
+            <ul className="mt-8 space-y-2">
+              {aboutPage.faq.map((item, index) => (
+                <li key={item.q}>
+                  <Reveal>
+                    {/* group = 아래 화살표가 '열림/닫힘'을 알아채는 표시 */}
+                    <details
+                      open={index === 0}
+                      className="group rounded-2xl border border-brand-100 bg-paper"
+                    >
+                      {/* ★ 카드 가로 전체가 눌립니다 ★
+                            <summary> 는 블록 요소라 폭을 꽉 채웁니다.
+                            글자만 눌리는 것이 아니라 빈 곳을 눌러도 열립니다.
+
+                          ★ 기본 삼각형 마커 숨기기 ★
+                            list-none 과 ::-webkit-details-marker 둘 다
+                            지정합니다. 브라우저마다 지우는 방법이 달라서
+                            하나만으로는 어딘가에 삼각형이 남습니다.
+
+                          ℹ️ 키보드 초점 표시(주황 테두리)는 globals.css 의
+                             :focus-visible 규칙이 자동으로 붙여 줍니다.
+                             여기에 따로 적지 않아도 됩니다. */}
+                      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 p-5 text-lg font-bold text-brand-900 sm:p-6 sm:text-xl [&::-webkit-details-marker]:hidden">
+                        {item.q}
+                        {/* 열리면 180도 돌아 위를 봅니다.
+                            ⚠️ 장식이라 낭독기에는 읽히지 않습니다
+                               (aria-hidden 은 icons.tsx 에서 붙습니다).
+                               '펼쳐짐/접힘' 은 <details> 가 이미 알려 줍니다. */}
+                        <ChevronDown className="mt-1 h-5 w-5 shrink-0 text-brand-600 transition-transform duration-200 group-open:rotate-180" />
+                      </summary>
+
+                      {/* 답 — 위 질문과 같은 좌우 여백을 씁니다.
+                          pt-0: <summary> 아래 여백이 이미 있어서 겹칩니다. */}
+                      <div className="px-5 pb-5 pt-0 text-base text-ink sm:px-6 sm:pb-6 sm:text-lg">
+                        {item.a}
+                      </div>
+                    </details>
+                  </Reveal>
+                </li>
               ))}
-            </dl>
+            </ul>
           </div>
         </section>
 
