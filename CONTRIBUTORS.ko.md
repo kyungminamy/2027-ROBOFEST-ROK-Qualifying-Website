@@ -18,7 +18,7 @@
 | git 기록에 남은 작성자 | 실제 작업자 |
 | --- | --- |
 | `lux_1 <lux_1@luxrobo.com>` | **Silas Lim (임수현)** · GitHub [@limsooh](https://github.com/limsooh) · lim.sooh5@gmail.com |
-| `luxroboeducation <luxrobo.education@gmail.com>` | **Amy Lee (이경민)** · kyungminamy@gmail.com |
+| `luxroboeducation <luxrobo.education@gmail.com>` | **Amy Lee (이경민)** · GitHub [@kyungminamy](https://github.com/kyungminamy) · kyungminamy@gmail.com |
 
 > ℹ️ 위 두 주소(`lux_1@luxrobo.com`, `luxrobo.education@gmail.com`)는
 > **부서에서 함께 쓰는 계정**입니다. 특정 개인의 것이 아닙니다.
@@ -49,7 +49,7 @@
   `docs/RUNBOOK-CLAUDE-CODE.md`(864줄), 판단 기록
   `docs/SESSION-LOG.md`(1,718줄), 규칙 문서 `CLAUDE.md`
 
-### Amy Lee (이경민)
+### Amy Lee (이경민) — GitHub [@kyungminamy](https://github.com/kyungminamy)
 
 **커밋 19개** · 2026-08-04 ~ 2026-08-12
 

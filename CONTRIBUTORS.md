@@ -18,7 +18,7 @@ of the work to the single `luxroboeducation` account.
 | git author on record | actual person |
 | --- | --- |
 | `lux_1 <lux_1@luxrobo.com>` | **Silas Lim (임수현)** · GitHub [@limsooh](https://github.com/limsooh) · lim.sooh5@gmail.com |
-| `luxroboeducation <luxrobo.education@gmail.com>` | **Amy Lee (이경민)** · kyungminamy@gmail.com |
+| `luxroboeducation <luxrobo.education@gmail.com>` | **Amy Lee (이경민)** · GitHub [@kyungminamy](https://github.com/kyungminamy) · kyungminamy@gmail.com |
 
 > ℹ️ Both addresses above (`lux_1@luxrobo.com`, `luxrobo.education@gmail.com`)
 > are **shared team accounts**, not any individual's. The names and personal
@@ -50,7 +50,7 @@ Designed and built the entire site.
   `docs/RUNBOOK-CLAUDE-CODE.md` (864), the decision log
   `docs/SESSION-LOG.md` (1,718), and the project rules in `CLAUDE.md`
 
-### Amy Lee (이경민)
+### Amy Lee (이경민) — GitHub [@kyungminamy](https://github.com/kyungminamy)
 
 **19 commits** · 2026-08-04 → 2026-08-12
 
