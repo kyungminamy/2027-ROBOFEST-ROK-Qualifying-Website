@@ -7,11 +7,17 @@ import { Reveal } from "@/components/Reveal";
 import { SequentialReveal } from "@/components/SequentialReveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
-/* ℹ️ withBold 는 2026-08-13 에 뺐습니다. 이 화면에서 `**…**` 를 쓰던 곳은
-      about.journey 를 그리던 참가 흐름 목록 하나뿐이었는데, 그 자리가
-      aboutPage.timeline 을 쓰는 가로 타임라인으로 바뀌면서 없어졌습니다.
-      ⚠️ 홈 화면(HomeIntro)은 여전히 about.journey + withBold 를 씁니다.
-         emphasis.tsx 를 지우지 마세요. */
+/* withBold 는 config 글 안의 `**…**` 부분만 굵게 만듭니다.
+   이 화면에서 쓰는 곳 (2026-08-13 담당자 요청으로 넷 다 굵기 표시를 넣었습니다):
+     · aboutPage.intro          여는 글
+     · aboutPage.worldSupport   '세계대회에 나가게 되면'
+     · aboutPage.faq            '참가 전에 궁금한 것들' 의 답
+   ℹ️ 네 필드 모두 이 화면에서만 씁니다. 그래서 `**` 를 넣어도 다른 화면에
+      영향이 없습니다. (about.journey 처럼 홈과 함께 쓰는 글이라면 양쪽에
+      모두 withBold 를 넣어야 합니다 — 자세한 규칙은 CLAUDE.md 참고)
+   ⚠️ `**` 는 반드시 짝을 맞추세요. 홀수 개면 굵어지지 않고 화면에 `**` 가
+      그대로 보입니다(일부러 그렇게 만들어 두었습니다). */
+import { withBold } from "@/lib/emphasis";
 import {
   ArrowRight,
   ChevronDown,
@@ -139,7 +145,7 @@ export default function AboutPage() {
                   key={paragraph}
                   className="text-base text-ink sm:text-lg"
                 >
-                  {paragraph}
+                  {withBold(paragraph)}
                 </p>
               ))}
             </div>
@@ -335,7 +341,7 @@ export default function AboutPage() {
                 {aboutPage.worldSupport.heading}
               </p>
               <p className="mt-2 text-base text-ink">
-                {aboutPage.worldSupport.body}
+                {withBold(aboutPage.worldSupport.body)}
               </p>
             </div>
 
@@ -435,7 +441,7 @@ export default function AboutPage() {
                       {/* 답 — 위 질문과 같은 좌우 여백을 씁니다.
                           pt-0: <summary> 아래 여백이 이미 있어서 겹칩니다. */}
                       <div className="px-5 pb-5 pt-0 text-base text-ink sm:px-6 sm:pb-6 sm:text-lg">
-                        {item.a}
+                        {withBold(item.a)}
                       </div>
                     </details>
                   </Reveal>
@@ -503,7 +509,7 @@ export default function AboutPage() {
                     {/* ③ 기관명 — <h3> 가 아니라 <p> 입니다.
                         globals.css 가 h1~h4 를 font-weight:700 으로 못 박아
                         두어서 <h3> 로는 '중간 굵기'가 나오지 않습니다. */}
-                    <p className="mt-2.5 text-[15px] font-medium text-brand-900">
+                    <p className="mt-2.5 text-[15px] font-bold text-brand-900">
                       {org.name}
                     </p>
 
