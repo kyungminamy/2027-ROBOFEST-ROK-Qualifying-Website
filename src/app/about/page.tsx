@@ -21,7 +21,11 @@ import { ArrowRight, ExternalLink } from "@/components/icons";
  *
  *  ★★★ 홈의 소개와 모양을 일부러 다르게 했습니다 ★★★
  *   홈: 큰 제목 + 얇은 선으로 나눈 특징 + 알약 모양 사실 + 세로 일정선
- *   여기: 숫자 카드 → 질문과 답(Q&A) → 원칙 목록 → 흐름 표 → 기관 소개
+ *   여기: 숫자 카드 → 원칙 목록 → 흐름 표 → 질문과 답 → 기관 소개
+ *
+ *  ★ 구역 배경색은 손으로 적지 않습니다 ★
+ *    아래 SECTION_ORDER 순서표에서 자동으로 정해집니다. 설명은 그 표
+ *    위에 있습니다.
  *   같은 내용을 같은 모양으로 두 번 보여 주면, 방문자가 '아까 본 화면'으로
  *   착각하고 그냥 닫아 버립니다.
  *
@@ -33,11 +37,50 @@ import { ArrowRight, ExternalLink } from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "ROBOFEST 소개",
-  description: `ROBOFEST가 어떤 대회인지, 다른 로봇 대회와 무엇이 다른지 안내합니다. ${competition.aboutPage.summary}`,
+  description: `ROBOFEST가 어떤 대회인지 안내합니다. ${competition.aboutPage.summary}`,
   /* 이 화면의 대표 주소. www 주소나 ?뒤에 붙는 값이 달라도
      검색엔진이 "원래 주소는 이것"이라고 알 수 있게 합니다. */
   alternates: { canonical: "/about" },
 };
+
+/* ============================================================================
+ *  구역 배경색 — 아래 순서표에서 '자동으로' 정해집니다 (2026-08-13)
+ *
+ *  ★ <section> 에 흰색·연파랑을 직접 적지 마세요 ★
+ *    순서표의 첫째가 흰색, 둘째가 연파랑, 셋째가 흰색 … 이렇게 번갈아
+ *    정해집니다. 구역을 추가·삭제하거나 순서를 바꿀 때 이 목록만 고치면
+ *    나머지 구역 색이 알아서 다시 계산됩니다.
+ *
+ *  【 왜 이렇게 바꿨나 】
+ *   예전에는 구역마다 bg-paper-soft 를 손으로 적어 두었습니다. 그래서
+ *   2026-08-13 에 맨 위 구역('다른 로봇 대회와 무엇이 다른가요') 하나를
+ *   지웠더니 아래 구역이 전부 한 칸씩 밀려서, 색을 네 곳 모두 손으로
+ *   다시 맞춰야 했습니다. 한 곳만 빠뜨려도 같은 색이 두 번 이어져
+ *   두 구역이 한 덩어리로 보입니다. 이 표는 그 일을 막습니다.
+ *
+ *  【 구역을 추가할 때 】
+ *   1. 아래 목록의 원하는 자리에 이름을 한 줄 넣습니다
+ *   2. 새 <section> 의 className 에 sectionTone("그이름") 을 씁니다
+ *   ⚠️ 목록에 없는 이름을 쓰면 배포 전에 오류가 나서 알려 줍니다.
+ *      (오타로 색이 조용히 틀리는 것을 막는 안전장치입니다)
+ *
+ *
+ *  ℹ️ 여는 글과 '숫자로 보는 ROBOFEST'(남색 띠)는 이 표에 없습니다.
+ *     남색 띠는 색이 정해져 있고, 여는 글은 그 위에 있어 번갈이와
+ *     상관이 없습니다.
+ * ========================================================================== */
+const SECTION_ORDER = [
+  "principles", // ROBOFEST의 네 가지 원칙
+  "journey", // 참가부터 세계대회까지
+  "faq", // (다음 단계에서 들어올 자리 — 비워 두는 중)
+  "organisers", // 누가 여는 대회인가요
+  "more", // 더 알아보기
+] as const;
+
+/** 순서표의 몇 번째인지 보고 배경색을 정합니다 (첫째=흰색, 둘째=연파랑, …) */
+function sectionTone(name: (typeof SECTION_ORDER)[number]): string {
+  return SECTION_ORDER.indexOf(name) % 2 === 0 ? "bg-paper" : "bg-paper-soft";
+}
 
 export default function AboutPage() {
   const { aboutPage, about, links, worldChampionship } = competition;
@@ -78,43 +121,11 @@ export default function AboutPage() {
                고치세요. 여기에 다시 펼쳐 적지 마세요. */}
         <FigureBand />
 
-        {/* ------------------------------------------------------ 질문과 답
-             홈에는 없는 형식입니다. 지도교사가 실제로 궁금해하는 순서대로
-             질문을 놓았습니다. 순서를 바꾸지 마세요. */}
-        <section className="py-12 sm:py-16">
-          <div className={container}>
-            <h2 className="text-2xl text-brand-900 sm:text-3xl">
-              다른 로봇 대회와 무엇이 다른가요
-            </h2>
-
-            {/* Reveal 은 <div> 를 그대로 그리므로, 예전 <div> 자리에
-                그대로 끼워 넣었습니다. DOM 모양이 바뀌지 않아
-                first:border-t-0(첫 항목의 윗줄 없애기)이 그대로 동작합니다.
-                ⚠️ Reveal 을 <dl> 바로 안이 아닌 다른 겹으로 옮기지 마세요.
-                   그러면 '첫 번째'를 못 찾아 첫 항목에 윗줄이 생깁니다. */}
-            <dl className="mt-8">
-              {aboutPage.faq.map((item) => (
-                <Reveal
-                  key={item.q}
-                  className="border-t border-brand-100 py-6 first:border-t-0 first:pt-0"
-                >
-                  <dt className="text-lg font-bold text-brand-900 sm:text-xl">
-                    {item.q}
-                  </dt>
-                  <dd className="mt-2 text-base text-ink sm:text-lg">
-                    {item.a}
-                  </dd>
-                </Reveal>
-              ))}
-            </dl>
-          </div>
-        </section>
-
         {/* ------------------------------------------------- 네 가지 원칙
              ⚠️ 홈과 같은 about.pillars 를 씁니다. 내용을 여기에 다시 적지
                 마세요. 대신 모양을 다르게 했습니다 (홈: 2단 얇은 선 /
                 여기: 번호가 붙은 세로 목록). */}
-        <section className="bg-paper-soft py-12 sm:py-16">
+        <section className={`${sectionTone("principles")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               ROBOFEST의 네 가지 원칙
@@ -160,7 +171,7 @@ export default function AboutPage() {
         {/* ------------------------------------------------------- 참가 흐름
              ⚠️ 홈과 같은 about.journey 를 씁니다.
                 홈은 세로 점선 목록, 여기는 번호 + 표 형식입니다. */}
-        <section className="py-12 sm:py-16">
+        <section className={`${sectionTone("journey")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               참가부터 세계대회까지
@@ -188,8 +199,15 @@ export default function AboutPage() {
               ))}
             </dl>
 
-            {/* ⚠️ 진출 팀 수를 적지 마세요. 아직 정해지지 않았습니다. */}
-            <p className="mt-6 rounded-2xl bg-paper-soft p-5 text-base text-ink sm:p-6">
+            {/* ⚠️ 진출 팀 수를 적지 마세요. 아직 정해지지 않았습니다.
+
+                ℹ️ 2026-08-13: 상자 색을 연파랑(bg-paper-soft)에서 흰색으로
+                   바꿨습니다. 이 구역의 배경이 연파랑이 되면서, 상자와
+                   배경이 똑같은 색이라 상자가 아예 보이지 않게 됐습니다.
+                   ⚠️ bg-paper-soft 로 되돌리지 마세요 — 구역 배경색은 위
+                      SECTION_ORDER 에서 자동으로 정해지므로, 되돌리면
+                      글자만 남고 상자는 사라집니다. */}
+            <p className="mt-6 rounded-2xl bg-paper p-5 text-base text-ink sm:p-6">
               {worldChampionship.advancementNotice} 세계대회는{" "}
               {worldChampionship.period} {worldChampionship.location}에서
               열립니다. 국내예선 장소인 부산과는 다른 곳입니다.
@@ -202,11 +220,14 @@ export default function AboutPage() {
                    글은 그대로이고 상자만 바뀌었습니다.
 
                 ★ 위 상자와 같은 값을 쓰세요 ★
-                  rounded-2xl · bg-paper-soft · p-5 sm:p-6 · 테두리 없음.
+                  rounded-2xl · bg-paper · p-5 sm:p-6 · 테두리 없음.
                   두 상자가 나란히 붙어 있어서, 한쪽만 테두리가 있으면
                   같은 종류의 글인데 다른 무게로 보입니다.
-                  ⚠️ border-2 나 bg-brand-50 을 다시 붙이지 마세요. */}
-            <div className="mt-4 rounded-2xl bg-paper-soft p-5 sm:p-6">
+                  ⚠️ border-2 나 bg-brand-50 을 다시 붙이지 마세요.
+
+                ℹ️ 2026-08-13: 위 상자와 함께 연파랑 → 흰색으로 바꿨습니다.
+                   이유는 바로 위 상자의 설명을 보세요. */}
+            <div className="mt-4 rounded-2xl bg-paper p-5 sm:p-6">
               <p className="text-base font-bold text-brand-900 sm:text-lg">
                 {aboutPage.worldSupport.heading}
               </p>
@@ -247,8 +268,44 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* ------------------------------------------------------ 질문과 답
+             지도교사가 실제로 궁금해하는 순서대로 질문을 놓았습니다.
+             순서를 바꾸지 마세요.
+
+             ℹ️ 2026-08-13: 같은 자리에 있던 '다른 로봇 대회와 무엇이
+                다른가요'를 지우고, 그 모양 그대로 이 구역을 넣었습니다.
+                글만 바뀌었고 마크업은 예전 것과 같습니다. */}
+        <section className={`${sectionTone("faq")} py-12 sm:py-16`}>
+          <div className={container}>
+            <h2 className="text-2xl text-brand-900 sm:text-3xl">
+              참가 전에 궁금한 것들
+            </h2>
+
+            {/* Reveal 은 <div> 를 그대로 그리므로, 예전 <div> 자리에
+                그대로 끼워 넣었습니다. DOM 모양이 바뀌지 않아
+                first:border-t-0(첫 항목의 윗줄 없애기)이 그대로 동작합니다.
+                ⚠️ Reveal 을 <dl> 바로 안이 아닌 다른 겹으로 옮기지 마세요.
+                   그러면 '첫 번째'를 못 찾아 첫 항목에 윗줄이 생깁니다. */}
+            <dl className="mt-8">
+              {aboutPage.faq.map((item) => (
+                <Reveal
+                  key={item.q}
+                  className="border-t border-brand-100 py-6 first:border-t-0 first:pt-0"
+                >
+                  <dt className="text-lg font-bold text-brand-900 sm:text-xl">
+                    {item.q}
+                  </dt>
+                  <dd className="mt-2 text-base text-ink sm:text-lg">
+                    {item.a}
+                  </dd>
+                </Reveal>
+              ))}
+            </dl>
+          </div>
+        </section>
+
         {/* ------------------------------------------------------- 기관 소개 */}
-        <section className="bg-paper-soft py-12 sm:py-16">
+        <section className={`${sectionTone("organisers")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               누가 여는 대회인가요
@@ -292,7 +349,7 @@ export default function AboutPage() {
         </section>
 
         {/* --------------------------------------------------- 다음에 볼 곳 */}
-        <section className="py-12 sm:py-16">
+        <section className={`${sectionTone("more")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               더 알아보기
