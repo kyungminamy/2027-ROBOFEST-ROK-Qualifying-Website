@@ -80,7 +80,7 @@ Known dated obligations a human still owns: turning off 구글폼 **응답 받�
 | | |
 |---|---|
 | 대회 일자 | 2026. 11. 27.(금) ~ 11. 28.(토) · 설치 11. 26.(목) |
-| 장소 | 부산보건대학교 체육관 — **예정, not contracted** |
+| 장소 | **부산과학기술대학교 체육관** — ✅ confirmed 2026-08-11 · 부산광역시 북구 시랑로132번길 88 |
 | 접수 기간 | 2026. 9. 1.(화) ~ 10. 16.(금) |
 | 참가비 | 무료 |
 | 참가 대상 | 전국 초·중·고 — Junior(초5~중2) / Senior(중3~고2) |
@@ -112,7 +112,6 @@ Known dated obligations a human still owns: turning off 구글폼 **응답 받�
 **Explicitly undecided — must not be presented as settled:**
 
 - Korea's 2027 quota per 종목 is unknown. **Never state how many teams advance.**
-- 부산보건대학교 is 예정. Word it as such until contracted.
 - The 대회명 is not yet formally confirmed on paper.
 
 ## Brand Commitments

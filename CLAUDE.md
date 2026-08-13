@@ -139,7 +139,7 @@ Add a Korean comment above every field explaining what it is and what changes if
 |---|---|
 | 대회명 | 2027 ROBOFEST World Championship 국내예선대회 — **the site drops the "(가칭)" prefix** (removed 2026-07-30; it read as unfinished to parents). The name is still not formally confirmed on paper, so if it changes, edit `competition.name`. |
 | 대회 일자 | **2026. 11. 27.(금) ~ 11. 28.(토)** ✅ confirmed · 설치 11. 26.(목) |
-| 장소 | 부산보건대학교 체육관 — still 예정, not contracted. **The site does not show this name anywhere** (removed screen by screen 2026-08-04 → 08-11 at the 담당자's request). It lives in `venue.name` and in the Event JSON-LD only. Every screen reads `장소명은 확정 후 공지 예정입니다.` See the 예정 note below before changing any of this. |
+| 장소 | **부산과학기술대학교 체육관** ✅ confirmed 2026-08-11 (building confirmed 08-12) · 부산광역시 북구 시랑로132번길 88 (46639). The name is shown on `/venue` (장소명 row) and on the homepage 장소 box, and ships in the Event JSON-LD. |
 | 주최·주관 | 부산광역시교육청 |
 | 운영·공인 | (주)럭스로보 · ROBOFEST 본부 (Lawrence Technological University) |
 | 공식 예선 여부 | ✅ 공식 예선 (official qualifier) — confirmed |
@@ -151,23 +151,25 @@ Add a Korean comment above every field explaining what it is and what changes if
 
 **⚠️ Unconfirmed, do not present as settled:**
 - Korea's 2027 quota per 종목 is unknown. **Never state a number of teams that will advance.**
-- 부산보건대학교 is 예정, not contracted. **As of 2026-08-11 its name appears on no screen at all** — see below.
+- ~~부산보건대학교 is 예정, not contracted.~~ → **Resolved 2026-08-11. The venue is confirmed and is `부산과학기술대학교 체육관`.** See below for what changed.
 
-  **Current state (2026-08-11).** Three 담당자 decisions landed on top of each other, so read this as one picture rather than three edits:
+  **Current state (2026-08-13).** The venue went through a long unconfirmed period, then was settled. Read this as one picture rather than a stack of edits:
 
-  1. **2026-08-04** — `venueDisplayName()` stopped appending "(예정)" to the name.
-  2. **2026-08-06** — the name itself was removed from every screen: 홈 2곳, then the `/venue` 헤더 and its 장소명 row. All four now read `장소명은 확정 후 공지 예정입니다.`
-  3. **2026-08-11** — the `장소는 아직 확정 전입니다` 안내 박스 at the top of `/venue` was deleted outright (it was a tinted callout box, and those were being removed site-wide).
+  1. **2026-08-04 → 08-11, while unconfirmed** — the name was progressively removed from every screen, and a `장소는 아직 확정 전입니다` callout box carried the caveat. All of that is now history.
+  2. **2026-08-11** — 담당자 confirmed **부산과학기술대학교** (not 부산보건대학교, which was only ever a candidate). Name, address and 우편번호 went in, and the callout box was deleted.
+  3. **2026-08-12** — the building was confirmed, so `venue.name` became `부산과학기술대학교 체육관`. Parking, 교통안내 tables, the Naver map picture and the 길찾기 link all landed the same day.
 
-  What that leaves:
-  - **The "not yet confirmed" fact is still stated three times** on `/venue` — 헤더, 장소명 줄, 주소 줄. It is not lost.
-  - **`venue.name` still holds `부산보건대학교 체육관`,** and it still ships in the Event JSON-LD on the homepage, which is machine-readable only. Search engines get the working assumption; visitors are not told it.
-  - **`venueDisplayName()` now has zero call sites.** It is kept deliberately, so restoring the name is an edit rather than a rewrite. Revert snippets sit in the ★ comments in `src/app/page.tsx` and `src/app/venue/page.tsx` — both note that the import has to come back too.
-  - **`venue.isConfirmed` now controls nothing on screen.** Flipping it to `true` is still correct when the contract is signed, but it no longer changes any pixel. `docs/RUNBOOK.md` §2-2 assumes it removes a box; that section is stale and should be corrected when someone next touches it.
+  Where the venue now appears:
+  - **`/venue`** — the 장소명 row and the 주소 row, plus a map picture and directions.
+  - **Homepage 장소 box** — the name and address.
+  - **Event JSON-LD** — machine-readable, for search results.
+  - ⚠️ The `/venue` page **header** deliberately does *not* name the venue. It reads `오시는 길` with no subtitle (2026-08-12 담당자 request). The name is one section below, so nothing is lost — do not "fix" it back in.
 
-  Two things a successor must not get wrong:
-  - **Do not "fix" the missing name or the missing "(예정)" back in.** Both were removed on request, on separate days.
-  - ⚠️ **Two sentences died with the 안내 박스 and exist nowhere now:** that the 대회 will be held *in 부산*, and the warning not to book 숙소·교통편 before the venue is fixed. Nobody asked for those to go; they were collateral. If a 지도교사 ever asks about travel booking, that is why — put the warning back as a plain line, not a box.
+  Two leftovers that are harmless but will confuse someone:
+  - **`venueDisplayName()` has zero call sites.** It used to append "(예정)"; it now just returns `venue.name`. Kept deliberately — revert snippets referencing it sit in ★ comments in `src/app/page.tsx`.
+  - **`venue.isConfirmed` controls nothing on screen.** It is `true` and correct, but the box it used to hide no longer exists, so flipping it changes no pixel. `docs/RUNBOOK.md` §2-2 still assumes it removes a box; that section is stale.
+
+  ℹ️ **The old "don't book 숙소·교통편 yet" warning is no longer needed.** It was lost when the callout box was deleted, and was flagged here as a gap — but with the venue and address now published, the reason for it is gone.
 
 **Resolved since first writing:** 접수 마감 is **10/16, confirmed 2026-07-30** — the 10/30 alternative was dropped. It may now be stated as a fixed date.
 

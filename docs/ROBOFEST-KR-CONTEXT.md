@@ -23,7 +23,7 @@ These are real contradictions found across the source documents. Get them resolv
 ### 1.1 The World Championship is in **SEOUL**, not Busan
 The 2027 Robofest World Championship (28th) will be at **광운대학교 (KwangWoon University), Seoul, May 2027** — the first time in Robofest's history it leaves the US. MOA signed 2026-05-13 at LTU; 럭스로보 CEO 오상훈 was a signatory and is named "director of Robofest Korea."
 
-**Busan is the 예선 venue (부산보건대학교), not the world championship venue.** Any site copy saying "부산에서 세계대회" is wrong.
+**Busan is the 예선 venue (부산과학기술대학교 체육관 — confirmed 2026-08-11), not the world championship venue.** Any site copy saying "부산에서 세계대회" is wrong.
 
 ### 1.2 ✅ RESOLVED — Competition dates
 **Confirmed 2026-07-29 by 교육사업부: 대회는 2026. 11. 27.(금) ~ 11. 28.(토).** 설치 11. 26.(목).
@@ -223,7 +223,7 @@ Legacy Korean operator `world-robofest.com` offered these. Consider them:
 /schedule             일정 — 접수·설명회·미션 공개·대회 2일차 타임테이블
 /apply                참가 신청 (지도자 계정 → 팀 등록 → 학생 등록 → 동의)
 /apply/status         신청 조회·수정 (마감 전까지 수정 가능)
-/venue                장소·오시는 길 (부산보건대학교), 주차, 주변 숙박
+/venue                오시는 길 (부산과학기술대학교 체육관), 교통안내, 주차
 /faq                  자주 묻는 질문 (계획서 §Ⅷ 10문항 그대로 사용 가능)
 /notice               공지사항 (미션 공개, 대진표, 설명회 안내)
 /downloads            규정집 국문 요약, 동의서, 참가확인서 양식, 포스터
