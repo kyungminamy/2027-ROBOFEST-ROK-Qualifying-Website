@@ -1,0 +1,56 @@
+name: Sync from upstream
+
+# Keeps the `live` branch of this repository identical to the upstream
+# repository's `main` branch.
+#
+# 06:00 KST = 21:00 UTC the previous day (KST is UTC+9). GitHub cron is
+# always UTC, so "0 21 * * *" fires at 06:00 Korean time.
+#
+# ---------------------------------------------------------------------------
+#  Three things in here are deliberate. Changing them breaks the sync.
+# ---------------------------------------------------------------------------
+#
+#  1. `git clone --bare`, never `--mirror`, and an explicit refspec on push.
+#     A mirror clone also copies `refs/pull/*`, which GitHub refuses on push,
+#     and the whole push fails partway through.
+#
+#  2. The push target is `live`, NOT the default branch. GitHub only runs
+#     scheduled workflows from the default branch. If this workflow ever
+#     overwrote the default branch, the first run would delete this file and
+#     the automation would silently never run again.
+#
+#  3. Upstream is public, so it is cloned anonymously. No company credential
+#     is involved anywhere in this file, which is why the sync keeps working
+#     after the author's work access ends. Writing to THIS repository uses
+#     the per-run GITHUB_TOKEN, not a personal access token.
+
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch: # lets you run it by hand from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone upstream (public - no credentials needed)
+        run: |
+          git clone --bare \
+            https://github.com/luxroboeducation/2027-ROBOFEST-ROK-Qualifying-Website.git \
+            upstream.git
+
+      - name: Push upstream main into this repository's live branch
+        working-directory: upstream.git
+        run: |
+          git push --force \
+            "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" \
+            "refs/heads/main:refs/heads/live"
+
+      - name: Report what was synced
+        working-directory: upstream.git
+        run: |
+          echo "upstream main is now at:"
+          git log -1 --format='%H %ad %s' --date=iso refs/heads/main
