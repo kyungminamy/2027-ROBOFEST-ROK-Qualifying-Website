@@ -1318,23 +1318,58 @@ export const competition = {
       caption: '지난 ROBOFEST 세계대회 현장',
     },
 
-    /** 주최·운영 기관 설명 */
+    /* 주최·운영 기관 설명 — '누가 여는 대회인가요' 카드 3장
+     *
+     *  ★ 로고 파일 (2026-08-13) ★
+     *   public/logos/ 에 있습니다. 원본은 image/ 에 한글 이름으로 그대로
+     *   두었고(그 폴더가 원본 보관소입니다), 배포용 사본만 영문 이름으로
+     *   옮겼습니다. 한글 파일명은 배포 환경이나 주소 인코딩에서 말썽이
+     *   생길 수 있어서입니다.
+     *
+     *   ⚠️ 세 파일 모두 **높이가 96px 로 맞춰진 보정본**입니다. 여백이
+     *      파일 안에 이미 들어 있어서, 화면에서는 셋 다 똑같이 32px 높이만
+     *      주면 크기가 나란히 맞습니다.
+     *      ★ 로고마다 다른 높이를 주거나 CSS padding 을 더하지 마세요 ★
+     *      로고를 새 파일로 바꿀 때도 높이 96px 로 맞춰서 넣으세요.
+     *      (원본 크기: 부산 320×96 · 럭스로보 339×96 · 로보페스트 336×96)
+     *
+     *  ℹ️ subtitle 은 없을 수 있습니다(부산광역시교육청). 화면에서는 빈
+     *     자리를 남겨 세 카드의 줄이 맞도록 처리합니다. */
     organisers: [
       {
         role: '주최 · 주관',
         name: '부산광역시교육청',
+        /** 기관명 아래 한 줄. 없으면 빈 문자열로 두세요(줄맞춤용). */
+        subtitle: '',
+        logo: '/logos/logo-busan-edu.png',
+        /** 원본 가로 픽셀. 높이는 셋 다 96px 로 같습니다(LOGO_H). */
+        logoWidth: 320,
+        /** 그림이 안 뜰 때 대신 보이고, 화면 낭독기가 읽습니다 */
+        logoAlt: '부산광역시교육청',
         body: '대회를 열고 운영 전반을 책임집니다. 참가비가 없는 것은 교육청 예산으로 대회를 치르기 때문입니다.',
         linkKey: 'busanEducationOffice' as const,
       },
       {
         role: '운영',
         name: '(주)럭스로보',
+        subtitle: 'ROBOFEST 한국 공식 운영기관',
+        logo: '/logos/logo-luxrobo.png',
+        logoWidth: 339,
+        logoAlt: '럭스로보',
         body: '접수와 대회 당일 진행을 맡습니다.',
         linkKey: 'luxrobo' as const,
       },
       {
+        /* ⚠️ 2026-08-13: 예전에는 이름이 한 줄이었습니다 —
+              'ROBOFEST 본부 (Lawrence Technological University)'.
+              카드 3칸으로 좁아지면서 한 줄에 들어가지 않아 기관명과 부제로
+              나눴습니다. 다시 한 줄로 합치지 마세요. */
         role: '공인',
-        name: 'ROBOFEST 본부 (Lawrence Technological University)',
+        name: 'ROBOFEST 본부',
+        subtitle: 'Lawrence Technological University',
+        logo: '/logos/logo-robofest.png',
+        logoWidth: 336,
+        logoAlt: 'ROBOFEST',
         body: '종목과 규정을 정하고, 이 대회를 대한민국 공식 예선으로 인정합니다.',
         linkKey: 'robofestOfficial' as const,
       },

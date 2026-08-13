@@ -452,40 +452,94 @@ export default function AboutPage() {
               누가 여는 대회인가요
             </h2>
 
-            <dl className="mt-8 space-y-5">
+            {/* ★ 가로 3칸 (2026-08-13) ★
+                  minmax(180px,1fr) 이라 좁아지면 알아서 2열 → 1열이 됩니다.
+                  휴대폰(본문 폭 335px)에서는 180×2+12=372 가 안 들어가므로
+                  따로 지정하지 않아도 1열이 됩니다.
+                  (타임라인과 달리 grid-cols-1 을 못 박을 필요가 없습니다) */}
+            <ul className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] items-stretch gap-3">
               {aboutPage.organisers.map((org) => {
                 const href: string = links[org.linkKey];
-                return (
-                  <div
-                    key={org.name}
-                    className="rounded-2xl border border-brand-100 bg-paper p-5 sm:p-6"
-                  >
-                    <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
-                      {org.role}
-                    </dt>
-                    <dd className="mt-1.5">
-                      <p className="text-lg font-bold text-brand-900">
-                        {org.name}
-                      </p>
-                      <p className="mt-1.5 text-base text-ink">{org.body}</p>
 
-                      {/* 주소가 있을 때만 링크를 만듭니다 */}
-                      {href && (
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1.5 text-base font-bold text-brand-700 underline decoration-brand-200 underline-offset-4 transition-colors hover:text-accent-600 hover:decoration-accent-600"
-                        >
-                          누리집 바로가기
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      )}
-                    </dd>
-                  </div>
+                return (
+                  /* ⚠️ 카드 배경은 반드시 흰색(bg-paper)입니다.
+                        로고 파일 배경이 흰색이라, 카드에 회색이나 연파랑을
+                        주면 로고 둘레에 흰 네모가 드러납니다.
+                        ★ bg-paper 를 바꾸지 마세요 ★ (구역 배경은 연파랑이고
+                          그 위에 흰 카드가 놓이는 구조입니다) */
+                  <li
+                    key={org.name}
+                    className="flex h-full flex-col rounded-2xl border border-brand-100 bg-paper p-5 sm:p-6"
+                  >
+                    {/* ① 로고
+                        ⚠️ 세 파일 모두 높이 96px 로 맞춰진 보정본이라
+                           똑같이 h-8(32px) 만 주면 크기가 나란히 맞습니다.
+                           ★ 로고마다 다른 높이를 주지 마세요 ★
+                        ⚠️ padding 을 더하지 마세요 — 여백은 파일 안에
+                           이미 들어 있습니다.
+                        ⚠️ object-fit 으로 자르지 마세요.
+                        ★ self-start 를 지우지 마세요 ★ 카드가 flex-col 이라
+                          기본값(align-items: stretch)이 그림을 카드 폭까지
+                          옆으로 늘여 버립니다. 실제로 320×96 로고가
+                          182×32 로 찌그러졌습니다(2026-08-13 확인).
+                        width/height 는 그림이 뜨기 전에 자리를 잡아 두어
+                        글이 밀리지 않게 하려고 적습니다(높이는 항상 96). */}
+                    {/* eslint-disable-next-line @next/next/no-img-element -- next/image 는 설정이 필요해 비개발자가 유지하기 어렵습니다. public 폴더의 사진만 쓰므로 기본 img 로 충분합니다. */}
+                    <img
+                      src={org.logo}
+                      alt={org.logoAlt}
+                      width={org.logoWidth}
+                      height={96}
+                      loading="lazy"
+                      decoding="async"
+                      className="mb-3.5 block h-8 w-auto self-start"
+                    />
+
+                    {/* ② 역할 배지 */}
+                    <span className="inline-flex self-start rounded-full bg-brand-100 px-2.5 py-[3px] text-xs font-bold text-brand-700">
+                      {org.role}
+                    </span>
+
+                    {/* ③ 기관명 — <h3> 가 아니라 <p> 입니다.
+                        globals.css 가 h1~h4 를 font-weight:700 으로 못 박아
+                        두어서 <h3> 로는 '중간 굵기'가 나오지 않습니다. */}
+                    <p className="mt-2.5 text-[15px] font-medium text-brand-900">
+                      {org.name}
+                    </p>
+
+                    {/* ④ 부제 — ⚠️ 없는 칸도 빈 줄을 남깁니다.
+                           그래야 세 카드의 설명·링크 줄이 나란히 맞습니다.
+                           부제가 없으면 줄바꿈 없는 공백( )을 넣습니다.
+                           ⚠️ 그냥 " " 를 넣으면 안 됩니다 — HTML 은 보통
+                              공백을 지워 버려서 줄 높이가 생기지 않습니다.
+                           ★ org.subtitle 이 비었다고 이 줄을 통째로 지우지
+                             마세요 — 카드 줄맞춤이 깨집니다 ★ */}
+                    <p className="mt-0.5 text-xs text-ink-soft">
+                      {org.subtitle || " "}
+                    </p>
+
+                    {/* ⑤ 설명 */}
+                    <p className="mt-2.5 text-[13px] text-ink">{org.body}</p>
+
+                    {/* ⑥ 링크 — mt-auto 로 카드 맨 아래에 붙습니다.
+                           설명 길이가 달라도 세 카드의 링크가 한 줄로
+                           맞춰집니다. ⚠️ mt-auto 를 지우지 마세요.
+                           주소가 없으면 링크를 아예 만들지 않습니다. */}
+                    {href && (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-auto inline-flex items-center gap-1.5 pt-4 text-[13px] font-bold text-brand-700 transition-colors hover:text-accent-600"
+                      >
+                        누리집 바로가기
+                        <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                      </a>
+                    )}
+                  </li>
                 );
               })}
-            </dl>
+            </ul>
           </div>
         </section>
 
