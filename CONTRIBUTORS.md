@@ -30,7 +30,7 @@ of the work to the single `luxroboeducation` account.
 
 ### Silas Lim (임수현) — GitHub [@limsooh](https://github.com/limsooh)
 
-**136 of 153 commits (89%)** · 2026-07-29 → 2026-08-12
+**137 of 156 commits (88%)** · 2026-07-29 → 2026-08-12
 
 Designed and built the entire site.
 
@@ -52,7 +52,7 @@ Designed and built the entire site.
 
 ### Amy Lee (이경민)
 
-**17 commits** · 2026-08-04 → 2026-08-12
+**19 commits** · 2026-08-04 → 2026-08-12
 
 - Header background photography, UI refinements, documentation updates
 
@@ -71,14 +71,26 @@ Designed and built the entire site.
 
 Every figure in this file comes straight from the git history.
 
+**The counts above are fixed to one point in the history — commit `4924aa7`
+(2026-08-12 17:43), the last commit before this file was finalised.** They are
+deliberately *not* "as of today": work continues on this repository, so a plain
+count would drift away from these numbers and make the file look wrong. Pinning
+the commit keeps every figure here true permanently.
+
 ```bash
-# commits per author — returns 136 and 17
-git log --format='%an <%ae>' | sort | uniq -c | sort -rn
+# commits per author up to that point — returns 137 and 19
+git log --format='%an <%ae>' 4924aa7 | sort | uniq -c | sort -rn
+
+# total commits at that point — returns 156
+git rev-list --count 4924aa7
 
 # working period
-git log --author="lux_1@luxrobo.com" --format='%ad' --date=short | sort | sed -n '1p;$p'
+git log --author="lux_1@luxrobo.com" 4924aa7 --format='%ad' --date=short | sort | sed -n '1p;$p'
 ```
+
+To see the *current* totals instead, drop `4924aa7` from those commands. The
+figures will be higher; that is expected and does not contradict anything above.
 
 ---
 
-*Written 2026-08-12*
+*Written 2026-08-13 · figures pinned to commit `4924aa7` (2026-08-12)*
