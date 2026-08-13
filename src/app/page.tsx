@@ -190,8 +190,18 @@ export default function Home() {
                      08-06 ~ 08-11 사이에는 '장소명은 확정 후 공지
                      예정입니다'가 나왔습니다.
                      ⚠️ 이름을 여기에 직접 적지 마세요 — config 의
-                        venue.name 에서 옵니다. */}
-              <dd className="mt-2 text-lg">{venue.name}</dd>
+                        venue.name 에서 옵니다.
+
+                  ★ 아래 '주소' 상자와 글자 크기·색을 똑같이 맞춥니다 ★
+                    2026-08-13: 전에는 이 줄만 text-lg(18px)이고 주소는
+                    text-base(16px)이라, 같은 종류의 값인데 2px 달랐습니다.
+                    '오시는 길'(/venue) 화면의 같은 두 줄이 쓰는 값
+                    (text-base sm:text-lg)으로 두 상자를 함께 맞췄습니다.
+                    ⚠️ 한쪽만 고치지 마세요. 두 상자가 나란히 놓이므로
+                       크기가 다르면 바로 눈에 띕니다. */}
+              <dd className="mt-2 text-base text-ink sm:text-lg">
+                {venue.name}
+              </dd>
             </Reveal>
 
             <Reveal
@@ -201,7 +211,9 @@ export default function Home() {
               <dt className="text-sm font-bold uppercase tracking-wider text-ink-soft">
                 주소
               </dt>
-              <dd className="mt-2 text-base text-ink">
+              {/* ⚠️ 위 '장소명' 상자와 같은 값이어야 합니다
+                     (text-base sm:text-lg). 위 상자의 설명을 보세요. */}
+              <dd className="mt-2 text-base text-ink sm:text-lg">
                 {venue.address ? (
                   venue.address
                 ) : (
