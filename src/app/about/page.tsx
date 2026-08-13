@@ -4,9 +4,14 @@ import { competition } from "@/config/competition";
 import { FigureBand } from "@/components/FigureBand";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
+import { SequentialReveal } from "@/components/SequentialReveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
-import { withBold } from "@/lib/emphasis";
+/* ℹ️ withBold 는 2026-08-13 에 뺐습니다. 이 화면에서 `**…**` 를 쓰던 곳은
+      about.journey 를 그리던 참가 흐름 목록 하나뿐이었는데, 그 자리가
+      aboutPage.timeline 을 쓰는 가로 타임라인으로 바뀌면서 없어졌습니다.
+      ⚠️ 홈 화면(HomeIntro)은 여전히 about.journey + withBold 를 씁니다.
+         emphasis.tsx 를 지우지 마세요. */
 import {
   ArrowRight,
   ChevronDown,
@@ -14,6 +19,7 @@ import {
   MailOpen,
   Puzzle,
   Robot,
+  Trophy,
   Wrench,
 } from "@/components/icons";
 
@@ -106,7 +112,10 @@ function sectionTone(name: (typeof SECTION_ORDER)[number]): string {
 const PILLAR_ICONS = [Robot, Wrench, MailOpen, Puzzle];
 
 export default function AboutPage() {
-  const { aboutPage, about, links, worldChampionship } = competition;
+  /* ℹ️ worldChampionship 은 2026-08-13 에 뺐습니다. 세계대회 안내 문단이
+        config 의 aboutPage.timelineNotice 한 줄로 바뀌면서 쓸 일이
+        없어졌습니다. (종목 상세 화면은 아직 씁니다) */
+  const { aboutPage, about, links } = competition;
 
   return (
     <>
@@ -209,37 +218,93 @@ export default function AboutPage() {
         </section>
 
         {/* ------------------------------------------------------- 참가 흐름
-             ⚠️ 홈과 같은 about.journey 를 씁니다.
-                홈은 세로 점선 목록, 여기는 번호 + 표 형식입니다. */}
+             ⚠️ 글은 aboutPage.timeline 에서 옵니다 — 홈이 쓰는
+                about.journey 와 **다른 목록**입니다. 왜 나눠 두었는지는
+                config 의 timeline 위 설명을 꼭 읽어 보세요. */}
         <section className={`${sectionTone("journey")} py-12 sm:py-16`}>
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               참가부터 세계대회까지
             </h2>
 
-            <dl className="mt-8">
-              {about.journey.map((stage, index) => (
-                <div
-                  key={stage.step}
-                  className="grid gap-1 border-b border-brand-100 py-5 sm:grid-cols-[auto_1fr] sm:gap-6"
-                >
-                  <dt className="flex items-baseline gap-2 text-base font-bold text-brand-900 sm:w-48">
-                    <span aria-hidden="true" className="tabular text-brand-500">
-                      {index + 1}
-                    </span>
-                    {stage.step}
-                  </dt>
-                  {/* ℹ️ withBold 는 config 의 `**…**` 부분만 굵게 만듭니다
-                         (2026-08-12, 4번 항목의 세계대회 문구 때문에 넣었습니다).
-                         ⚠️ 홈 화면도 같은 글을 쓰므로 그쪽에도 같이 넣었습니다 —
-                            한쪽만 넣으면 다른 쪽에 `**` 가 그대로 보입니다.
-                         자세한 설명은 src/lib/emphasis.tsx 맨 위에 있습니다. */}
-                  <dd className="text-base text-ink">{withBold(stage.body)}</dd>
-                </div>
-              ))}
-            </dl>
+            {/* ★ 가로 타임라인 — 카드 4장 (2026-08-13) ★
+                  auto-fit 이라 넓으면 4열, 좁아지면 3열 → 2열로 알아서 접힙니다.
+
+                ⚠️ 아주 좁은 화면에서 1열이 되게 하려면 grid-cols-1 이 따로
+                   필요합니다. minmax(130px,1fr) 만 두면 휴대폰(본문 폭 335px)
+                   에서도 130×2+8=268 이 들어가 버려 2열이 됩니다.
+                   그래서 420px 미만은 1열로 못 박았습니다.
+                   ★ 375px 에서 1열이어야 한다는 것이 담당자 요구사항입니다 ★ */}
+            {/* 순서대로 하나씩 나타납니다 (1→2→3→4).
+                  · 400ms 동안, 아래에서 8px 올라오며
+                  · 카드마다 120ms 씩 늦게 시작
+                  · 묶음 전체에 관찰자 하나 → 한 번 나타나면 관찰을 끊습니다
+                  · '동작 줄이기'를 켰거나 자바스크립트가 막히면 그냥 보입니다
+                자세한 설명은 src/components/SequentialReveal.tsx 맨 위와
+                globals.css 의 .seq-reveal 규칙에 있습니다.
+
+                ⚠️ 홈 화면이 쓰는 Reveal 과 다른 컴포넌트입니다. 바꿔 쓰지 마세요. */}
+            <SequentialReveal className="mt-8 grid grid-cols-1 gap-2 min-[420px]:grid-cols-[repeat(auto-fit,minmax(130px,1fr))]">
+              {aboutPage.timeline.map((stage, index) => {
+                const isLast = index === aboutPage.timeline.length - 1;
+
+                return (
+                  /* ⚠️ 나타나는 효과는 이 <li> 에 걸립니다
+                        (globals.css 의 `.seq-reveal > *`). 그래서 카드 모양
+                        (테두리·배경·여백)도 <li> 에 둡니다. 안쪽에 <div> 를
+                        하나 더 끼우면 테두리는 가만히 있고 글자만 움직여
+                        어긋나 보입니다. */
+                  <li
+                    key={stage.step}
+                    className={`flex h-full flex-col rounded-2xl bg-paper p-4 ${
+                      isLast
+                        ? "border-2 border-brand-600"
+                        : "border border-brand-100"
+                    }`}
+                  >
+                      {/* 첫 줄 — 왼쪽 번호 배지, 오른쪽 아이콘 */}
+                      <div className="flex items-center justify-between">
+                        <span
+                          aria-hidden="true"
+                          className="tabular flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-700"
+                        >
+                          {index + 1}
+                        </span>
+
+                        {isLast ? (
+                          /* 마지막 칸만 트로피입니다. 다음 칸이 없으니
+                             화살표를 두면 어디론가 더 이어지는 것처럼 보입니다. */
+                          <Trophy className="h-4 w-4 shrink-0 text-brand-600" />
+                        ) : (
+                          /* ⚠️ 1열로 접히면 화살표를 숨깁니다.
+                                카드가 세로로 쌓이는데 오른쪽 화살표가 남아
+                                있으면 방향이 어긋나 보입니다.
+                                숨기는 기준(420px)은 위 격자와 같은 값입니다.
+                                ★ 한쪽만 고치지 마세요 ★ */
+                          <ArrowRight className="hidden h-4 w-4 shrink-0 text-brand-300 min-[420px]:block" />
+                        )}
+                      </div>
+
+                      {/* ⚠️ 여기는 <h3> 가 아니라 <p> 입니다 (일부러 그렇습니다).
+                             globals.css 가 h1~h4 를 모두 font-weight:700 으로
+                             정해 두어서, <h3> 에 font-medium 을 줘도 굵게
+                             나옵니다. 담당자가 요청한 것은 '중간 굵기'라
+                             !important 로 그 규칙과 싸우는 대신 <p> 를 썼습니다.
+                             단계 이름은 짧은 이름표이고, '네 단계가 순서대로'
+                             라는 뜻은 바깥 <ol>/<li> 가 이미 전달합니다. */}
+                    <p className="mt-3 text-sm font-medium text-brand-900">
+                      {stage.step}
+                    </p>
+                    <p className="mt-1 text-xs text-ink-soft">{stage.body}</p>
+                  </li>
+                );
+              })}
+            </SequentialReveal>
 
             {/* ⚠️ 진출 팀 수를 적지 마세요. 아직 정해지지 않았습니다.
+                   위 4번 칸이 '세계대회 진출' 이라고만 적혀 있어서, 진출이
+                   정해진 것처럼 읽히지 않게 잡아 주는 것이 이 문단입니다.
+                   ★ 지우거나 타임라인에서 멀리 떼어 놓지 마세요 ★
 
                 ℹ️ 2026-08-13: 상자 색을 연파랑(bg-paper-soft)에서 흰색으로
                    바꿨습니다. 이 구역의 배경이 연파랑이 되면서, 상자와
@@ -248,9 +313,7 @@ export default function AboutPage() {
                       SECTION_ORDER 에서 자동으로 정해지므로, 되돌리면
                       글자만 남고 상자는 사라집니다. */}
             <p className="mt-6 rounded-2xl bg-paper p-5 text-base text-ink sm:p-6">
-              {worldChampionship.advancementNotice} 세계대회는{" "}
-              {worldChampionship.period} {worldChampionship.location}에서
-              열립니다. 국내예선 장소인 부산과는 다른 곳입니다.
+              {aboutPage.timelineNotice}
             </p>
 
             {/* 세계대회에 나가게 된 팀이 받는 도움 — 계획서 Ⅳ-11

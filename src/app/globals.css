@@ -191,6 +191,49 @@ time,
   font-variant-numeric: tabular-nums;
 }
 
+/* ==========================================================================
+ *  순차 페이드인 (.seq-reveal) — '참가부터 세계대회까지' 타임라인 (2026-08-13)
+ *
+ *  ★★★ 아래 opacity:0 은 '.seq-reveal 이 붙어 있을 때만' 적용됩니다 ★★★
+ *
+ *   그 클래스는 자바스크립트가 붙입니다(SequentialReveal.tsx). 그래서
+ *   학교 인터넷 등에서 자바스크립트가 막히면 클래스 자체가 붙지 않고,
+ *   카드는 **처음부터 그냥 보입니다.**
+ *
+ *   ⚠️ 이 규칙을 <ol> 이나 <li> 처럼 '항상 붙어 있는' 선택자로 옮기지
+ *      마세요. 옮기는 순간 자바스크립트가 막힌 사람에게 참가 흐름 4칸이
+ *      영영 안 보이게 됩니다. Reveal.tsx 맨 위의 설명과 같은 이유입니다.
+ *
+ *  ℹ️ 시차는 nth-child 로 줍니다. 카드가 4장으로 고정이라 CSS 로 충분하고,
+ *     칸마다 style 을 따로 넣지 않아도 됩니다.
+ *     ⚠️ 칸을 5개 이상으로 늘리면 아래 nth-child 도 함께 늘리세요.
+ *        (없으면 5번째부터는 시차 없이 1번과 같이 나타납니다)
+ * ========================================================================== */
+.seq-reveal > * {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 카드 간 시차 120ms — 1 → 2 → 3 → 4 순서로 하나씩 */
+.seq-reveal > *:nth-child(2) {
+  transition-delay: 120ms;
+}
+.seq-reveal > *:nth-child(3) {
+  transition-delay: 240ms;
+}
+.seq-reveal > *:nth-child(4) {
+  transition-delay: 360ms;
+}
+
+/* 화면에 들어오면 이 클래스가 붙습니다 (한 번만) */
+.seq-reveal.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+
 /* 키보드 사용자를 위한 초점 표시 — 접근성상 제거하지 마세요 */
 :focus-visible {
   outline: 2px solid var(--color-accent-600);
