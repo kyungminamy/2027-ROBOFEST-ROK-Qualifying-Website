@@ -2495,8 +2495,9 @@ export const categoryDetails: Record<CategorySlug, CategoryDetail> = {
   // --------------------------------------------------------- BottleSumo
   bottlesumo: {
     whatItIs: [
-      '테이블 위에 놓인 물병을 밀어서 떨어뜨리고, 이어서 상대 로봇과 1대 1로 겨루는 종목입니다.',
-      '규칙이 단순하고 로봇도 비교적 간단해서, 처음 대회에 나가는 팀에게 가장 권하는 종목입니다.',
+      /* ℹ️ `**…**` 는 그 부분만 굵게 나옵니다 (2026-08-14 담당자 요청) */
+      '테이블 위에 놓인 **물병**을 밀어서 떨어뜨리고, 이어서 상대 로봇과 **1대 1**로 겨루는 종목입니다.',
+      '규칙이 단순하고 로봇도 비교적 간단해서, **처음 대회에 나가는 팀**에게 가장 권하는 종목입니다.',
     ],
     howItRuns: [
       '1차 기록 경기: 병 5개를 테이블 밖으로 밀어내는 데 걸린 시간을 재며, 최대 120초입니다. 출발 신호 뒤 3초를 기다린 다음 움직여야 합니다.',
@@ -2505,8 +2506,13 @@ export const categoryDetails: Record<CategorySlug, CategoryDetail> = {
       '경기 테이블은 가로 182cm × 세로 75cm이며, 바닥에서 약 12.75cm 높이에 놓입니다.',
     ],
     prepare: {
+      /* ℹ️ 굵게 (2026-08-14 담당자 요청). 이 종목은 부문에 따라 쓸 수 있는
+            키트와 무게가 달라, 그 세 군데가 눈에 걸리게 해 둔 것입니다.
+            ⚠️ 담당자가 지정한 것은 'classic 부문' 과 'unlimited' 였지만,
+               둘의 굵기 범위가 어긋나 보이지 않도록 'Unlimited 부문' 까지
+               묶었습니다. 되돌리려면 뒤쪽 `**` 를 '부문' 앞으로 옮기세요. */
       robotKit:
-        'Classic 부문은 레고와 VEX IQ만 쓸 수 있고, Unlimited 부문은 제한이 없습니다. 부문에 따라 무게 제한이 다릅니다 — Junior Classic 1.2kg, Senior Classic 1.5kg, Junior Unlimited 2.5kg, Senior Unlimited 3kg.',
+        '**Classic 부문**은 레고와 VEX IQ만 쓸 수 있고, **Unlimited 부문**은 제한이 없습니다. 부문에 따라 **무게 제한**이 다릅니다 — Junior Classic 1.2kg, Senior Classic 1.5kg, Junior Unlimited 2.5kg, Senior Unlimited 3kg.',
       computer: '프로그램을 고칠 노트북 1대.',
       beforeEvent: ['미리 제출할 것은 없습니다.'],
       onSite: ['로봇 본체', '노트북과 충전기', '여분 배터리와 부품'],
