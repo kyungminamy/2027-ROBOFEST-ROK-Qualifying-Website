@@ -34,6 +34,7 @@ export function PageHeader({
   backHref,
   backLabel,
   image,
+  solid = false,
 }: {
   title: string;
   /** 제목 아래 한 줄 설명 (없으면 생략) */
@@ -43,15 +44,30 @@ export function PageHeader({
   backLabel?: string;
   /** 배경 사진 (없으면 남색 격자무늬가 나옵니다) */
   image?: HeaderImage;
+  /** true 면 사진 없이 브랜드 남색 단색 띠로 그립니다 (2026-08-14) */
+  solid?: boolean;
 }) {
   /* 사진 경로가 비어 있으면 사진 없이 격자무늬로 돌아갑니다.
      (경로가 잘못돼도 깨진 사진 대신 격자무늬가 보이게 하기 위함) */
   const hasImage =
-    !!image && image.wide.trim() !== "" && image.small.trim() !== "";
+    !solid && !!image && image.wide.trim() !== "" && image.small.trim() !== "";
+
+  /* ★ 배경은 셋 중 하나입니다 ★
+       solid    → bg-brand-700 단색. 종목 상세 화면이 씁니다(담당자 요청).
+                  종목 카드의 제목 띠와 **같은 색**이라, 목록에서 카드를
+                  누르고 들어왔을 때 색이 이어집니다.
+       사진 있음 → header-photo (사진 + 남색 막)
+       그 밖    → hero-field (brand-900 단색. 첫 화면과 같은 바탕)
+     ⚠️ solid 는 다른 화면에 영향이 없습니다. 넘기지 않으면 예전 그대로입니다. */
+  const background = solid
+    ? "bg-brand-700"
+    : hasImage
+      ? "header-photo"
+      : "hero-field";
 
   return (
     <section
-      className={`${hasImage ? "header-photo" : "hero-field"} text-white`}
+      className={`${background} text-white`}
       /* 사진은 배경이라 화면 낭독기에 읽히지 않습니다.
          내용을 설명하는 사진이 아니라 분위기용이므로 이대로 둡니다. */
       style={
@@ -69,11 +85,27 @@ export function PageHeader({
         {/* ★ 띠 높이 ★
             199px → 298px(1.5배) → 395px(다시 1.3배)로 두 번 키웠습니다.
             줄이려면 아래 py- 값을 낮추면 됩니다.
+            (고정 높이는 쓰지 않습니다. 안에 든 내용이 높이를 정합니다 —
+             아래 '설명이 없어도 자리는 비워 둔다' 설명을 보세요.)
 
             ⚠️ 휴대폰은 일부러 덜 키웠습니다. 작은 화면(320×568)에서
                넓은 화면과 같은 비율로 키우면 띠 하나가 화면의 60%를
-               차지해, 정작 읽어야 할 내용이 화면 밖으로 밀립니다. */}
-        <div className="py-22 sm:py-28 lg:py-36">
+               차지해, 정작 읽어야 할 내용이 화면 밖으로 밀립니다.
+
+            ★★★ 단색(solid) 일 때는 여백이 절반입니다 (2026-08-14) ★★★
+              사진이 있을 때의 큰 여백은 **사진을 보여 주기 위한 자리**
+              였습니다. 배경이 단색이 되자 그 자리가 그냥 남색 덩어리가
+              되어 화면의 절반을 차지했습니다(담당자 지적).
+              그래서 solid 일 때만 py- 값을 정확히 절반으로 씁니다.
+                사진   py-22 / sm:py-28 / lg:py-36  (88 / 112 / 144px)
+                단색   py-11 / sm:py-14 / lg:py-18  (44 /  56 /  72px)
+              ⚠️ 사진 쪽 값을 함께 줄이지 마세요. 나머지 일곱 화면은
+                 사진이 보일 자리가 필요합니다. */}
+        <div
+          className={
+            solid ? "py-11 sm:py-14 lg:py-18" : "py-22 sm:py-28 lg:py-36"
+          }
+        >
           {backHref && (
             <Link
               href={backHref}

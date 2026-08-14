@@ -229,7 +229,16 @@
 > 화면의 `page.tsx` 에서 `headerImages.compassMap` 으로 바꾸면 됩니다.
 
 `public/header/` 에는 원본이 이 폴더에 없는 사진도 있습니다
-(`compass`, `robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
+(`robot`). 예전에 넣은 것으로, 원본을 따로 보관하지 않았습니다.
+
+> ⚠️ **`compass`(나무 탁자 위의 황동 나침반) 는 2026-08-14 에 지웠습니다.**
+> 종목 상세 화면 머리띠가 사진에서 **남색 단색**으로 바뀌면서(담당자 요청)
+> 쓰는 곳이 없어졌습니다. `public/header/compass.jpg`·`compass-sm.jpg` 와
+> `config` 의 `headerImages.compass` 항목을 함께 지웠습니다.
+> **이 폴더에 원본이 없던 사진이라, 되살릴 곳은 git 기록뿐입니다.**
+> (`git log --diff-filter=D -- public/header/compass.jpg`)
+> ⚠️ 이름이 비슷한 `compass-map`(`compassMap`) 은 **다른 사진**이고
+> 파일도 항목도 그대로 있습니다.
 
 > ⚠️ `robot` 은 **2026-08-12 부터 쓰는 곳이 없습니다.**
 > 2026-08-06 에 참가 신청 화면에서 빠졌고, 08-12 에 ROBOFEST 소개
@@ -250,7 +259,7 @@
    3:1 만 넘으면 되지만, 설명 줄은 옅은 파랑(brand-100)에 작은 글씨라
    **4.5:1** 이 필요합니다. 제목만 보고 정하면 설명 줄이 깨집니다.
 
-지금 값: `robotTable` 0.72 · `modi` 0.72 · `compass` 0.58 ·
+지금 값: `robotTable` 0.72 · `modi` 0.72 ·
 `build` 0.76 · `entrance` 0.68 · `frontDesk` 0.76 · `awards` 0.76 ·
 `apply` 0.68 (지금은 쓰는 곳 없음) ·
 `compassMap` 0.68 (지금은 쓰는 곳 없음) ·

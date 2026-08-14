@@ -125,7 +125,16 @@ export default async function CategoryDetailPage({
         description={category.summary}
         backHref="/categories"
         backLabel="종목 안내"
-        image={competition.headerImages.compass}
+        /* ℹ️ 2026-08-14 담당자 요청: 배경 사진(나무 탁자 위 황동 나침반,
+               headerImages.compass)을 없애고 **남색 단색**으로 바꿨습니다.
+               8개 종목 화면이 이 파일 하나를 쓰므로 여기 한 줄이 8개에
+               모두 적용됩니다.
+             ★ 색은 종목 카드의 제목 띠와 같은 brand-700 입니다 ★
+               목록에서 카드를 누르고 들어오면 같은 남색이 이어집니다.
+             ⚠️ 사진 파일(public/header/compass.jpg, compass-sm.jpg)과
+                config 의 headerImages.compass 항목은 같은 날 지웠습니다.
+                다시 사진을 쓰려면 git 기록에서 이 커밋 직전을 보세요. */
+        solid
       />
 
       <main id="main" className="flex-1">
