@@ -98,7 +98,13 @@ function Bullets({ items }: { items: readonly string[] }) {
     <ul className="ml-5 list-disc space-y-2 marker:text-brand-300">
       {items.map((line) => (
         <li key={line} className="text-base text-ink">
-          {line}
+          {/* ℹ️ withBold 는 config 글 안의 `**…**` 부분만 굵게 만듭니다
+                 (2026-08-14 추가). 이 목록은 '경기 진행 방식', '대회 전에
+                 준비할 것', '당일 가져올 것', '알아 두면 좋은 점' 네 곳에
+                 함께 쓰입니다 — 어느 항목에든 별표를 넣을 수 있습니다.
+              ⚠️ 별표는 짝을 맞추세요. 홀수면 굵어지지 않고 화면에 별표가
+                 그대로 보입니다. */}
+          {withBold(line)}
         </li>
       ))}
     </ul>
