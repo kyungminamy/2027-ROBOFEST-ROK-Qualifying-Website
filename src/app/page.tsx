@@ -4,6 +4,7 @@ import {
   formatKoreanDateRange,
 } from "@/config/competition";
 import { CategoryCard } from "@/components/CategoryCard";
+import { RowReveal } from "@/components/RowReveal";
 import { FigureBand } from "@/components/FigureBand";
 import { EventJsonLd } from "@/components/EventJsonLd";
 import { Hero } from "@/components/Hero";
@@ -78,26 +79,45 @@ export default function Home() {
           moreHref="/categories"
           moreLabel="종목 비교표 한눈에 보기"
         >
-          {/* 휴대폰 1개 / 태블릿 2개 / 넓은 화면 3개씩 */}
-          <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {competition.categories.map((category, index) => (
-              <li key={category.slug}>
-                {/* 카드가 아래에서 떠오릅니다.
-                    시간차(delayMs)를 index % 3 으로 주는 이유:
-                    넓은 화면에서 한 줄에 3개씩 놓이므로, 한 줄 안에서
-                    왼쪽→오른쪽으로 차례차례 뜨는 것처럼 보입니다.
-                    8개에 순서대로 시간차를 주면 마지막 카드가 0.56초나
-                    기다려서 느리게 느껴집니다.
+          {/* ★ 열 개수를 화면 폭별로 못 박습니다 — 3열이 되는 구간이
+                없어야 합니다 (2026-08-14 담당자 요청) ★
+                  640px 미만    → 1열  (4줄 × 2장… 이 아니라 8줄)
+                  640~1279px    → 2열  (4줄 × 2장, 딱 맞음)
+                  1280px 이상   → 4열  (2줄 × 4장, 딱 맞음)
 
-                    ⚠️ h-full 이 필요합니다. Reveal 이 카드를 한 겹 감싸므로,
-                       이 겹이 칸 높이를 꽉 채우지 않으면 같은 줄 카드들의
-                       높이가 서로 어긋납니다. */}
-                <Reveal className="h-full" delayMs={(index % 3) * 80}>
-                  <CategoryCard category={category} />
-                </Reveal>
+              【 왜 3열을 없앴나 】
+                종목이 8개라 3열로 놓으면 3+3+2 가 되어 마지막 줄에 빈칸이
+                하나 생깁니다. 1·2·4열은 8을 나누어떨어지게 하는 값이라
+                어느 폭에서도 줄이 꽉 찹니다.
+                ⚠️ lg:grid-cols-3 을 되살리지 마세요. 빈칸이 다시 생깁니다.
+                ⚠️ 종목 수가 8개가 아니게 되면 이 값을 다시 따져야 합니다.
+
+              items-stretch 는 격자의 기본값이지만, '같은 줄 카드 높이를
+              맞추는 것이 의도'라는 뜻으로 적어 둡니다. 지우지 마세요. */}
+          {/* ★ 카드는 '줄 단위'로 나타납니다 (2026-08-14 담당자 요청) ★
+                같은 줄에 있는 카드가 한꺼번에 뜨고, 줄과 줄 사이에만
+                시차(150ms)가 있습니다. 넓은 화면이면 두 단계로 끝납니다.
+                좁은 화면(1열)에서는 시차 없이 8장이 한꺼번에 뜹니다 —
+                한 줄에 한 장씩이라 줄 단위로 하면 8단계가 되기 때문입니다.
+
+              ℹ️ RowReveal 이 <ul> 을 대신 그려 줍니다. 위 격자 클래스는
+                 그대로 넘어가므로 열 개수 설정은 여기 한 곳에 있습니다.
+                 몇 열인지는 RowReveal 이 화면에서 직접 읽어 계산하므로,
+                 위 grid-cols 를 바꿔도 그 파일은 고치지 않아도 됩니다.
+
+              ⚠️ 카드를 하나씩 Reveal 로 감싸던 방식으로 되돌리지 마세요.
+                 8장이 하나씩 떠서 마지막 카드까지 오래 걸립니다. */}
+          <RowReveal className="grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            {competition.categories.map((category) => (
+              /* ⚠️ <li> 자체가 떠오릅니다(globals.css 의 `.row-reveal > *`).
+                    그래서 감싸는 <div> 를 따로 두지 않습니다. 한 겹 끼우면
+                    그 겹이 칸 높이를 꽉 채우지 못해 같은 줄 카드의 높이가
+                    어긋납니다. 카드(<a>)는 h-full 이라 <li> 를 채웁니다. */
+              <li key={category.slug}>
+                <CategoryCard category={category} />
               </li>
             ))}
-          </ul>
+          </RowReveal>
         </HomeSection>
 
         {/* 5. 일정 — 흰 배경.

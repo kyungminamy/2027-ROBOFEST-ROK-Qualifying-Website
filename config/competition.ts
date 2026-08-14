@@ -1087,6 +1087,20 @@ export const competition = {
       summary: '병을 밀어내고 상대 로봇과 겨루는 서바이벌 방식의 입문자 친화 종목',
       // ⚠️ 2026 시즌부터 Junior Unlimited가 신설되어 4개 부문입니다
       divisions: ['Junior Classic', 'Junior Unlimited', 'Senior Classic', 'Senior Unlimited'],
+      /* ★ 종목 카드에서만 쓰는 짧은 표기 (2026-08-14) ★
+         【 왜 따로 두나 】
+          위 divisions 네 개를 카드에 그대로 넣으면, 8개 종목 중 이 카드만
+          배지가 네 줄로 늘어나 혼자 길쭉해집니다. 첫 화면이 넓은 화면에서
+          한 줄에 4장을 놓기 때문에 칸이 좁아 특히 티가 납니다.
+         【 어디에 나오나 】
+          첫 화면과 '종목 안내'의 카드 — 두 곳뿐입니다. `divisions` 는
+          그대로 살아 있고, **종목 비교표와 BottleSumo 상세 화면에는 네 부문이
+          전부 나옵니다.** 참가자가 세부 부문을 확인할 길은 막히지 않습니다.
+         ⚠️ 이 두 줄을 지우면 카드가 자동으로 위 divisions 네 개를 씁니다
+            (오류가 나지는 않습니다). 다른 일곱 종목에는 이 항목이 없습니다.
+         ⚠️ 부문 구성이 바뀌면 divisions 와 이 두 줄을 함께 고치세요. */
+      cardDivisions: ['Junior', 'Senior'],
+      cardDivisionsNote: '각 Classic · Unlimited 부문 운영',
       maxTeamSize: 3,
       kitRestriction: 'Classic 부문은 LEGO·VEX IQ만 / Unlimited 부문은 제한 없음',
       isWorldQualifier: false,

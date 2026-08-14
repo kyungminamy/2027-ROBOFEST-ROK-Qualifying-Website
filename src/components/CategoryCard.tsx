@@ -13,6 +13,17 @@ import { ArrowRight } from "@/components/icons";
  * ========================================================================== */
 
 export function CategoryCard({ category }: { category: Category }) {
+  /* 참가 부문 배지 — 카드에 보여 줄 목록을 고릅니다 (2026-08-14).
+     config 에 cardDivisions 가 있으면 그것을, 없으면 divisions 를 씁니다.
+     지금은 BottleSumo 한 종목만 cardDivisions 를 가지고 있습니다
+     (부문이 네 개라 카드에서는 Junior · Senior 로 줄여 씁니다).
+     ⚠️ 여덟 종목 중 일부만 가진 항목이라 `in` 으로 확인합니다. 없는
+        카드에서 그냥 꺼내 쓰면 타입 오류가 납니다. */
+  const divisions =
+    "cardDivisions" in category ? category.cardDivisions : category.divisions;
+  const divisionsNote =
+    "cardDivisionsNote" in category ? category.cardDivisionsNote : null;
+
   return (
     <Link
       href={`/categories/${category.slug}`}
@@ -43,13 +54,22 @@ export function CategoryCard({ category }: { category: Category }) {
               띠와 같은 색입니다. 검토 의견의 '전체 Key 컬러와 어울리게'가
               바로 이 뜻입니다. 다른 색을 새로 만들지 마세요. */}
         <div className="bg-brand-700 px-4 py-3.5 text-center">
+          {/* ★ 영문 이름과 한글 이름을 항상 두 줄로 놓습니다 (2026-08-14) ★
+                예전에는 한 줄에 나란히 뒀는데, 넓은 화면에서 카드가 한 줄에
+                4장씩 놓이면서 칸이 좁아지자 이름이 긴 종목(RoboParade)만
+                줄바꿈이 일어나 그 카드의 띠만 높아졌습니다.
+                처음부터 두 줄로 못 박으면 여덟 장의 띠 높이가 같아집니다.
+              ⚠️ 두 <span> 의 block 을 지우지 마세요. 지우면 다시 한 줄로
+                 이어 붙어 좁은 칸에서 카드마다 높이가 달라집니다. */}
           <h3 className="text-base font-bold text-white sm:text-lg">
-            {category.name}
-            {/* 한글 이름은 한 단계 연하게 — 영문 이름이 먼저 읽히도록.
+            <span className="block">{category.name}</span>
+            {/* 한글 이름은 한 단계 작고 한 단계 연하게 — 영문 이름이 먼저
+                읽히도록. mt-0.5 는 2px 이며, 둘이 한 덩어리로 보이게 하는
+                값입니다. 더 벌리면 이름 두 개가 따로 놀아 보입니다.
                 ⚠️ 색을 brand-300 이하로 낮추지 마세요. 남색 바탕 위에서
                    글자 대비가 규정(4.5:1)에 못 미칩니다.
                    brand-200 은 5.9:1 로 통과합니다. */}
-            <span className="ml-1.5 text-sm font-bold text-brand-200 sm:text-base">
+            <span className="mt-0.5 block text-sm font-bold text-brand-200 sm:text-base">
               {category.nameKo}
             </span>
           </h3>
@@ -60,19 +80,21 @@ export function CategoryCard({ category }: { category: Category }) {
           {/* 한 줄 소개 */}
           <p className="flex-1 text-base text-ink">{category.summary}</p>
 
-          {/* 참가 부문 — 종목에 따라 1~4개입니다 */}
+          {/* 참가 부문 — 카드에서는 종목마다 1~2개입니다 */}
           <div className="mt-5">
             <p className="text-xs font-bold uppercase tracking-wider text-ink-soft">
               참가 부문
             </p>
             {/* ★ 칩 크기를 다시 키우지 마세요 ★
-                BottleSumo 는 부문 이름이 4개(Junior Classic · Junior
-                Unlimited · Senior Classic · Senior Unlimited)이고 하나하나가
-                깁니다. 예전 크기(text-sm · px-2.5)로는 좁은 칸에서 한 줄에
-                하나씩 들어가 카드 하나만 세로로 길쭉해졌습니다.
-                글자와 여백을 함께 한 단계 줄여 두 줄에 들어가게 했습니다. */}
+                예전 크기(text-sm · px-2.5)로는 좁은 칸에서 배지가 한 줄에
+                하나씩 들어가 카드가 세로로 길쭉해졌습니다. 글자와 여백을
+                함께 한 단계 줄여 둔 값입니다.
+                ℹ️ 2026-08-14: 배지가 네 개였던 BottleSumo 를 Junior ·
+                   Senior 두 개로 줄이면서, 이제 여덟 카드가 모두 배지
+                   두 개(VCC·RoboParade 는 하나)로 한 줄에 들어갑니다.
+                   줄인 내용은 바로 아래 보조 문장이 받습니다. */}
             <ul className="mt-2 flex flex-wrap gap-1.5">
-              {category.divisions.map((division) => (
+              {divisions.map((division) => (
                 <li
                   key={division}
                   className="rounded-md border border-brand-100 bg-brand-50 px-2 py-0.5 text-xs font-bold text-brand-800"
@@ -81,6 +103,15 @@ export function CategoryCard({ category }: { category: Category }) {
                 </li>
               ))}
             </ul>
+
+            {/* 배지에서 줄인 세부 부문을 한 줄로 받아 줍니다.
+                지금은 BottleSumo 에만 나옵니다 — config 에
+                cardDivisionsNote 가 있는 종목에만 붙습니다.
+                ⚠️ 글자 크기(text-xs)와 색(text-ink-soft)을 키우지 마세요.
+                   배지보다 눈에 띄면 부문이 네 개인 것처럼 읽힙니다. */}
+            {divisionsNote && (
+              <p className="mt-1.5 text-xs text-ink-soft">{divisionsNote}</p>
+            )}
           </div>
 
           <div className="mt-4 flex items-center justify-between gap-3 border-t border-brand-100 pt-3.5">
