@@ -9,6 +9,7 @@ import {
   type CategorySlug,
 } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
+import { withBold } from "@/lib/emphasis";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 import { ArrowRight, ExternalLink } from "@/components/icons";
@@ -235,10 +236,15 @@ export default async function CategoryDetailPage({
 
           {/* ================================================ 2) 무엇을 하나 */}
           <Section title="무엇을 하는 종목인가요">
+            {/* ℹ️ withBold 는 config 글 안의 `**…**` 부분만 굵게 만듭니다
+                   (2026-08-14 추가). 지금은 game 의 '새로운 미션' 한 곳에만
+                   쓰였고, 나머지 일곱 종목 글에는 `**` 가 없어 그대로 나옵니다.
+                ⚠️ `**` 는 반드시 짝을 맞추세요. 홀수 개면 굵어지지 않고
+                   화면에 `**` 가 그대로 보입니다. */}
             <div className="space-y-3">
               {detail.whatItIs.map((line) => (
                 <p key={line} className="text-base text-ink sm:text-lg">
-                  {line}
+                  {withBold(line)}
                 </p>
               ))}
             </div>
@@ -258,7 +264,9 @@ export default async function CategoryDetailPage({
           {/* ========================================== 3) 무엇을 준비해야 하나 */}
           <Section title="무엇을 준비해야 하나요">
             <dl>
-              <Row label="로봇 · 키트">{detail.prepare.robotKit}</Row>
+              {/* ℹ️ 이 줄도 `**…**` 로 굵게 할 수 있습니다 (2026-08-14).
+                     지금은 game 의 '제한이 없습니다.' 한 곳에만 쓰였습니다. */}
+              <Row label="로봇 · 키트">{withBold(detail.prepare.robotKit)}</Row>
               <Row label="노트북 등 장비">{detail.prepare.computer}</Row>
 
               <Row label="대회 전에 준비할 것">
