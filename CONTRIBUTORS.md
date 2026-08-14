@@ -73,8 +73,8 @@ Designed and built the entire site.
 Every figure in this file comes straight from the git history.
 
 **The counts above are fixed to one point in the history — commit `0ce1a06`
-(2026-08-14 12:22), the last commit of Silas's final day.** They are
-deliberately *not* "as of today": work continues on this repository, so a plain
+(2026-08-14 12:22), the last commit before this file was finalised on
+Silas's final day.** They are deliberately *not* "as of today": work continues on this repository, so a plain
 count would drift away from these numbers and make the file look wrong. Pinning
 the commit keeps every figure here true permanently.
 
