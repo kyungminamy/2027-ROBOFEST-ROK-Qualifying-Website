@@ -38,9 +38,20 @@ function Th({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Td({ children }: { children: React.ReactNode }) {
+/* className 은 **폭을 조절할 때만** 씁니다. 지금은 '키트 제한' 칸의
+   w-full 하나뿐입니다. 색·글씨 크기·여백은 여기서 한 번에 정하니
+   칸마다 따로 주지 마세요 — 그러면 칸끼리 모양이 어긋납니다. */
+function Td({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <td className="border-b border-brand-100 px-3.5 py-3 align-top text-sm text-ink">
+    <td
+      className={`border-b border-brand-100 px-3.5 py-3 align-top text-sm text-ink ${className}`}
+    >
       {children}
     </td>
   );
@@ -225,9 +236,27 @@ export default function CategoriesPage() {
             </p>
 
             {/* ⚠️ 표는 반드시 이 스크롤 상자 안에 두세요.
-                   그러지 않으면 휴대폰에서 페이지 전체가 좌우로 흔들립니다. */}
+                   그러지 않으면 휴대폰에서 페이지 전체가 좌우로 흔들립니다.
+
+                ★ min-w 는 44rem 입니다 — 46rem 으로 올리지 마세요 ★
+                  2026-08-13: 넓은 화면에서 표가 가로로 삐져나와 스크롤이
+                  생긴다는 지적이 있었습니다. 원인은 글자가 아니라 이 값
+                  이었습니다. 본문 칸이 720px 인데 46rem = **736px** 이라,
+                  내용과 상관없이 16px 이 항상 넘쳤습니다.
+
+                  화면에서 재어 본 값:
+                    46rem(736px) → 표 736px  ← 넘침
+                    45rem(720px) → 표 720px
+                    44rem(704px) → 표 718px  ← 이 아래로는 값이 안 변합니다
+                  44rem 부터는 이 값이 더 이상 제한이 되지 않고, 표가 제
+                  너비(718px)로 놓입니다. 그래서 44rem 으로 두었습니다.
+
+                ⚠️ 이 값을 아예 없애지는 마세요. 좁은 화면에서는 칸이 5개라
+                   어차피 다 못 들어갑니다. 없애면 글자가 세로로 짓눌려
+                   읽기 나빠집니다. 좁은 화면에서 좌우로 미는 것은
+                   **의도된 동작**이고, 위 안내 문구가 그것을 알려 줍니다. */}
             <div className="mt-6 overflow-x-auto rounded-2xl border border-brand-200 bg-paper">
-              <table className="w-full min-w-[46rem] border-collapse">
+              <table className="w-full min-w-[44rem] border-collapse">
                 <caption className="sr-only">
                   종목별 참가 부문, 최대 인원, 키트 제한, 난이도 비교표
                 </caption>
@@ -255,18 +284,67 @@ export default function CategoriesPage() {
                         </span>
                       </Td>
                       <Td>
-                        <ul>
+                        {/* 참가 부문 — 종목 카드와 같은 알약 상자 모양입니다.
+                            (2026-08-14 담당자 요청으로 시험 적용)
+
+                            ★ 표가 가로로 넓어지지 않습니다 ★
+                              화면에서 재어 확인했습니다. 표 전체 너비는
+                              718px 그대로이고, 칸끼리 폭을 주고받을 뿐입니다.
+                                참가 부문  116 → 221px
+                                키트 제한  317 → 220px
+                              BottleSumo 줄은 오히려 145 → 130px 로
+                              짧아집니다. 부문 4개가 세로로 쌓이지 않고
+                              flex-wrap 으로 옆에 붙기 때문입니다.
+
+                            ★ 남는 폭은 '키트 제한' 칸이 가져갑니다 ★
+                              아래 그 칸의 <Td> 에 w-full 이 붙어 있습니다.
+                              그것이 없으면 표가 폭을 나눌 때 이 칸이
+                              221px 까지 부풀어, 알약 오른쪽에 100px 넘는
+                              빈 자리가 생깁니다 (2026-08-14 담당자 지적).
+                              ⚠️ 아래 w-full 을 지우면 그 빈 자리가 돌아옵니다.
+
+                            ℹ️ text-xs 는 표 본문(text-sm)보다 한 단계
+                               작습니다. 종목 카드의 알약과 같은 값이라
+                               일부러 맞춘 것입니다. */}
+                        {/* ⚠️ whitespace-nowrap 을 지우지 마세요 ⚠️
+                               없으면 'Junior Classic' 이 상자 안에서
+                               'Junior' / 'Classic' 두 줄로 접힙니다.
+                               알약이 세로로 길쭉해져 보기 나쁩니다.
+                               이 값이 있어야 칸이 최소한 가장 긴 알약
+                               (111px) 만큼은 넓어집니다. */}
+                        <ul className="flex flex-wrap gap-1.5">
                           {category.divisions.map((d) => (
-                            <li key={d}>{d}</li>
+                            <li
+                              key={d}
+                              className="whitespace-nowrap rounded-md border border-brand-100 bg-brand-50 px-2 py-0.5 text-xs font-bold text-brand-800"
+                            >
+                              {d}
+                            </li>
                           ))}
                         </ul>
                       </Td>
                       <Td>
+                        {/* ℹ️ 2026-08-14: '학생 5명' → '5명'. 칸 제목이
+                               이미 '최대 인원' 이라 '학생' 은 같은 말을
+                               두 번 하는 셈이었습니다.
+                               ⚠️ 종목 카드(CategoryCard) 아래쪽 줄은
+                                  '학생 최대 5명' 그대로입니다. 거기에는
+                                  칸 제목이 없어서 '학생' 이 필요합니다. */}
                         <span className="whitespace-nowrap">
-                          학생 {category.maxTeamSize}명
+                          {category.maxTeamSize}명
                         </span>
                       </Td>
-                      <Td>{category.kitRestriction}</Td>
+                      {/* ★ w-full — 남는 폭을 이 칸이 다 가져갑니다 ★
+                          표는 칸마다 '가장 넓게 폈을 때의 너비' 비율로 폭을
+                          나눕니다. BottleSumo 의 알약 4개를 한 줄로 펴면
+                          435px 이라, 참가 부문 칸이 실제로 쓰지도 않는
+                          폭을 크게 가져갔습니다.
+                          이 칸에 w-full 을 주면 남는 폭이 전부 이쪽으로
+                          와서, 참가 부문은 알약에 필요한 만큼만 씁니다.
+                            전: 참가 부문 221 · 키트 제한 220
+                            후: 참가 부문 139 · 키트 제한 311
+                          ⚠️ 지우면 알약 옆 빈 자리가 다시 생깁니다. */}
+                      <Td className="w-full">{category.kitRestriction}</Td>
                       <Td>
                         <span className="whitespace-nowrap">
                           {category.difficulty}
