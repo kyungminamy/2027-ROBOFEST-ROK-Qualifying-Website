@@ -30,7 +30,7 @@ of the work to the single `luxroboeducation` account.
 
 ### Silas Lim (임수현) — GitHub [@limsooh](https://github.com/limsooh)
 
-**137 of 156 commits (88%)** · 2026-07-29 → 2026-08-12
+**147 of 178 commits (83%)** · 2026-07-29 → 2026-08-14
 
 Designed and built the entire site.
 
@@ -45,14 +45,15 @@ Designed and built the entire site.
   publishing something broken
 - **Accessibility** — contrast ratios computed per header image to verify WCAG
   compliance (3:1 for headings, 4.5:1 for body text)
-- **~3,900 lines of handover documentation** so a non-developer successor could
-  operate the site from a browser: `docs/RUNBOOK.md` (1,124 lines),
-  `docs/RUNBOOK-CLAUDE-CODE.md` (864), the decision log
-  `docs/SESSION-LOG.md` (1,718), and the project rules in `CLAUDE.md`
+- **~4,600 lines of handover documentation** so a non-developer successor could
+  operate the site from a browser: `docs/RUNBOOK.md` (1,134 lines),
+  `docs/RUNBOOK-CLAUDE-CODE.md` (881), the decision log
+  `docs/SESSION-LOG.md` (2,339 — started here, continued by Amy), and the
+  project rules in `CLAUDE.md` (231)
 
 ### Amy Lee (이경민) — GitHub [@kyungminamy](https://github.com/kyungminamy)
 
-**19 commits** · 2026-08-04 → 2026-08-12
+**31 commits** · 2026-08-04 → 2026-08-14
 
 - Header background photography, UI refinements, documentation updates
 
@@ -71,26 +72,26 @@ Designed and built the entire site.
 
 Every figure in this file comes straight from the git history.
 
-**The counts above are fixed to one point in the history — commit `4924aa7`
-(2026-08-12 17:43), the last commit before this file was finalised.** They are
+**The counts above are fixed to one point in the history — commit `0ce1a06`
+(2026-08-14 12:22), the last commit of Silas's final day.** They are
 deliberately *not* "as of today": work continues on this repository, so a plain
 count would drift away from these numbers and make the file look wrong. Pinning
 the commit keeps every figure here true permanently.
 
 ```bash
-# commits per author up to that point — returns 137 and 19
-git log --format='%an <%ae>' 4924aa7 | sort | uniq -c | sort -rn
+# commits per author up to that point — returns 147 and 31
+git log --format='%an <%ae>' 0ce1a06 | sort | uniq -c | sort -rn
 
-# total commits at that point — returns 156
-git rev-list --count 4924aa7
+# total commits at that point — returns 178
+git rev-list --count 0ce1a06
 
 # working period
-git log --author="lux_1@luxrobo.com" 4924aa7 --format='%ad' --date=short | sort | sed -n '1p;$p'
+git log --author="lux_1@luxrobo.com" 0ce1a06 --format='%ad' --date=short | sort | sed -n '1p;$p'
 ```
 
-To see the *current* totals instead, drop `4924aa7` from those commands. The
+To see the *current* totals instead, drop `0ce1a06` from those commands. The
 figures will be higher; that is expected and does not contradict anything above.
 
 ---
 
-*Written 2026-08-13 · figures pinned to commit `4924aa7` (2026-08-12)*
+*Written 2026-08-14 · figures pinned to commit `0ce1a06` (2026-08-14)*
