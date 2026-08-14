@@ -106,6 +106,14 @@ export function HeroSlides({
   /* 이미 보여준 사진 번호. 여기에 든 것만 실제로 내려받습니다. */
   const [seen, setSeen] = useState<number[]>([0]);
 
+  /* '다시 시작'을 누른 횟수 (2026-08-14).
+     아래 남은 시간 막대의 key 에 들어갑니다. 값이 바뀌면 막대가 새로
+     그려져서, 채워지던 것이 처음(빈 상태)부터 다시 시작합니다.
+     ⚠️ 화면에 보이는 숫자가 아닙니다. 세는 것 자체가 목적이 아니라,
+        '아까와 다른 값'이기만 하면 됩니다. 왜 필요한지는 바로 아래
+        '멈췄다 다시 시작할 때' 설명을 보세요. */
+  const [runId, setRunId] = useState(0);
+
   /* 사진이 2장 이상일 때만 넘김 버튼과 자동 넘김이 의미가 있습니다 */
   const many = slides.length > 1;
 
@@ -122,7 +130,24 @@ export function HeroSlides({
      index 가 바뀔 때마다 타이머를 다시 겁니다. 그래서 버튼으로 직접
      넘기면 그 시점부터 간격을 처음부터 다시 셉니다.
      ⚠️ 몇 초인지 여기에 적지 마세요. config 의 heroSlideIntervalMs 를
-        고쳤을 때 이 설명만 옛날 숫자로 남습니다. (실제로 그런 적 있음) */
+        고쳤을 때 이 설명만 옛날 숫자로 남습니다. (실제로 그런 적 있음)
+
+     ★ 멈췄다 다시 시작하면 '처음부터' 다시 셉니다 (2026-08-14) ★
+       멈추면 아래 return 이 돌아 타이머가 아예 없어지고, 다시 시작하면
+       새 타이머를 겁니다. 남은 시간을 기억하지 않습니다.
+
+       그런데 남은 시간 막대는 CSS 라서 성질이 반대입니다. 멈추면 그
+       자리에 '얼어붙고', 다시 시작하면 얼었던 지점에서 이어집니다.
+       그래서 넘어가기 직전(막대가 거의 다 찬 상태)에 멈췄다가 다시
+       시작하면, 막대는 곧바로 끝까지 차서 멈춰 있는데 사진은 한 칸
+       더 기다렸다 넘어갔습니다. 다 됐다고 해 놓고 아무 일도 일어나지
+       않으니 고장 난 것처럼 보였습니다.
+
+       고친 방법: 시계를 하나로 맞추는 대신, 둘 다 처음부터 다시
+       시작하게 했습니다. 다시 시작을 누르면 runId 가 올라가고, 막대가
+       새로 그려져 빈 상태에서 다시 채워집니다.
+       ⚠️ 막대만, 또는 이 타이머만 한쪽을 고치면 그 어긋남이 그대로
+          돌아옵니다. 두 곳은 같이 움직여야 합니다. */
   useEffect(() => {
     if (!many || paused) return;
     const timer = window.setTimeout(() => go(index + 1), intervalMs);
@@ -171,8 +196,11 @@ export function HeroSlides({
               >
                 <div
                   /* key 에 index 를 넣어, 사진이 바뀔 때마다 막대를
-                     처음부터 다시 채우게 합니다 */
-                  key={index}
+                     처음부터 다시 채우게 합니다.
+                     runId 도 함께 넣습니다 — '다시 시작'을 누른 때에도
+                     (사진은 그대로인데) 막대를 처음부터 채우기 위해서입니다.
+                     자세한 이유는 위 자동 넘김 설명을 보세요. */
+                  key={`${index}-${runId}`}
                   className="hero-progress h-full w-full bg-accent-500"
                   style={{
                     animationDuration: `${intervalMs}ms`,
@@ -218,7 +246,14 @@ export function HeroSlides({
                    pausedByUser 는 아직 null 일 수 있으므로 그 값을 뒤집으면
                    안 됩니다 (!null 은 true 라서, 멈춘 상태에서 눌러도
                    계속 멈춰 있게 됩니다). */
-                onClick={() => setPausedByUser(!paused)}
+                onClick={() => {
+                  const next = !paused;
+                  setPausedByUser(next);
+                  /* 다시 시작할 때만(멈출 때 말고) 막대를 처음부터
+                     다시 채웁니다. 위 자동 넘김 타이머도 이때 새로
+                     걸리므로, 둘이 같은 지점에서 함께 출발합니다. */
+                  if (!next) setRunId((n) => n + 1);
+                }}
                 className={buttonBase}
                 aria-label={
                   paused ? "사진 자동 넘김 다시 시작" : "사진 자동 넘김 멈춤"
