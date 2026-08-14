@@ -8,11 +8,12 @@ import { SequentialReveal } from "@/components/SequentialReveal";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 /* withBold 는 config 글 안의 `**…**` 부분만 굵게 만듭니다.
-   이 화면에서 쓰는 곳 (2026-08-13 담당자 요청으로 넷 다 굵기 표시를 넣었습니다):
+   이 화면에서 쓰는 곳 (2026-08-13 담당자 요청으로 굵기 표시를 넣었습니다):
      · aboutPage.intro          여는 글
      · aboutPage.worldSupport   '세계대회에 나가게 되면'
-     · aboutPage.faq            '참가 전에 궁금한 것들' 의 답
-   ℹ️ 네 필드 모두 이 화면에서만 씁니다. 그래서 `**` 를 넣어도 다른 화면에
+   ℹ️ 2026-08-14: 여기 있던 `aboutPage.faq` 줄을 지웠습니다. '참가 전에
+      궁금한 것들' 구역이 없어지면서 그 데이터도 함께 없앴습니다.
+   ℹ️ 두 필드 모두 이 화면에서만 씁니다. 그래서 `**` 를 넣어도 다른 화면에
       영향이 없습니다. (about.journey 처럼 홈과 함께 쓰는 글이라면 양쪽에
       모두 withBold 를 넣어야 합니다 — 자세한 규칙은 CLAUDE.md 참고)
    ⚠️ `**` 는 반드시 짝을 맞추세요. 홀수 개면 굵어지지 않고 화면에 `**` 가
@@ -20,7 +21,6 @@ import { container } from "@/lib/layout";
 import { withBold } from "@/lib/emphasis";
 import {
   ArrowRight,
-  ChevronDown,
   ExternalLink,
   MailOpen,
   Puzzle,
@@ -41,7 +41,9 @@ import {
  *
  *  ★★★ 홈의 소개와 모양을 일부러 다르게 했습니다 ★★★
  *   홈: 큰 제목 + 얇은 선으로 나눈 특징 + 알약 모양 사실 + 세로 일정선
- *   여기: 숫자 카드 → 원칙 목록 → 흐름 표 → 질문과 답 → 기관 소개
+ *   여기: 숫자 카드 → 원칙 목록 → 흐름 표 → 기관 소개
+ *   (2026-08-14: '흐름 표' 와 '기관 소개' 사이에 있던 질문과 답 구역을
+ *    담당자 요청으로 없앴습니다)
  *
  *  ★ 구역 배경색은 손으로 적지 않습니다 ★
  *    아래 SECTION_ORDER 순서표에서 자동으로 정해집니다. 설명은 그 표
@@ -89,10 +91,13 @@ export const metadata: Metadata = {
  *     남색 띠는 색이 정해져 있고, 여는 글은 그 위에 있어 번갈이와
  *     상관이 없습니다.
  * ========================================================================== */
+/* ℹ️ 2026-08-14: 여기 있던 "faq" ('참가 전에 궁금한 것들') 를 지웠습니다.
+      이 목록에서 한 줄이 빠지면 아래 구역들의 차례가 한 칸씩 당겨지고,
+      색은 이 표를 보고 다시 계산되므로 손으로 고칠 곳이 없습니다.
+      지금은 흰색 → 연파랑 → 흰색 → 연파랑 으로 나옵니다. */
 const SECTION_ORDER = [
   "principles", // ROBOFEST의 네 가지 원칙
   "journey", // 참가부터 세계대회까지
-  "faq", // (다음 단계에서 들어올 자리 — 비워 두는 중)
   "organisers", // 누가 여는 대회인가요
   "more", // 더 알아보기
 ] as const;
@@ -377,79 +382,15 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ------------------------------------------------------ 질문과 답
-             지도교사가 실제로 궁금해하는 순서대로 질문을 놓았습니다.
-             순서를 바꾸지 마세요.
+        {/* ℹ️ 2026-08-14: 여기 있던 '참가 전에 궁금한 것들' 구역을 담당자
+               요청으로 없앴습니다. 접었다 펴는 문답 8개가 있었고, config 의
+               `aboutPage.faq` 데이터도 함께 지웠습니다 (이 구역만 쓰던
+               데이터입니다). 위 SECTION_ORDER 에서도 "faq" 를 뺐습니다.
 
-             ℹ️ 2026-08-13: 같은 자리에 있던 '다른 로봇 대회와 무엇이
-                다른가요'를 지우고, 그 모양 그대로 이 구역을 넣었습니다.
-                글만 바뀌었고 마크업은 예전 것과 같습니다. */}
-        <section className={`${sectionTone("faq")} py-12 sm:py-16`}>
-          <div className={container}>
-            <h2 className="text-2xl text-brand-900 sm:text-3xl">
-              참가 전에 궁금한 것들
-            </h2>
-
-            {/* ★★★ 접었다 펴는 문답 — <details> 를 씁니다 (2026-08-13) ★★★
-                  자바스크립트를 한 줄도 쓰지 않았습니다. 여닫기·키보드
-                  조작·화면 낭독기 안내가 전부 브라우저 기본 기능입니다.
-                  ⚠️ 리액트 상태(useState)로 바꾸지 마세요. 학교 인터넷에서
-                     자바스크립트가 막히면 답이 영영 안 열리게 됩니다.
-                     상단 메뉴(SiteNav)도 같은 이유로 <details> 입니다.
-
-                ℹ️ 여러 개를 동시에 열 수 있습니다. <details> 에 name 을
-                   주면 라디오처럼 하나만 열리는데, 담당자가 여러 개를 동시에
-                   열 수 있게 해 달라고 해서 name 을 일부러 넣지 않았습니다.
-                   ⚠️ name 을 추가하지 마세요.
-
-                ℹ️ 첫 문항만 open 으로 시작합니다. 열려 있는 것이 하나 있어야
-                   '눌러서 펴는 것' 이라는 걸 바로 알아봅니다.
-
-                ⚠️ <dl>/<dt>/<dd> 에서 <ul>/<li> 로 바꿨습니다. <dt> 안에는
-                   <details> 를 넣을 수 없기 때문입니다(HTML 규칙 위반).
-                   질문·답 텍스트는 config 에서 그대로 오므로 글은 그대로입니다. */}
-            <ul className="mt-8 space-y-2">
-              {aboutPage.faq.map((item, index) => (
-                <li key={item.q}>
-                  <Reveal>
-                    {/* group = 아래 화살표가 '열림/닫힘'을 알아채는 표시 */}
-                    <details
-                      open={index === 0}
-                      className="group rounded-2xl border border-brand-100 bg-paper"
-                    >
-                      {/* ★ 카드 가로 전체가 눌립니다 ★
-                            <summary> 는 블록 요소라 폭을 꽉 채웁니다.
-                            글자만 눌리는 것이 아니라 빈 곳을 눌러도 열립니다.
-
-                          ★ 기본 삼각형 마커 숨기기 ★
-                            list-none 과 ::-webkit-details-marker 둘 다
-                            지정합니다. 브라우저마다 지우는 방법이 달라서
-                            하나만으로는 어딘가에 삼각형이 남습니다.
-
-                          ℹ️ 키보드 초점 표시(주황 테두리)는 globals.css 의
-                             :focus-visible 규칙이 자동으로 붙여 줍니다.
-                             여기에 따로 적지 않아도 됩니다. */}
-                      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 p-5 text-lg font-bold text-brand-900 sm:p-6 sm:text-xl [&::-webkit-details-marker]:hidden">
-                        {item.q}
-                        {/* 열리면 180도 돌아 위를 봅니다.
-                            ⚠️ 장식이라 낭독기에는 읽히지 않습니다
-                               (aria-hidden 은 icons.tsx 에서 붙습니다).
-                               '펼쳐짐/접힘' 은 <details> 가 이미 알려 줍니다. */}
-                        <ChevronDown className="mt-1 h-5 w-5 shrink-0 text-brand-600 transition-transform duration-200 group-open:rotate-180" />
-                      </summary>
-
-                      {/* 답 — 위 질문과 같은 좌우 여백을 씁니다.
-                          pt-0: <summary> 아래 여백이 이미 있어서 겹칩니다. */}
-                      <div className="px-5 pb-5 pt-0 text-base text-ink sm:px-6 sm:pb-6 sm:text-lg">
-                        {withBold(item.a)}
-                      </div>
-                    </details>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+               ★ 길이 막히지 않는 이유 ★
+                 같은 질문 대부분이 '자주 묻는 질문'(/faq) 화면에 있고,
+                 그 화면은 모든 화면 맨 위 메뉴에서 바로 갈 수 있습니다.
+               다시 넣고 싶으면 git 기록에서 이 커밋 직전을 보세요. */}
 
         {/* ------------------------------------------------------- 기관 소개 */}
         <section className={`${sectionTone("organisers")} py-12 sm:py-16`}>
@@ -471,8 +412,12 @@ export default function AboutPage() {
                   /* ⚠️ 카드 배경은 반드시 흰색(bg-paper)입니다.
                         로고 파일 배경이 흰색이라, 카드에 회색이나 연파랑을
                         주면 로고 둘레에 흰 네모가 드러납니다.
-                        ★ bg-paper 를 바꾸지 마세요 ★ (구역 배경은 연파랑이고
-                          그 위에 흰 카드가 놓이는 구조입니다) */
+                        ★ bg-paper 를 바꾸지 마세요 ★
+                        ℹ️ 2026-08-14: 구역 배경이 연파랑에서 흰색으로 바뀌어
+                           (위 구역 하나가 없어지면서 차례가 당겨졌습니다)
+                           지금은 흰 배경에 흰 카드가 놓입니다. 카드는
+                           테두리(border-brand-100)로 구분됩니다 — 바로 위
+                           '네 가지 원칙' 구역과 같은 구조입니다. */
                   <li
                     key={org.name}
                     className="flex h-full flex-col rounded-2xl border border-brand-100 bg-paper p-5 sm:p-6"
