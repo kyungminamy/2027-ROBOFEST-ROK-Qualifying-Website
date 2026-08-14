@@ -344,6 +344,13 @@ export default function VenuePage() {
                       />
                     )}
 
+                    {/* ℹ️ 2026-08-14: 잠깐 config 의 \n 을 줄바꿈으로 바꾸는
+                           처리를 넣었다가 같은 날 걷어냈습니다. '승용차
+                           이용시' 만 두 줄이 되어 네 항목 중 이것만 구조가
+                           달라 보였기 때문입니다. 네 항목 모두 한 줄 문단이
+                           되도록 글을 줄이는 쪽으로 정리했습니다.
+                        ⚠️ 줄바꿈을 넣고 싶어지면, 그 항목만 튀어 보이지
+                           않는지 네 항목을 나란히 놓고 보세요. */}
                     {description ? (
                       <p className="mt-3 text-base text-ink sm:text-lg">
                         {description}
