@@ -250,18 +250,27 @@ time,
  *   ⚠️ 여기에 nth-child 시차를 넣지 마세요. 열 개수가 바뀌면 곧바로
  *      줄과 어긋납니다.
  * ========================================================================== */
+/* ★ 숨김 상태에는 transition 을 걸지 않습니다 (2026-08-14 고침) ★
+     여기에 transition 을 두면, 이 클래스가 붙는 순간 '보이던 카드가
+     0.4초에 걸쳐 사라지는' 모습이 그대로 보입니다. 그 섹션을 보고 있는
+     중에 새로고침하면 실제로 그렇게 됐습니다.
+     숨기는 것은 즉시, 나타나는 것만 부드럽게 — 그래서 transition 은
+     아래 .is-in 쪽에만 있습니다. ⚠️ 이 규칙으로 옮기지 마세요. */
 .row-reveal > * {
   opacity: 0;
   transform: translateY(10px);
-  transition:
-    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 화면에 들어오면 이 클래스가 붙습니다 (한 번만) */
+/* 화면에 들어오면 이 클래스가 붙습니다 (한 번만).
+   ℹ️ 줄 사이 시차(transition-delay)는 RowReveal.tsx 가 칸마다 직접
+      넣습니다. 여기 transition 은 그 값을 덮어쓰지 않습니다
+      (inline style 이 우선). */
 .row-reveal.is-in > * {
   opacity: 1;
   transform: none;
+  transition:
+    opacity 400ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 키보드 사용자를 위한 초점 표시 — 접근성상 제거하지 마세요 */

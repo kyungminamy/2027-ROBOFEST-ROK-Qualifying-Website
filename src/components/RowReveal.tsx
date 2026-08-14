@@ -48,8 +48,8 @@ import { useEffect, useRef } from "react";
  *   움직임 없이 처음부터 보입니다. ⚠️ 지우지 마세요 (접근성 필수).
  * ========================================================================== */
 
-/** 화면 아래에서 이만큼 올라오면 시작합니다 (Reveal 과 같은 값) */
-const ENTER_MARGIN = "0px 0px -15% 0px";
+/** 목록이 이만큼(15%) 화면에 들어오면 시작합니다 */
+const VISIBLE_RATIO = 0.15;
 
 /** 줄과 줄 사이 시차 (밀리초). 한 줄 안에서는 시차가 없습니다. */
 const ROW_STEP_MS = 150;
@@ -79,9 +79,43 @@ export function RowReveal({
        막히면) 카드는 계속 보이는 상태입니다. */
     el.classList.add("row-reveal");
 
+    /* ★★★ 이 한 줄을 지우지 마세요 — 지우면 효과가 통째로 안 돕니다 ★★★
+     *
+     *  offsetHeight 를 읽으면 브라우저가 '지금 당장' 스타일을 계산합니다.
+     *  즉 위에서 숨긴 상태(opacity 0)가 이 시점에 확정됩니다.
+     *
+     *  【 없으면 무슨 일이 생기나 (2026-08-14 실제로 겪은 문제) 】
+     *   섹션이 **이미 화면 안에 있는 채로** 이 코드가 실행되면 — 그 자리에서
+     *   새로고침해 스크롤이 복원됐을 때가 대표적입니다 — 아래 관찰자가
+     *   곧바로 반응해 is-in 을 붙입니다. 그러면 '숨김'과 '보임'이 한 번의
+     *   스타일 계산 안에서 처리되어, 브라우저는 opacity 0 을 한 번도
+     *   계산하지 않습니다. 시작값이 없으니 전환이 생략되고, 카드는 그냥
+     *   처음부터 보입니다(= 애니메이션이 없는 것처럼 보입니다).
+     *   실제로 195ms 에 숨김, 206ms 에 보임이 붙었는데 opacity 는 1.00 에서
+     *   한 번도 내려가지 않았습니다.
+     *
+     *  ℹ️ requestAnimationFrame 으로 한 프레임 미루는 방법도 있지만, 다른
+     *     탭에 가려져 있으면 rAF 가 멈추므로 카드가 영영 안 보일 수
+     *     있습니다. 이 방식은 그런 위험이 없습니다. */
+    void el.offsetHeight;
+
     const io = new IntersectionObserver(
       (entries) => {
-        if (!entries[0]?.isIntersecting) return;
+        const entry = entries[0];
+        if (!entry?.isIntersecting) return;
+
+        /* 목록이 15% 이상 보일 때 시작합니다.
+           ⚠️ 안전장치: 좁은 화면에서는 카드 8장이 세로로 쌓여 목록이 화면
+              보다 훨씬 길어집니다. 그런 경우 비율이 15% 에 영영 못 닿아
+              카드가 끝내 안 보일 수 있습니다. 그래서 '15% 에 닿을 수 없는
+              길이'면 화면에 걸치기만 해도 시작하게 해 둡니다.
+              ★ 이 갈래를 지우지 마세요 ★ 카드가 안 보이는 것은 이
+                프로젝트에서 가장 나쁜 결과입니다. */
+        const unreachable = entry.rootBounds
+          ? entry.boundingClientRect.height * VISIBLE_RATIO >
+            entry.rootBounds.height
+          : false;
+        if (entry.intersectionRatio < VISIBLE_RATIO && !unreachable) return;
 
         /* ★ 지금 몇 열인지 — 나타나기 '직전에' 잽니다 ★
              관찰을 시작한 뒤 창 크기가 바뀌었을 수도 있어서, 처음이 아니라
@@ -108,7 +142,10 @@ export function RowReveal({
              다시 스크롤해도 되풀이되지 않습니다. */
         io.disconnect();
       },
-      { rootMargin: ENTER_MARGIN },
+      /* 0 도 함께 넣는 이유: 위 '안전장치'가 판단할 기회를 얻으려면,
+         비율이 15% 에 닿지 못하더라도 화면에 걸치는 순간 한 번은
+         불려야 합니다. */
+      { threshold: [0, VISIBLE_RATIO] },
     );
 
     io.observe(el);
