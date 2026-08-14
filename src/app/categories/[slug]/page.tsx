@@ -273,7 +273,11 @@ export default async function CategoryDetailPage({
               {/* ℹ️ 이 줄도 `**…**` 로 굵게 할 수 있습니다 (2026-08-14).
                      지금은 game 의 '제한이 없습니다.' 한 곳에만 쓰였습니다. */}
               <Row label="로봇 · 키트">{withBold(detail.prepare.robotKit)}</Row>
-              <Row label="노트북 등 장비">{detail.prepare.computer}</Row>
+              {/* ℹ️ 이 줄도 `**…**` 로 굵게 할 수 있습니다 (2026-08-14).
+                     지금은 umc 의 '프로그래밍용 노트북' 한 곳에만 쓰였습니다. */}
+              <Row label="노트북 등 장비">
+                {withBold(detail.prepare.computer)}
+              </Row>
 
               <Row label="대회 전에 준비할 것">
                 <Bullets items={detail.prepare.beforeEvent} />
