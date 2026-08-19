@@ -23,8 +23,20 @@ export type HeaderImage = {
   wide: string;
   small: string;
   position: string;
-  /** 사진 위에 덮는 남색 막의 진하기 (0~1). 밝은 사진일수록 크게. */
+  /** 사진 위에 덮는 남색 막의 진하기 (0~1). 밝은 사진일수록 크게.
+   *  ★ 768px 이상에서는 이 값이 **왼쪽(글자 쪽)의 진하기**입니다. ★
+   *    오른쪽으로 갈수록 저절로 옅어져 화면 끝에서 사라집니다.
+   *    그 규칙은 globals.css 에 첫 화면과 공통으로 한 곳에 있습니다. */
   overlay: number;
+  /** 막이 옅어지기 시작하는 자리 (선택). 안 쓰면 globals.css 의 기본값
+   *  `calc(50% + 384px)` — 글이 놓이는 칸의 오른쪽 끝 — 을 씁니다.
+   *
+   *  ⚠️ 2026-08-18 현재 **이 값을 쓰는 사진은 없습니다.** '참가 신청'이
+   *     하루 썼다가 다시 뺐습니다. 지우지 않고 남겨 둔 것은 되돌릴
+   *     여지를 두기 위해서입니다.
+   *  ⚠️ 앞당길수록 글자 뒤가 밝아집니다. 쓰게 되면 반드시 명도 대비를
+   *     다시 재세요 (제목 3:1, 설명 줄 4.5:1). */
+  overlayEnd?: string;
   alt: string;
 };
 
@@ -58,7 +70,11 @@ export function PageHeader({
                   누르고 들어왔을 때 색이 이어집니다.
        사진 있음 → header-photo (사진 + 남색 막)
        그 밖    → hero-field (brand-900 단색. 첫 화면과 같은 바탕)
-     ⚠️ solid 는 다른 화면에 영향이 없습니다. 넘기지 않으면 예전 그대로입니다. */
+     ⚠️ solid 는 다른 화면에 영향이 없습니다. 넘기지 않으면 예전 그대로입니다.
+
+     ℹ️ 2026-08-18: 사진마다 막 모양을 달리 하던 `overlayShape`(스포트라이트)
+        갈래를 지웠습니다. 담당자 요청으로 '참가 신청'도 다른 화면과 같은
+        막으로 돌아와, 사진이 있는 화면은 예외 없이 header-photo 하나입니다. */
   const background = solid
     ? "bg-brand-700"
     : hasImage
@@ -77,6 +93,11 @@ export function PageHeader({
               "--header-image-small": `url(${image.small})`,
               "--header-pos": image.position,
               "--header-overlay": String(image.overlay),
+              /* 사진이 따로 정했을 때만 덮어씁니다.
+                 안 정했으면 globals.css 의 기본값이 그대로 쓰입니다. */
+              ...(image.overlayEnd
+                ? { "--overlay-end": image.overlayEnd }
+                : {}),
             } as React.CSSProperties)
           : undefined
       }
