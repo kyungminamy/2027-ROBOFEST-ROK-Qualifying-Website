@@ -197,7 +197,7 @@ Readers are 지도교사, 학부모, and students across 전국 초·중·고. M
 
 ## Before you start work each session
 
-0. Read the top 2–3 entries of `docs/SESSION-LOG.md` — what happened recently, and which decisions are already settled. You have no memory of previous sessions; that file is the substitute. Append an entry there when the session's work is done. It is a record, not a rulebook: anything that must hold *from now on* belongs in this file instead.
+0. Read the top 2–3 entries of `docs/SESSION-LOG.md` — what happened recently, and which decisions are already settled. You have no memory of previous sessions; that file is the substitute. Append an entry there when the session's work is done, **in the same commit as the work it describes**, and fill in its `**커밋**` line with the **commit subject, not a hash** — a hash written before the push is rewritten by `--amend` and by the `git pull --rebase` this file mandates below. The format and the reason are in that file's `커밋 줄 적는 법` section (added 2026-08-19, after 15 entries were found claiming "아직 커밋하지 않았습니다" while sitting in a commit). It is a record, not a rulebook: anything that must hold *from now on* belongs in this file instead.
 1. Skim `config/competition.ts` — it is the source of truth for competition facts, not this file.
 2. If asked to add a date or fact, put it in the config and reference it. Do not inline it.
 3. If a task would require a database, login, file uploads, email sending, cron, or an admin UI, stop and say so — out of scope by design; explain the unattended-failure reason.

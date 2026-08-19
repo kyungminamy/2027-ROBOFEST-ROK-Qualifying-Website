@@ -26,11 +26,25 @@ import { Fragment, type ReactNode } from "react";
  *     마세요(기울임·링크·목록 등). 필요해지면 그때 진짜 마크다운을 쓸지
  *     따로 판단해야 합니다. 지금 이 파일이 작은 것이 장점입니다.
  *
- *  【 지금 쓰는 곳 】
- *    · 홈 화면의 '참가부터 세계대회까지' 목록 (src/components/HomeIntro.tsx)
- *    · ROBOFEST 소개 화면의 같은 목록 (src/app/about/page.tsx)
- *    두 화면이 `about.journey` 의 **같은 글**을 쓰므로, 한 곳에만 넣으면
- *    다른 곳에 `**` 가 그대로 보입니다. 새로 쓸 때도 짝을 맞춰 주세요.
+ *  【 지금 별표를 쓸 수 있는 config 항목 — 2026-08-19 확인 】
+ *    · `about.journey[].body`      — 홈(HomeIntro.tsx) **과** /about
+ *    · `aboutPage.intro[]`         — /about
+ *    · `aboutPage.worldSupport.body` — /about
+ *    · `categoryDetails.*.whatItIs[]`        — 종목 상세
+ *    · `categoryDetails.*.prepare.robotKit`  — 종목 상세
+ *    · `categoryDetails.*.prepare.computer`  — 종목 상세
+ *    · `categoryDetails.*` 의 목록들(`howItRuns`·`prepare.beforeEvent`·
+ *      `prepare.onSite`·`notes`) — 종목 상세의 Bullets 를 거칩니다
+ *    · `scheduleNotice`            — /schedule (2026-08-19 추가)
+ *
+ *  ⚠️⚠️ **`about.journey` 는 두 화면이 같은 글을 씁니다.** 한 화면에만
+ *     withBold 를 넣으면 다른 화면에 `**` 가 그대로 보입니다. 나머지 항목은
+ *     쓰는 화면이 하나뿐이라 그 걱정이 없습니다 — 하지만 **어떤 항목이든
+ *     새 화면에서 쓰기 시작하면 그 화면에도 withBold 를 넣어야 합니다**
+ *     (CLAUDE.md 의 규칙).
+ *
+ *  ℹ️ 이 목록은 손으로 적은 것이라 낡을 수 있습니다. 지금 상태는 이렇게
+ *     확인합니다 — `grep -rn "withBold(" src/`
  * ========================================================================== */
 
 /** `**…**` 로 감싼 부분만 굵게 만들어 돌려줍니다.

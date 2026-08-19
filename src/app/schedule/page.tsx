@@ -6,6 +6,7 @@ import {
 } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
+import { withBold } from "@/lib/emphasis";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
 
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export default function SchedulePage() {
-  const { milestones, dates } = competition;
+  const { milestones, dates, scheduleNotice } = competition;
 
   return (
     <>
@@ -133,9 +134,14 @@ export default function SchedulePage() {
             <h2 className="text-2xl text-brand-900 sm:text-3xl">
               참고해 주세요
             </h2>
+            {/* ★ 이 문장은 여기 적혀 있지 않습니다 ★
+                   config/competition.ts 의 scheduleNotice 에 있습니다.
+                   문구를 고치려면 그 파일만 고치세요.
+                 ★ withBold 로 감싸는 이유 ★
+                   그 문장 안의 `**…**` 를 굵은 글씨로 바꿔 줍니다.
+                   ⚠️ 이걸 지우면 화면에 별표가 그대로 보입니다. */}
             <p className="mt-4 text-base text-ink sm:text-lg">
-              종목별로 정원이 있어 접수가 조기에 마감될 수 있습니다. 참가를
-              생각하고 계시다면 접수 시작 후 여유 있게 신청해 주세요.
+              {withBold(scheduleNotice)}
             </p>
 
             {/* ℹ️ 2026-08-11: 여기 있던 둘째 문단을 담당자 요청으로 없앴습니다.
