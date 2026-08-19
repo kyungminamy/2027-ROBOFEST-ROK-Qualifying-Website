@@ -8,6 +8,7 @@ import {
   findCategory,
   type CategorySlug,
 } from "@/config/competition";
+import { CategoryBar } from "@/components/CategoryBar";
 import { PageHeader } from "@/components/PageHeader";
 import { withBold } from "@/lib/emphasis";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -130,7 +131,13 @@ export default async function CategoryDetailPage({
       <PageHeader
         title={`${category.name} ${category.nameKo}`}
         description={category.summary}
-        backHref="/categories"
+        /* ★ '/categories' 가 아니라 '#category-list' 로 갑니다 (2026-08-19) ★
+             종목 안내 화면 맨 위가 아니라 **종목 목록(카드 8개) 자리**로
+             바로 떨어집니다. 목록을 보러 돌아가는 길인데 화면 맨 위에
+             내려놓으면 다시 한참 내려야 했습니다.
+           ⚠️ 아래 '다른 종목 보기' 단추와 **같은 자리**를 가리킵니다.
+              한쪽만 고치지 마세요. */
+        backHref="/categories#category-list"
         backLabel="종목 안내"
         /* ℹ️ 2026-08-14 담당자 요청: 배경 사진(나무 탁자 위 황동 나침반,
                headerImages.compass)을 없애고 **남색 단색**으로 바꿨습니다.
@@ -143,6 +150,18 @@ export default async function CategoryDetailPage({
                 다시 사진을 쓰려면 git 기록에서 이 커밋 직전을 보세요. */
         solid
       />
+
+      {/* ------------------------------------------------------- 종목 이동 띠
+          ★ 8개 종목 어디로든 한 번에 갑니다 (2026-08-19 담당자 요청) ★
+            자리는 **머리띠 바로 아래, 아래 로고 띠 위**입니다.
+            순서·이름은 config 의 categories 배열을 그대로 씁니다 —
+            자세한 설명은 src/components/CategoryBar.tsx 맨 위에 있습니다.
+          ⚠️ 화면에 붙이지 마세요(sticky·fixed 금지). 상단 메뉴가 이미
+             붙어 있어서 두 겹이 됩니다.
+          ⚠️ <main> 밖입니다. 이 띠는 이 종목의 '내용'이 아니라 화면을
+             옮겨 다니는 길이라, 본문 바로가기(#main)가 이 띠를 건너뛰고
+             내용으로 바로 가도록 두었습니다. */}
+      <CategoryBar currentSlug={category.slug} />
 
       <main id="main" className="flex-1">
         {/* ------------------------------------------------------- 종목 로고
@@ -364,8 +383,16 @@ export default async function CategoryDetailPage({
                 참가 신청 안내
                 <ArrowRight className="h-5 w-5" />
               </Link>
+              {/* ★ 자리·문구·모양은 그대로, 목적지만 바뀌었습니다 (2026-08-19) ★
+                     '/categories' → '/categories#category-list'.
+                     종목 안내 화면 맨 위가 아니라 종목 목록(카드 8개)
+                     자리로 바로 떨어집니다.
+                   ⚠️ 위 머리띠의 '← 종목 안내' 링크와 같은 자리를
+                      가리킵니다. 한쪽만 고치지 마세요.
+                   ⚠️ 가리키는 자리는 src/app/categories/page.tsx 의
+                      id="category-list" 입니다. */}
               <Link
-                href="/categories"
+                href="/categories#category-list"
                 className="inline-flex min-h-[52px] items-center justify-center rounded-lg border-2 border-brand-200 bg-paper px-7 text-base font-bold text-brand-700 transition-colors hover:border-brand-400 sm:text-lg"
               >
                 다른 종목 보기

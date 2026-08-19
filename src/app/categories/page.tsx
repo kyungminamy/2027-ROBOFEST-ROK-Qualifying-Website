@@ -194,7 +194,27 @@ export default function CategoriesPage() {
                 바로 위에 '참가 부문 안내'(옅은 파랑) 구역이 새로 들어와서,
                 번갈아 나오게 하려면 이 구역이 흰색이어야 합니다.
                 ⚠️ 위 구역을 지우면 여기를 다시 bg-paper-soft 로 되돌리세요. */}
-        <section className="py-14 sm:py-20">
+        {/* ★ id="category-list" — 종목 상세 화면에서 돌아오는 자리입니다 ★
+              (2026-08-19 담당자 요청) 상세 화면의 두 곳이 이 자리를
+              가리킵니다. 지우거나 이름을 바꾸면 두 곳이 함께 고장 납니다.
+                · 머리띠의 '← 종목 안내' 링크
+                · 맨 아래 '다른 종목 보기' 단추
+              둘 다 src/app/categories/[slug]/page.tsx 에 있습니다.
+
+            ★ scroll-mt-[var(--nav-h)] 를 지우지 마세요 ★
+              상단 메뉴는 화면에 붙어 있어서(sticky), 이 자리로 오면 브라우저가
+              구역 윗변을 **화면 맨 위**에 맞춥니다. 그러면 '종목 목록' 제목이
+              메뉴 뒤로 숨습니다. 메뉴 높이(52/64/80px)만큼 덜 내려오게 하는
+              값이고, 숫자가 아니라 globals.css 의 --nav-h 를 그대로 씁니다 —
+              메뉴 높이가 바뀌면 저절로 따라옵니다.
+              (globals.css 의 `#main`, /apply 의 `#apply-form` 도 같은 방식)
+
+            ℹ️ 도착하면 제목만 보이고 카드가 화면 밖에 있으면 안 됩니다.
+               이 구역은 위 여백(56/80px) + 제목 + 한 줄 설명 다음 바로
+               카드가 오므로, 제목에서 카드까지 190~230px 입니다. 가장 작은
+               휴대폰(568px 높이)에서도 첫 카드가 들어옵니다.
+               ⚠️ 제목과 카드 사이에 글을 더 넣으면 이 성질이 깨집니다. */}
+        <section id="category-list" className="scroll-mt-[var(--nav-h)] py-14 sm:py-20">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">종목 목록</h2>
             <p className="mt-3 text-base text-ink-soft">
