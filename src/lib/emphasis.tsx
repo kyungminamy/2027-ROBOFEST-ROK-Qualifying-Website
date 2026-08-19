@@ -36,6 +36,7 @@ import { Fragment, type ReactNode } from "react";
  *    · `categoryDetails.*` 의 목록들(`howItRuns`·`prepare.beforeEvent`·
  *      `prepare.onSite`·`notes`) — 종목 상세의 Bullets 를 거칩니다
  *    · `scheduleNotice`            — /schedule (2026-08-19 추가)
+ *    · `venue.parkingNote`         — /venue (2026-08-19 추가)
  *
  *  ⚠️⚠️ **`about.journey` 는 두 화면이 같은 글을 씁니다.** 한 화면에만
  *     withBold 를 넣으면 다른 화면에 `**` 가 그대로 보입니다. 나머지 항목은

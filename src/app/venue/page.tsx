@@ -4,6 +4,7 @@ import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { withBold } from "@/lib/emphasis";
 import { ExternalLink } from "@/components/icons";
 
 /* ============================================================================
@@ -514,8 +515,13 @@ export default function VenuePage() {
         <section className="py-12 sm:py-16">
           <div className={container}>
             <h2 className="text-2xl text-brand-900 sm:text-3xl">주차 안내</h2>
+            {/* ★ withBold — parkingNote 안의 `**…**` 를 굵게 바꿔 줍니다 ★
+                   (2026-08-19 담당자 요청: 주차장 두 곳의 이름을 굵게)
+                 ⚠️ 이걸 지우면 화면에 별표가 그대로 보입니다.
+                 ⚠️ 문구도 굵게 할 자리도 이 파일이 아니라
+                    config/competition.ts 의 venue.parkingNote 에 있습니다. */}
             <p className="mt-4 text-base text-ink sm:text-lg">
-              {venue.parkingNote}
+              {withBold(venue.parkingNote)}
             </p>
           </div>
         </section>
