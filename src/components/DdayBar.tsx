@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { competition } from "@/config/competition";
-import { countdownFor, type CountdownView } from "@/lib/countdown";
-import { msUntilNextSeoulMidnight, todayInSeoul } from "@/lib/dday";
+import { useCountdown } from "@/lib/useCountdown";
 import {
   getScrolled,
   getScrolledOnServer,
@@ -37,45 +36,11 @@ import { edgePadding } from "@/lib/layout";
  *     화면 낭독기에게 알릴 만한 변화가 아닙니다.
  * ========================================================================== */
 
-/**
- * 날짜가 바뀌었을 때 React 에게 알려 주는 구독자.
- *
- * ⚠️ setInterval 로 바꾸지 마세요. 하루에 한 번만 바뀌는 값을 1초마다
- *    계산하게 됩니다. 타이머가 발화하면 '그다음 자정'을 다시 예약합니다.
- */
-function subscribeDate(onChange: () => void): () => void {
-  let timer: number | undefined;
-
-  const scheduleMidnight = () => {
-    /* 최소 1초 — 시계가 살짝 어긋나 0ms 가 나오면 타이머가 쉼 없이
-       다시 걸리게 됩니다. */
-    const wait = Math.max(1000, msUntilNextSeoulMidnight());
-    timer = window.setTimeout(() => {
-      onChange();
-      scheduleMidnight();
-    }, wait);
-  };
-
-  scheduleMidnight();
-
-  /* 절전에서 깨어나거나 다른 탭에서 돌아오면 타이머가 밀려 있을 수 있습니다 */
-  document.addEventListener("visibilitychange", onChange);
-  window.addEventListener("focus", onChange);
-
-  return () => {
-    window.clearTimeout(timer);
-    document.removeEventListener("visibilitychange", onChange);
-    window.removeEventListener("focus", onChange);
-  };
-}
-
-/** 배포 시 미리 만드는 단계에서는 오늘이 언제인지 알 수 없습니다 */
-const noDateYet = () => null;
-
-function useCountdown(): CountdownView | null {
-  const today = useSyncExternalStore(subscribeDate, todayInSeoul, noDateYet);
-  return today === null ? null : countdownFor(today);
-}
+/* ℹ️ 2026-08-19: 여기 있던 남은 날짜 계산(subscribeDate / useCountdown)은
+      src/lib/useCountdown.ts 로 옮겼습니다. '참가 신청' 머리띠의 D-day 배지
+      (ApplyDdayBadge)가 **같은 숫자**를 보여 주어야 해서, 계산을 두 벌 두지
+      않으려고 한 곳으로 모은 것입니다. 이 파일이 하는 일은 그대로입니다 —
+      '어떻게 보이나'만 담당합니다. */
 
 function useScrolled(): boolean {
   return useSyncExternalStore(
