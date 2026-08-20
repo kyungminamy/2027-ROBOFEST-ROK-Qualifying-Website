@@ -55,6 +55,9 @@ export default function FaqPage() {
                  있습니다. 건드리기 전에 config 의 그 항목 주석을 읽으세요.
               ℹ️ 이 사진은 같은 날 '일정' 화면에서 잠깐 썼던 것입니다. */
         image={competition.headerImages.frontDesk}
+        /* 제목 '자주 묻는 질문' 앞에 붙는 작은 그림 (2026-08-20 담당자 요청).
+           경로는 config 의 faqTitleIcon 에 있습니다 — 여기에 적지 마세요. */
+        titleIcon={competition.faqTitleIcon}
       />
 
       <main id="main" className="flex-1">
@@ -70,7 +73,32 @@ export default function FaqPage() {
                       이 더 붙어 첫 제목이 아래로 툭 떨어져 보입니다. */}
             {faqPage.map((section) => (
               <div key={section.group} className="mt-12 first:mt-0">
+                {/* ★ 묶음 제목 **앞**의 작은 그림 ★ (2026-08-20 담당자 요청)
+                    ℹ️ 처음에는 제목 **뒤**에 붙였다가, 같은 날 담당자 요청으로
+                       **글자 맨 앞**으로 옮겼습니다. 머리띠 제목과 같은 자리라
+                       화면을 내려가는 동안 그림이 같은 세로줄에 놓입니다.
+                       ⚠️ 되돌리지 마세요. 뒤로 옮기려면 아래 img 를
+                          {section.group} 다음으로 옮기고 mr- 를 ml- 로
+                          바꾸면 됩니다.
+                    · 높이 1em → 제목 글자와 같은 크기 (담당자 요청).
+                    · 경로는 config 의 faqPage 각 묶음 icon 에 있습니다.
+                      비워 두면 그 묶음만 그림 없이 제목만 나옵니다.
+                    · 이 그림들은 **남색(brand-900)** 입니다. 제목 글자와 같은
+                      색이라 한 덩어리로 보입니다.
+                      ⚠️ 머리띠용 흰색 파일(icon-faq.png)을 여기에 쓰면
+                         흰 바탕에서 보이지 않습니다.
+                    · alt="" → 바로 뒤 글자가 같은 말을 합니다 (낭독기 건너뜀). */}
                 <h2 className="text-2xl text-brand-900 sm:text-3xl">
+                  {section.icon && (
+                    /* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */
+                    <img
+                      src={section.icon}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className="mr-[0.35em] inline-block h-[1em] w-[1em] align-[-0.15em]"
+                    />
+                  )}
                   {section.group}
                 </h2>
 

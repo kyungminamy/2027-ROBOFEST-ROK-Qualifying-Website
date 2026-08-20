@@ -47,6 +47,7 @@ export function PageHeader({
   backLabel,
   image,
   solid = false,
+  titleIcon,
 }: {
   title: string;
   /** 제목 아래 한 줄 설명 (없으면 생략) */
@@ -58,6 +59,20 @@ export function PageHeader({
   image?: HeaderImage;
   /** true 면 사진 없이 브랜드 남색 단색 띠로 그립니다 (2026-08-14) */
   solid?: boolean;
+  /** 제목 **앞**에 붙는 작은 그림의 경로 (2026-08-20)
+   *
+   *  ★ 지금 쓰는 화면은 '자주 묻는 질문'(/faq) 하나뿐입니다. ★
+   *    넘기지 않으면 예전과 똑같이 제목만 나옵니다.
+   *    그 화면의 묶음 제목(신청과 비용 등)도 **맨 앞**에 그림을 붙입니다.
+   *    두 자리가 같아야 화면을 내려가는 동안 그림이 같은 세로줄에 놓입니다.
+   *
+   *  ⚠️ 머리띠는 **남색 바탕에 흰 글자**입니다. 검정 그림을 넘기면 거의
+   *     보이지 않습니다. 흰색으로 다시 뽑은 파일을 넘기세요
+   *     (만드는 방법은 image/README.md).
+   *  ℹ️ 크기는 제목 글자 크기를 따라갑니다(높이 1em). 화면이 넓어져 제목이
+   *     커지면 그림도 같이 커집니다.
+   *  ℹ️ 경로가 비어 있으면 그림 없이 제목만 나옵니다. */
+  titleIcon?: string;
 }) {
   /* 사진 경로가 비어 있으면 사진 없이 격자무늬로 돌아갑니다.
      (경로가 잘못돼도 깨진 사진 대신 격자무늬가 보이게 하기 위함) */
@@ -137,7 +152,30 @@ export function PageHeader({
             </Link>
           )}
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl">{title}</h1>
+          {/* ★ 제목 앞의 작은 그림 ★ (titleIcon 을 넘긴 화면만)
+                · 높이 1em → 제목 글자와 같은 크기. 화면이 넓어져 제목이
+                  커지면 그림도 같이 커집니다 (담당자 요청).
+                · align-[-0.15em] → 한글 글자의 위아래에 눈으로 맞춘 값입니다.
+                  baseline 그대로 두면 그림이 글자보다 높이 떠 보입니다.
+                · alt="" → 바로 옆 글자가 같은 말을 하므로 낭독기는 건너뜁니다.
+                  ⚠️ 여기에 설명을 넣으면 제목이 두 번 읽힙니다.
+                · <h1> 안에 두어 글자처럼 흐릅니다. flex 로 바꾸지 마세요 —
+                  제목이 두 줄이 되는 좁은 화면에서 모양이 깨집니다.
+                ⚠️ next/image 를 쓰지 않는 이유는 다른 그림들과 같습니다 —
+                   설정이 필요해 비개발자가 유지하기 어렵습니다. */}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl">
+            {titleIcon && (
+              /* eslint-disable-next-line @next/next/no-img-element -- 위 설명 참고 */
+              <img
+                src={titleIcon}
+                alt=""
+                width={50}
+                height={50}
+                className="mr-[0.4em] inline-block h-[1em] w-[1em] align-[-0.15em]"
+              />
+            )}
+            {title}
+          </h1>
 
           {/* ⚠️ 여기에 max-w-[..ch] 를 다시 넣지 마세요.
                  ch 는 영문 '0' 한 글자 너비 기준이라, 한글에서는 칸의
