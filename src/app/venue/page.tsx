@@ -51,6 +51,14 @@ export default function VenuePage() {
   /* 지도 그림. src 가 비어 있으면 지도 자리를 통째로 그리지 않습니다. */
   const mapImage: { src: string; alt: string; width: number; height: number } =
     venue.mapImage;
+  /* 주차 지도. 위 mapImage 와 같은 규칙입니다 — src 가 비어 있으면
+     그림 자리를 통째로 그리지 않습니다 (글은 그대로 남습니다). */
+  const parkingImage: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+  } = venue.parkingImage;
 
   return (
     <>
@@ -523,6 +531,41 @@ export default function VenuePage() {
             <p className="mt-4 text-base text-ink sm:text-lg">
               {withBold(venue.parkingNote)}
             </p>
+
+            {/* ------------------------------------------------- 주차 지도
+                ℹ️ 2026-08-20 담당자 요청: 위 글 아래에 주차장 지도를 넣었습니다.
+                   붉은 표시가 주차장 두 곳의 입구, 붉은 화살표가 정문에서
+                   들어가는 방향입니다.
+
+                ★ 위 '장소' 구역의 지도와 같은 방식입니다 ★
+                  그림 파일 한 장이라 자바스크립트가 꺼져 있어도, 남의 서버가
+                  막혀도 똑같이 보입니다. 학교 인터넷에서 중요합니다.
+
+                ⚠️ width·height 를 지우지 마세요. 그림이 늦게 뜰 때 그만큼
+                   자리를 미리 비워 두는 값입니다.
+
+                ★ 폭을 본문 폭에 꽉 채우지 않습니다 ★
+                  이 그림은 거의 정사각형(947×839)이라 720px 로 깔면 높이가
+                  638px — 휴대폰에서 화면을 한 장 넘게 차지합니다. 위 지도
+                  (1010×592, 납작함)와 사정이 다릅니다. 그래서 640px 로
+                  묶었습니다. 원본보다 작게 보여 주는 것이라 흐려지지도
+                  않습니다.
+                  ⚠️ 947px 보다 크게 보여 주지 마세요. 늘리는 순간 지도
+                     글씨가 흐려집니다. */}
+            {parkingImage.src && (
+              <div className="mt-6 w-full max-w-[40rem]">
+                {/* eslint-disable-next-line @next/next/no-img-element -- 위 지도와 같은 이유 */}
+                <img
+                  src={parkingImage.src}
+                  alt={parkingImage.alt}
+                  width={parkingImage.width}
+                  height={parkingImage.height}
+                  loading="lazy"
+                  decoding="async"
+                  className="block h-auto w-full rounded-lg border border-brand-200"
+                />
+              </div>
+            )}
           </div>
         </section>
       </main>
