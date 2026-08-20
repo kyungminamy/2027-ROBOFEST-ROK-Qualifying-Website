@@ -37,6 +37,8 @@ import { Fragment, type ReactNode } from "react";
  *      `prepare.onSite`·`notes`) — 종목 상세의 Bullets 를 거칩니다
  *    · `scheduleNotice`            — /schedule (2026-08-19 추가)
  *    · `venue.parkingNote`         — /venue (2026-08-19 추가)
+ *    · `faqPage[].items[].a`      — /faq (2026-08-20 추가. **답만** 입니다 —
+ *                                    질문 q 는 줄 전체가 이미 굵습니다)
  *
  *  ⚠️⚠️ **`about.journey` 는 두 화면이 같은 글을 씁니다.** 한 화면에만
  *     withBold 를 넣으면 다른 화면에 `**` 가 그대로 보입니다. 나머지 항목은

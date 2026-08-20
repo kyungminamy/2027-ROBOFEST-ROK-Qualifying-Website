@@ -3,6 +3,7 @@ import { competition } from "@/config/competition";
 import { PageHeader } from "@/components/PageHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { container } from "@/lib/layout";
+import { withBold } from "@/lib/emphasis";
 import { ChevronDown } from "@/components/icons";
 
 /* ============================================================================
@@ -90,8 +91,14 @@ export default function FaqPage() {
                         />
                       </summary>
 
+                      {/* ★ withBold — 답 안의 `**…**` 를 굵게 바꿔 줍니다 ★
+                          (2026-08-20 담당자 요청: 답의 핵심을 굵게)
+                        ⚠️ 이걸 지우면 화면에 별표가 그대로 보입니다.
+                        ⚠️ 굵게 할 자리는 이 파일이 아니라
+                           config/competition.ts 의 faqPage 안 a 에 있습니다.
+                        ℹ️ 질문(item.q)은 줄 전체가 이미 굵어서 그대로 그립니다. */}
                       <p className="pb-5 text-base text-ink sm:text-lg">
-                        {item.a}
+                        {withBold(item.a)}
                       </p>
                     </details>
                   ))}
